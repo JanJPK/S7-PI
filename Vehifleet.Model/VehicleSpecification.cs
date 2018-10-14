@@ -1,0 +1,30 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Vehifleet.Model
+{
+    public class VehicleSpecification
+    {
+        public int Id { get; set; }
+
+        [Required]
+        [MaxLength(30)]
+        public string Manufacturer { get; set; }
+
+        [Required]
+        [MaxLength(30)]
+        public string Model { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        public string ConfigurationCode { get; set; }
+
+        [Required]
+        public int Horsepower { get; set; }
+
+        [Required]
+        public int Seats { get; set; }
+
+        [Required]
+        public UsageReport UsageReport { get; set; }
+    }
+}

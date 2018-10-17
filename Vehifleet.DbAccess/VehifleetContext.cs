@@ -5,6 +5,7 @@ namespace Vehifleet.DbAccess
 {
     public class VehifleetContext : DbContext
     {
+        /*
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<CostCenter> CostCenters { get; set; }
         public DbSet<Event> Events { get; set; }
@@ -13,6 +14,7 @@ namespace Vehifleet.DbAccess
         public DbSet<Employee> Users { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleSpecification> VehicleSpecifications { get; set; }
+        */
 
         public VehifleetContext() : base()
         {            

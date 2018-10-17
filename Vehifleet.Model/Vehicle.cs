@@ -13,12 +13,10 @@ namespace Vehifleet.Model
 
         public Booking Booking { get; set; }
 
-        public int? OngoingEventId { get; set; }
-
-        public Event OngoingEvent { get; set; }
-
         [Required]
-        public bool UsageReport { get; set; }
+        public int UsageReportId { get; set; }
+        
+        public UsageReport UsageReport { get; set; }
 
         [Required]
         public VehicleStatus Status { get; set; }

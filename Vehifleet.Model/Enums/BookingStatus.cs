@@ -3,6 +3,7 @@
     public enum BookingStatus
     {
         Created,
+        Submitted, 
         Rejected,
         Accepted,
         AwaitingReview,

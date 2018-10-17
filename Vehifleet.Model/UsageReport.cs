@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Vehifleet.Model
 {
@@ -14,5 +15,7 @@ namespace Vehifleet.Model
 
         [Required]
         public decimal Cost { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }

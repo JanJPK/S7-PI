@@ -1,9 +1,9 @@
-﻿namespace Vehifleet.Model.Enums
+﻿namespace Vehifleet.Data.Models.Enums
 {
     public enum BookingStatus
     {
         Created,
-        Submitted, 
+        Submitted,
         Rejected,
         Accepted,
         AwaitingReview,

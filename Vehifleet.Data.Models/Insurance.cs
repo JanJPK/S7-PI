@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Vehifleet.Data.Models.BaseEntities;
 
-namespace Vehifleet.Model
+namespace Vehifleet.Data.Models
 {
-    public class Inspection
+    public class Insurance : AuditableEntity
     {
         public int Id { get; set; }
 
@@ -13,10 +14,10 @@ namespace Vehifleet.Model
         public Vehicle Vehicle { get; set; }
 
         [Required]
-        public DateTime DateStart { get; set; }
+        public DateTime StartDate { get; set; }
 
         [Required]
-        public DateTime DateEnd { get; set; }
+        public DateTime ExpirationDate { get; set; }
 
         [Required]
         public decimal Cost { get; set; }
@@ -24,7 +25,7 @@ namespace Vehifleet.Model
         public string Notes { get; set; }
 
         [Required]
-        public bool Passed { get; set; }
+        public string InsuranceId { get; set; }
 
         [Required]
         public int Mileage { get; set; }

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Vehifleet.Data.Models.BaseEntities;
 
-namespace Vehifleet.Model
+namespace Vehifleet.Data.Models
 {
-    public class VehicleSpecification
+    public class VehicleSpecification : CostGeneratingEntity
     {
         public int Id { get; set; }
 
@@ -25,6 +26,6 @@ namespace Vehifleet.Model
         public int Seats { get; set; }
 
         [Required]
-        public UsageReport UsageReport { get; set; }
+        public decimal Weight { get; set; }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Vehifleet.Model.Enums;
+using Vehifleet.Data.Models.BaseEntities;
+using Vehifleet.Data.Models.Enums;
 
-namespace Vehifleet.Model
+namespace Vehifleet.Data.Models
 {
-    public class Booking
+    public class Booking : CostGeneratingEntity
     {
         public int Id { get; set; }
 
@@ -29,10 +30,6 @@ namespace Vehifleet.Model
         public Location StartLocation { get; set; }
 
         public Location EndLocation { get; set; }
-
-        public int? UsageReportId { get; set; }
-
-        public UsageReport UsageReport { get; set; }
 
         public string Notes { get; set; }
     }

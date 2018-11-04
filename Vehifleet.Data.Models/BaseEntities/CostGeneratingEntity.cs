@@ -1,12 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Vehifleet.Model
+namespace Vehifleet.Data.Models.BaseEntities
 {
-    public class UsageReport
+    public class CostGeneratingEntity : AuditableEntity
     {
-        public int Id { get; set; }
-
         [Required]
         public int Mileage { get; set; }
 
@@ -15,7 +12,5 @@ namespace Vehifleet.Model
 
         [Required]
         public decimal Cost { get; set; }
-
-        public DateTime Date { get; set; }
     }
 }

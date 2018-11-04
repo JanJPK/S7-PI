@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Vehifleet.Data.Models.BaseEntities;
 
-namespace Vehifleet.Model
+namespace Vehifleet.Data.Models
 {
-    public class CostCenter
+    public class CostCenter : AuditableEntity
     {
         public int Id { get; set; }
 

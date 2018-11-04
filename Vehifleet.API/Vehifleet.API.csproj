@@ -12,9 +12,4 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Vehifleet.DbAccess\Vehifleet.DbAccess.csproj" />
-    <ProjectReference Include="..\Vehifleet.Model\Vehifleet.Model.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace Vehifleet.Model.Enums
+﻿namespace Vehifleet.Data.Models.Enums
 {
     public enum VehicleStatus
     {

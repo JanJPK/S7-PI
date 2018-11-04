@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Vehifleet.Data.Models.BaseEntities;
 
-namespace Vehifleet.Model
+namespace Vehifleet.Data.Models
 {
-    public class Location
+    public class Location : AuditableEntity
     {
         public int Id { get; set; }
 

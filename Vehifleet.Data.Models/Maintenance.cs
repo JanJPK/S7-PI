@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Vehifleet.Data.Models.BaseEntities;
 
-namespace Vehifleet.Model
+namespace Vehifleet.Data.Models
 {
-    public class Maintenance
+    public class Maintenance : AuditableEntity
     {
         public int Id { get; set; }
 
@@ -11,8 +12,7 @@ namespace Vehifleet.Model
         public int VehicleId { get; set; }
 
         public Vehicle Vehicle { get; set; }
-
-        [Required]
+        
         public DateTime DateStart { get; set; }
 
         public DateTime DateEnd { get; set; }
@@ -25,5 +25,8 @@ namespace Vehifleet.Model
 
         [Required]
         public int Mileage { get; set; }
+
+        [Required]
+        public bool Completed { get; set; }
     }
 }

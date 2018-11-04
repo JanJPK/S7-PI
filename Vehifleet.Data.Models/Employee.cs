@@ -1,14 +1,29 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Linq.Expressions;
+using Vehifleet.Data.Models.BaseEntities;
 
-namespace Vehifleet.Model
+namespace Vehifleet.Data.Models
 {
-    public class Employee
+    public class Employee : CostGeneratingEntity
     {
         public int Id { get; set; }
 
         [Required]
         [MaxLength(20)]
-        public string UserId { get; set; }
+        public string Username { get; set; }
+
+        [Required]
+        public byte[] PasswordHash { get; set; }
+
+        [Required]
+        public byte[] PasswordSalt { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
 
         [Required]
         public bool IsManager { get; set; }

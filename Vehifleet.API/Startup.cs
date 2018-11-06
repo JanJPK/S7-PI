@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Vehifleet.API.DbAccess;
+using Vehifleet.API.DbAccess.Repositories;
+using Vehifleet.Data.Dtos;
+using Vehifleet.Data.Models;
 
 namespace Vehifleet.API
 {
@@ -38,7 +42,9 @@ namespace Vehifleet.API
 
             var dbConnectionString = Configuration["ConnectionStrings:VehifleetDb"];
             services.AddDbContext<VehifleetContext>(c => c.UseSqlServer(dbConnectionString));
-            
+
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,8 +66,19 @@ namespace Vehifleet.API
                 });
             }
 
+            ConfigureAutoMapper();
             app.UseCors("AllowAllOriginsHeadersAndMethods");
             app.UseMvc();
+        }
+
+        private void ConfigureAutoMapper()
+        {
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<Vehicle, VehicleDto>()
+                      .ForMember(d => d.VehicleName,
+                                 m => m.MapFrom(s => s.VehicleSpecification.Name));
+            });
         }
     }
 }

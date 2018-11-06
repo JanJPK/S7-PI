@@ -11,7 +11,7 @@ namespace Vehifleet.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(20)]        
         public string Username { get; set; }
 
         [Required]

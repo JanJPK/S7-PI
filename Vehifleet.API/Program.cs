@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Vehifleet.API.DbAccess;
@@ -19,8 +20,12 @@ namespace Vehifleet.API
                 try
                 {                    
                     var context = scope.ServiceProvider.GetService<VehifleetContext>();
-                    context.CleanDatabase();
-                    context.SeedDatabase();
+                    var configuration = scope.ServiceProvider.GetService<IConfiguration>();
+                    if(Convert.ToBoolean(configuration["Database:SeedOnStartup"]))
+                    {
+                        context.CleanDatabase();
+                        context.SeedDatabase();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -28,6 +33,8 @@ namespace Vehifleet.API
                     logger.LogError(ex, "Exception occured during database migration or seeding.");                    
                 }
             }
+
+            host.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args)

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Vehifleet.Data.Models.BaseEntities;
 
 namespace Vehifleet.Data.Models
@@ -36,5 +37,8 @@ namespace Vehifleet.Data.Models
         public string MaintenanceNotes { get; set; }
 
         public virtual ICollection<Vehicle> Vehicles { get; set;  }
+
+        [NotMapped]
+        public string Name => $"{Manufacturer} {Model}";
     }
 }

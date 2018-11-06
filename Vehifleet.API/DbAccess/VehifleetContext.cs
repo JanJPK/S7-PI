@@ -79,7 +79,6 @@ namespace Vehifleet.API.DbAccess
             modelBuilder.Entity<Employee>()
                         .Property(e => e.IsActive)
                         .HasDefaultValue(true);
-
         }
     }    
 }

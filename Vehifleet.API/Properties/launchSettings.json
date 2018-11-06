@@ -4,22 +4,22 @@
     "windowsAuthentication": false, 
     "anonymousAuthentication": true, 
     "iisExpress": {
-      "applicationUrl": "http://localhost:6653",
-      "sslPort": 44379
+      "applicationUrl": "http://localhost:9001/"
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchUrl": "api/values",
+      "launchUrl": "api/vehicles",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "Vehifleet.API": {
       "commandName": "Project",
+      "launchBrowser": false,
       "launchUrl": "api/values",
-      "applicationUrl": "https://localhost:9001/",
+      "applicationUrl": "https://localhost:9002/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

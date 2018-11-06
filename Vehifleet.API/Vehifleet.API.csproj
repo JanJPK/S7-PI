@@ -5,11 +5,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20181106183937_InitialMigration.cs" />
+    <Compile Remove="Migrations\20181106183937_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20181106184257_InitialMigration.cs" />
+    <Compile Remove="Migrations\20181106184257_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20181106184358_InitialMigration.cs" />
+    <Compile Remove="Migrations\20181106184358_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20181106190345_UpdatedBooking.cs" />
+    <Compile Remove="Migrations\20181106190345_UpdatedBooking.Designer.cs" />
+    <Compile Remove="Migrations\20181106190529_UpdatedEmployeeIsActive.cs" />
+    <Compile Remove="Migrations\20181106190529_UpdatedEmployeeIsActive.Designer.cs" />
+    <Compile Remove="Migrations\20181106190734_UpdatedBookingToEmployeeRelationship.cs" />
+    <Compile Remove="Migrations\20181106190734_UpdatedBookingToEmployeeRelationship.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vehifleet.Data.Dtos\Vehifleet.Data.Dtos.csproj" />
+    <ProjectReference Include="..\Vehifleet.Data.Models\Vehifleet.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

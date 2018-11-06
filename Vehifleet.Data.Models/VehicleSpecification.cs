@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Vehifleet.Data.Models.BaseEntities;
 
 namespace Vehifleet.Data.Models
 {
     public class VehicleSpecification : CostGeneratingEntity
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -26,6 +28,13 @@ namespace Vehifleet.Data.Models
         public int Seats { get; set; }
 
         [Required]
-        public decimal Weight { get; set; }
+        public int Weight { get; set; }
+
+        [Required]
+        public int DistanceBetweenOilChange { get; set; }
+
+        public string MaintenanceNotes { get; set; }
+
+        public virtual ICollection<Vehicle> Vehicles { get; set;  }
     }
 }

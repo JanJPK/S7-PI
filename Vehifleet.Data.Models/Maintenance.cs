@@ -6,12 +6,13 @@ namespace Vehifleet.Data.Models
 {
     public class Maintenance : AuditableEntity
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
         public int VehicleId { get; set; }
 
-        public Vehicle Vehicle { get; set; }
+        public virtual Vehicle Vehicle { get; set; }
         
         public DateTime DateStart { get; set; }
 
@@ -24,7 +25,7 @@ namespace Vehifleet.Data.Models
         public string Description { get; set; }
 
         [Required]
-        public int Mileage { get; set; }
+        public int Distance { get; set; }
 
         [Required]
         public bool Completed { get; set; }

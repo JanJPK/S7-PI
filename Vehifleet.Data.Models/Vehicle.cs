@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Vehifleet.Data.Models.BaseEntities;
 using Vehifleet.Data.Models.Enums;
 
@@ -7,14 +9,18 @@ namespace Vehifleet.Data.Models
 {
     public class Vehicle : CostGeneratingEntity
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
+        public int VehicleSpecificationId { get; set; }
+
         public VehicleSpecification VehicleSpecification { get; set; }
-
-        public int BookingId { get; set; }
-
-        public Booking Booking { get; set; }
+        
+        [ForeignKey("Location")]
+        public string LocationCode { get; set; }
+        
+        public Location Location { get; set; }
 
         [Required]
         public VehicleStatus Status { get; set; }
@@ -28,5 +34,13 @@ namespace Vehifleet.Data.Models
 
         [Required]
         public string ChassisCode { get; set; }
+
+        public virtual ICollection<Booking> Bookings { get; set; }
+
+        public virtual ICollection<Inspection> Inspections { get; set; }
+
+        public virtual ICollection<Insurance> Insurances { get; set; }
+
+        public virtual ICollection<Maintenance> Maintenances { get; set; }
     }
 }

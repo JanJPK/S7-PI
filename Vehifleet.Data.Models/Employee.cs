@@ -1,12 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Data;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Vehifleet.Data.Models.BaseEntities;
 
 namespace Vehifleet.Data.Models
 {
     public class Employee : CostGeneratingEntity
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -29,15 +30,15 @@ namespace Vehifleet.Data.Models
         public bool IsManager { get; set; }
 
         [Required]
-        public int CostCenterId { get; set; }
+        public bool IsActive { get; set; }
 
-        public CostCenter CostCenter { get; set; }
-
-        public int? BookingId { get; set; }
-
-        public Booking Booking { get; set; }
+        public string Role { get; set; }
 
         [Required]
-        public bool UsageReport { get; set; }
+        public string Department { get; set; }
+
+        public virtual ICollection<Booking> Bookings { get; set; }
+
+        public virtual ICollection<Booking> ManagedBookings { get; set; }
     }
 }

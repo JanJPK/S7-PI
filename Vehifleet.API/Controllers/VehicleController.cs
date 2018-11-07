@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Vehifleet.API.DbAccess.Repositories;
+using Vehifleet.API.Repositories.Interfaces;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models.Enums;
 
@@ -27,6 +28,17 @@ namespace Vehifleet.API.Controllers
             return Ok(Mapper.Map<IEnumerable<VehicleDto>>(vehicles));
         }
 
+        [HttpGet("bookable")]
+        public async Task<IActionResult> GetBookableVehiclesList()
+        {
+            var vehicles = await vehicleRepository.Get();
+            var bookableVehicles = vehicles.Where(v => v.Insurances.Last().ExpirationDate > DateTime.Today &&
+                                                       v.Inspections.Last().ExpirationDate > DateTime.Today &&
+                                                       v.Status == VehicleStatus.Available);
+
+            return Ok(Mapper.Map<IEnumerable<VehicleListDto>>(bookableVehicles));
+        }
+
         [HttpGet("status/{status}")]
         public async Task<IActionResult> GetVehiclesByStatus(string status)
         {
@@ -34,13 +46,11 @@ namespace Vehifleet.API.Controllers
             {
                 var vehicles = await vehicleRepository.GetByStatus(parsedStatus);
                 return Ok(Mapper.Map<IEnumerable<VehicleDto>>(vehicles));
-
             }
             else
             {
                 return BadRequest($"Status [{status}] is not a valid vehicle status.");
             }
-
         }
 
         [HttpGet("location/{locationCode}")]
@@ -65,6 +75,5 @@ namespace Vehifleet.API.Controllers
                 return Ok(Mapper.Map<VehicleDto>(vehicle));
             }
         }
-
     }
 }

@@ -1,4 +1,4 @@
-﻿using Vehifleet.Data.Models.Enums;
+﻿using System;
 
 namespace Vehifleet.Data.Dtos
 {
@@ -8,9 +8,9 @@ namespace Vehifleet.Data.Dtos
 
         public int VehicleSpecificationId { get; set; }
 
-        public string VehicleName { get; set; }
+        public string Manufacturer { get; set; }
 
-        public string LocationCode { get; set; }
+        public string Model { get; set; }
 
         public string Status { get; set; }
 
@@ -19,5 +19,13 @@ namespace Vehifleet.Data.Dtos
         public int YearOfManufacture { get; set; }
 
         public string ChassisCode { get; set; }
+
+        public string LocationCode { get; set; }
+
+        public int Mileage { get; set; }
+
+        public DateTime? InsuranceExpirationDate { get; set; }
+
+        public DateTime? InspectionExpirationDate { get; set; }
     }
 }

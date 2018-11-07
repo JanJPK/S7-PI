@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Vehifleet.API.DbAccess;
+using Vehifleet.API.Repositories.Interfaces;
 using Vehifleet.Data.Models;
 using Vehifleet.Data.Models.Enums;
 
-namespace Vehifleet.API.DbAccess.Repositories
+namespace Vehifleet.API.Repositories
 {
     public class VehicleRepository : IVehicleRepository
     {
@@ -20,6 +23,8 @@ namespace Vehifleet.API.DbAccess.Repositories
         {
             return await context.Vehicles
                                 .Include(v => v.VehicleSpecification)
+                                .Include(v => v.Insurances)
+                                .Include(v => v.Inspections)
                                 .ToListAsync();
         }
 

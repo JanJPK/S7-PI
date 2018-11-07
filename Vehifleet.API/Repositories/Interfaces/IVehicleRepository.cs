@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Vehifleet.Data.Models;
 using Vehifleet.Data.Models.Enums;
 
-namespace Vehifleet.API.DbAccess.Repositories
+namespace Vehifleet.API.Repositories.Interfaces
 {
     public interface IVehicleRepository
     {

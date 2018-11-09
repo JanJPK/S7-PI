@@ -1,6 +1,12 @@
 <div class="container">
   <div class="row">
-    <div class="col-8"><app-vehicle-list></app-vehicle-list></div>
-    <div class="col-4"><app-vehicle-detail></app-vehicle-detail></div>
+    <div class="col-8">
+      <app-vehicle-list
+        (vehicleClicked)="onVehicleClicked($event)"
+      ></app-vehicle-list>
+    </div>
+    <div class="col-4" *ngIf="selectedVehicle">
+      <app-vehicle-detail [vehicle]="selectedVehicle"></app-vehicle-detail>
+    </div>
   </div>
 </div>

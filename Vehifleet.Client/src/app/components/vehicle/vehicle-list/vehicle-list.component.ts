@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { VehicleService } from '../../../services/vehicle.service';
 import { VehicleListItem } from '../../../classes/vehicle-list-item';
 
@@ -10,10 +10,17 @@ import { VehicleListItem } from '../../../classes/vehicle-list-item';
 export class VehicleListComponent implements OnInit {
   vehicles: VehicleListItem[];
 
+  @Output() vehicleClicked = new EventEmitter<number>();
+
   constructor(private vehicleService: VehicleService) { }
 
   ngOnInit() {
     this.getBookableVehicles();
+  }
+
+  selectVehicle(id: number) {
+    console.log(id);
+    this.vehicleClicked.emit(id);
   }
 
   getBookableVehicles() {

@@ -1,1 +1,17 @@
 <h2>Details</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h3>{{ vehicle.manufacturer }} {{ vehicle.model }}</h3>
+      <h6>{{ vehicle.yearOfManufacture }}</h6>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">License plate:</div>
+    <div class="col-6">{{ vehicle.licensePlate }}</div>
+  </div>
+  <div class="row">
+    <div class="col-6">Current location:</div>
+    <div class="col-6">{{ vehicle.currentLocation }}</div>
+  </div>
+</div>

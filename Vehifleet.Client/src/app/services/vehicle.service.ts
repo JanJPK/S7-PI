@@ -18,12 +18,16 @@ export class VehicleService extends BaseService {
 
   getVehicles(): Observable<Vehicle[]> {
     return this.http.get<Vehicle[]>(`${this.apiUrl}/vehicles`)
-                    .pipe(catchError(this.handleError('getVehicles', [])))
+                    .pipe(catchError(this.handleError('getVehicles', [])));
   }
 
   getBookableVehicles(): Observable<VehicleListItem[]> {
     return this.http.get<VehicleListItem[]>(`${this.apiUrl}/vehicles/bookable`)
-                    .pipe(catchError(this.handleError('getBookableVehicles', [])))
+                    .pipe(catchError(this.handleError('getBookableVehicles', [])));
+  }
+
+  getById(id: number): Observable<Vehicle> {
+    return this.http.get<Vehicle>(`${this.apiUrl}/vehicles/${id}`);
   }
 
 

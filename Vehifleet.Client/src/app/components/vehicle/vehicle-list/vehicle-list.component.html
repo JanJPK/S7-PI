@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let vehicle of vehicles">
+    <tr *ngFor="let vehicle of vehicles" (click)="selectVehicle(vehicle.id)">
       <td>{{ vehicle.manufacturer }}</td>
       <td>{{ vehicle.model }}</td>
       <td>{{ vehicle.yearOfManufacture }}</td>

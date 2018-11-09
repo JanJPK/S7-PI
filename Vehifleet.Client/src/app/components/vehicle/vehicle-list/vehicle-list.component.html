@@ -1,0 +1,25 @@
+<h2>Available vehicles</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td>Manufacturer</td>
+      <td>Model</td>
+      <td>Year of manufacture</td>
+      <td>Seats</td>
+      <td>Horsepower</td>
+      <td>Current location</td>
+      <td>Can be booked until</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let vehicle of vehicles">
+      <td>{{ vehicle.manufacturer }}</td>
+      <td>{{ vehicle.model }}</td>
+      <td>{{ vehicle.yearOfManufacture }}</td>
+      <td>{{ vehicle.seats }}</td>
+      <td>{{ vehicle.horsepower }}</td>
+      <td>{{ vehicle.locationCode }}</td>
+      <td>{{ vehicle.canBeBookedUntil | date: format:timezone }}</td>
+    </tr>
+  </tbody>
+</table>

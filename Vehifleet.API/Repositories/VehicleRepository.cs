@@ -22,6 +22,7 @@ namespace Vehifleet.API.Repositories
         public async Task<IEnumerable<Vehicle>> Get()
         {
             return await context.Vehicles
+                                .Include(v => v.Location)
                                 .Include(v => v.VehicleSpecification)
                                 .Include(v => v.Insurances)
                                 .Include(v => v.Inspections)

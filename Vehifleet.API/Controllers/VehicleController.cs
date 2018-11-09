@@ -36,7 +36,7 @@ namespace Vehifleet.API.Controllers
                                                        v.Inspections.Last().ExpirationDate > DateTime.Today &&
                                                        v.Status == VehicleStatus.Available);
 
-            return Ok(Mapper.Map<IEnumerable<VehicleListDto>>(bookableVehicles));
+            return Ok(Mapper.Map<IEnumerable<VehicleListItemDto>>(bookableVehicles));
         }
 
         [HttpGet("status/{status}")]

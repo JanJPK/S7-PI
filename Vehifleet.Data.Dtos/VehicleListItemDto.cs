@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Vehifleet.Data.Dtos
 {
-    public class VehicleListDto
+    public class VehicleListItemDto
     {
         public int Id { get; set; }
 

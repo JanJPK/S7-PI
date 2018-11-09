@@ -88,7 +88,7 @@ namespace Vehifleet.API
                                  m => m.MapFrom(s => s.Insurances.Last().ExpirationDate))
                       .ForMember(d => d.InspectionExpirationDate,
                                  m => m.MapFrom(s => s.Inspections.Last().ExpirationDate));
-                config.CreateMap<Vehicle, VehicleListDto>()
+                config.CreateMap<Vehicle, VehicleListItemDto>()
                       .ForMember(d => d.Manufacturer,
                                  m => m.MapFrom(s => s.VehicleSpecification.Manufacturer))
                       .ForMember(d => d.Model,
@@ -96,7 +96,7 @@ namespace Vehifleet.API
                       .ForMember(d => d.Horsepower,
                                  m => m.MapFrom(s => s.VehicleSpecification.Horsepower))
                       .ForMember(d => d.Seats,
-                                 m => m.MapFrom(s => s.VehicleSpecification.Seats))
+                                 m => m.MapFrom(s => s.VehicleSpecification.Seats))                      
                       .ForMember(d => d.CanBeBookedUntil,
                                  o => o.MapFrom(s => s.CanBeBookedUntil));
             });

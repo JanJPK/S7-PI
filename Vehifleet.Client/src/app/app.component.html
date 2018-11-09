@@ -1,9 +1,31 @@
 <div>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <a class="navbar-brand">{{ title }}</a>
-      <ul class="nav navbar-nav"></ul>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" routerLink="dashboard">Vehifleet</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarColor01"
+      aria-controls="navbarColor01"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="vehicles">New booking</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="vehicles">My bookings</a>
+        </li>
+      </ul>
     </div>
   </nav>
+  <br />
   <div class="container"><router-outlet></router-outlet></div>
 </div>

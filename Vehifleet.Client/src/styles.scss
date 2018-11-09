@@ -1,1 +1,13 @@
-@import '../node_modules/bootswatch/dist/darkly/bootstrap.min.css';
+@import '~bootswatch/dist/darkly/variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~bootswatch/dist/darkly/bootswatch';
+
+$accentColor: #3a5066;
+
+.thead {
+  background-color: $accentColor;
+}
+
+.table-responsive {
+  max-height: calc(80vh);
+}

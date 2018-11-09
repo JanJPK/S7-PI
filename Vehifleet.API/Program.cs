@@ -20,11 +20,11 @@ namespace Vehifleet.API
                 try
                 {                    
                     var context = scope.ServiceProvider.GetService<VehifleetContext>();
-                    var configuration = scope.ServiceProvider.GetService<IConfiguration>();
-                    if(Convert.ToBoolean(configuration["Database:SeedOnStartup"]))
+                    var configuration = scope.ServiceProvider.GetService<IConfiguration>();                    
+                    if (Convert.ToBoolean(configuration["Database:SeedOnStartup"]))
                     {
                         context.CleanDatabase();
-                        context.SeedDatabase();
+                        //context.SeedDatabase();
                     }
                 }
                 catch (Exception ex)

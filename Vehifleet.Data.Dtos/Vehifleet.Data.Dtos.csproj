@@ -8,4 +8,8 @@
     <ProjectReference Include="..\Vehifleet.Data.Models\Vehifleet.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
+
 </Project>

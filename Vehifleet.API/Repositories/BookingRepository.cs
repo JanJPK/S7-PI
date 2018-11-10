@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vehifleet.API.DbAccess;
+using Vehifleet.API.Repositories.Interfaces;
 using Vehifleet.Data.Models;
 
 namespace Vehifleet.API.Repositories

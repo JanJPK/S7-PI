@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using Vehifleet.API.Repositories;
+using Vehifleet.API.Repositories.Interfaces;
 using Vehifleet.API.Security;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
@@ -68,8 +69,9 @@ namespace Vehifleet.API.Controllers
                 return BadRequest("login_failure");
             }
 
-            var jwt = await jwtManager.GenerateJwt(identity, credentials.UserName,  new JsonSerializerSettings { Formatting = Formatting.Indented });
-            return new OkObjectResult(jwt);
+            //var jwt = await jwtManager.GenerateJwt(identity, credentials.UserName,  new JsonSerializerSettings { Formatting = Formatting.Indented });
+            //return new OkObjectResult(jwt);
+            return Ok();
         }
 
         private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password)
@@ -85,7 +87,7 @@ namespace Vehifleet.API.Controllers
             // check the credentials
             if (await userManager.CheckPasswordAsync(userToVerify, password))
             {
-                return await Task.FromResult(jwtManager.GenerateClaimsIdentity(userName, userToVerify.Id));
+                //return await Task.FromResult(jwtManager.GenerateClaimsIdentity(userName, userToVerify.Id));
             }
 
             // Credentials are invalid, or account doesn't exist

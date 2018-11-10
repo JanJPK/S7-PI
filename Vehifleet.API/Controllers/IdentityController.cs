@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Vehifleet.API.Repositories;
+using Vehifleet.API.Repositories.Interfaces;
 using Vehifleet.API.Security;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
@@ -16,19 +17,31 @@ using Vehifleet.Data.Models;
 namespace Vehifleet.API.Controllers
 {
     [Route("api")]
-    public class SecurityController : Controller
+    public class IdentityController : Controller
     {
         private readonly UserManager<EmployeeIdentity> userManager;
         private readonly IEmployeeRepository employeeRepository;
+        private readonly IIdentityRepository identityRepository;
         private readonly IJwtManager jwtManager;
 
-        public SecurityController(UserManager<EmployeeIdentity> userManager,
+        public IdentityController(UserManager<EmployeeIdentity> userManager,
                                   IEmployeeRepository employeeRepository,
+                                  IIdentityRepository identityRepository,
                                   IJwtManager jwtManager)
         {
             this.userManager = userManager;
             this.employeeRepository = employeeRepository;
+            this.identityRepository = identityRepository;
             this.jwtManager = jwtManager;
+        }
+
+        [HttpGet("role")]
+        public async Task<IActionResult> CreateRole()
+        {                        
+            await identityRepository.InsertRole(new IdentityRole("Employee"));
+            await identityRepository.InsertRole(new IdentityRole("Administrator"));
+            await identityRepository.InsertRole(new IdentityRole("Manager"));
+            return Ok();
         }
 
         [HttpPost("register")]
@@ -50,7 +63,7 @@ namespace Vehifleet.API.Controllers
             else
             {
                 return BadRequest();
-            }
+            }            
         }
 
         [HttpPost("login")]
@@ -61,35 +74,23 @@ namespace Vehifleet.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var identity = await GetClaimsIdentity(credentials.UserName, credentials.Password);
-            if (identity == null)
+            var user = await userManager.FindByNameAsync(credentials.UserName);
+            if (user == null)
             {
-                return BadRequest("Login failed.");
+                return BadRequest("Invalid username.");
             }
 
-            var jwt = await jwtManager.GenerateJwt(identity, credentials.UserName, new JsonSerializerSettings { Formatting = Formatting.Indented });
-            return new OkObjectResult(jwt);
-        }
-
-        private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password)
-        {
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
-                return await Task.FromResult<ClaimsIdentity>(null);
-
-            // get the user to verifty
-            var userToVerify = await userManager.FindByNameAsync(userName);
-
-            if (userToVerify == null) return await Task.FromResult<ClaimsIdentity>(null);
-
-            // check the credentials
-            if (await userManager.CheckPasswordAsync(userToVerify, password))
+            if (await userManager.CheckPasswordAsync(user, credentials.Password))
             {
-                return await Task.FromResult(jwtManager.GenerateClaimsIdentity(userName, userToVerify.Id));
+                //var identity = await Task.FromResult(jwtManager.GenerateClaimsIdentity(user.UserName, user.Id));                
+                //var jwt = await jwtManager.GenerateJwt(identity, credentials.UserName, new JsonSerializerSettings { Formatting = Formatting.Indented });
+                var jwt = jwtManager.GenerateJwt();
+                return new OkObjectResult(jwt);
             }
-
-            // Credentials are invalid, or account doesn't exist
-            return await Task.FromResult<ClaimsIdentity>(null);
+            else
+            {
+                return BadRequest("Invalid password.");
+            }
         }
-
     }
 }

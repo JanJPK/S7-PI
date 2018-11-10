@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Vehifleet.Data.Models;
 
-namespace Vehifleet.API.Repositories
+namespace Vehifleet.API.Repositories.Interfaces
 {
     public interface IEmployeeRepository
     {

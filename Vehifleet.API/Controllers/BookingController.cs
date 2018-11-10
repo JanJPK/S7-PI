@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Vehifleet.API.Repositories;
+using Vehifleet.API.Repositories.Interfaces;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
 

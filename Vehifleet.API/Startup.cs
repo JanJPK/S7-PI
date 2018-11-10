@@ -42,51 +42,59 @@ namespace Vehifleet.API
                      });
 
             // Security
-            services.AddCors(cors =>
+            services.AddCors(o =>
             {
-                cors.AddPolicy("AllowAllOriginsHeadersAndMethods",
+                o.AddPolicy("AllowAllOriginsHeadersAndMethods",
                                builder => { builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
             });
 
-            services.AddIdentityCore<EmployeeIdentity>(options => { options.User.RequireUniqueEmail = true; })
-                    .AddEntityFrameworkStores<VehifleetContext>()
+            services.AddIdentityCore<EmployeeIdentity>(options => { options.User.RequireUniqueEmail = true; })                    
+                    .AddEntityFrameworkStores<VehifleetContext>()     
                     .AddDefaultTokenProviders();
 
             // Jwt
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:Key"]));
-            services.Configure<JwtOptions>(options =>
+
+            // JwtManager options
+            services.AddSingleton<IJwtManager, JwtManager>();
+            services.Configure<JwtOptions>(o =>
             {
-                options.Issuer = Configuration["Jwt:Issuer"];
-                options.Audience = Configuration["Jwt:Audience"];
-                options.SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                o.Issuer = Configuration["Jwt:Issuer"];
+                o.Audience = Configuration["Jwt:Audience"];
+                o.SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             });
 
-            services.AddAuthentication(options =>
+            // Authentication
+            services.AddAuthentication(o =>
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
+                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
             {
-                options.ClaimsIssuer = Configuration["Jwt:Issuer"];
-                options.TokenValidationParameters = new TokenValidationParameters
+                o.ClaimsIssuer = Configuration["Jwt:Issuer"];
+                o.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidIssuer = Configuration["Jwt:Issuer"],
+
                     ValidateAudience = true,
                     ValidAudience = Configuration["Jwt:Audience"],
+
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = key,
+
+                    ValidateLifetime = true,                    
                     RequireExpirationTime = false,
-                    ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
                 };
-                options.SaveToken = true;
+                o.SaveToken = true;
             });
 
-            services.AddAuthorization(options =>
-            {
-                options
-                   .AddPolicy("ApiUser", policy => policy.RequireClaim("rol", "api_access"));
+            services.AddAuthorization(o =>
+            {                
+                o.AddPolicy("RequireEmployeeRole", p => p.RequireRole("Employee"));
+                o.AddPolicy("requireElevatedRights", p => p.RequireRole("Administrator", "Manager"));
+                //o.AddPolicy("ApiUser", policy => policy.RequireClaim("rol", "api_access"));
             });
 
             // Services
@@ -95,8 +103,9 @@ namespace Vehifleet.API
             services.AddScoped<IInsuranceRepository, InsuranceRepository>();
             services.AddScoped<IInspectionRepository, InspectionRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IIdentityRepository, IdentityRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<IJwtManager, JwtManager>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -148,7 +157,7 @@ namespace Vehifleet.API
                                  m => m.MapFrom(s => s.VehicleSpecification.Seats))
                       .ForMember(d => d.CanBeBookedUntil,
                                  o => o.MapFrom(s => s.CanBeBookedUntil));
-                config.CreateMap<EmployeeRegistrationDto, EmployeeIdentity>();
+                config.CreateMap<EmployeeIdentityDto, EmployeeIdentity>();
             });
         }
     }

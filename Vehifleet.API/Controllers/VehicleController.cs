@@ -11,7 +11,6 @@ using Vehifleet.Data.Models.Enums;
 
 namespace Vehifleet.API.Controllers
 {
-    [Authorize(Policy="ApiUser")]
     [Route("api/vehicles")]
     public class VehicleController : Controller
     {

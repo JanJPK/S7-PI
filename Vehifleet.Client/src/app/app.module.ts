@@ -8,6 +8,9 @@ import { VehicleListComponent } from './components/vehicle/vehicle-list/vehicle-
 import { VehicleDetailComponent } from './components/vehicle/vehicle-detail/vehicle-detail.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
+import { VehicleSpecificationComponent } from './components/vehicle-specification/vehicle-specification.component';
+import { DashboardLoginComponent } from './components/dashboard/dashboard-login/dashboard-login.component';
+import { DashboardRegisterComponent } from './components/dashboard/dashboard-register/dashboard-register.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +18,10 @@ import { HttpClientModule } from '@angular/common/http';
     VehicleListComponent,
     DashboardComponent,
     VehicleComponent,
-    VehicleDetailComponent
+    VehicleDetailComponent,
+    VehicleSpecificationComponent,
+    DashboardLoginComponent,
+    DashboardRegisterComponent
   ],
   imports: [
     BrowserModule,

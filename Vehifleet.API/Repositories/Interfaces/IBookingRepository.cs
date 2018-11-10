@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Vehifleet.Data.Models;
 
-namespace Vehifleet.API.Repositories
+namespace Vehifleet.API.Repositories.Interfaces
 {
     public interface IBookingRepository
     {

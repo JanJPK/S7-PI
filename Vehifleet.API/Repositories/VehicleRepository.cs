@@ -10,11 +10,11 @@ using Vehifleet.Data.Models.Enums;
 
 namespace Vehifleet.API.Repositories
 {
-    public class VehicleRepository : IVehicleRepository
+    public class VehicleRepository : BaseRepository<Vehicle, int>, IVehicleRepository
     {
         private readonly VehifleetContext context;
 
-        public VehicleRepository(VehifleetContext context)
+        public VehicleRepository(VehifleetContext context) : base(context)
         {
             this.context = context;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vehifleet.API.Repositories.Interfaces;
 using Vehifleet.Data.Dtos;
@@ -10,6 +11,7 @@ using Vehifleet.Data.Models.Enums;
 
 namespace Vehifleet.API.Controllers
 {
+    [Authorize(Policy="ApiUser")]
     [Route("api/vehicles")]
     public class VehicleController : Controller
     {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vehifleet.API.DbAccess;
 
 namespace Vehifleet.API.Migrations
 {
     [DbContext(typeof(VehifleetContext))]
-    partial class VehifleetContextModelSnapshot : ModelSnapshot
+    [Migration("20181109224346_RefactoredIdentityModel")]
+    partial class RefactoredIdentityModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,9 +194,7 @@ namespace Vehifleet.API.Migrations
 
                     b.Property<int>("FuelConsumed");
 
-                    b.Property<string>("IdentityId");
-
-                    b.Property<bool>("IsActive");
+                    b.Property<int>("IdentityId");
 
                     b.Property<string>("LocationCode");
 
@@ -205,10 +205,6 @@ namespace Vehifleet.API.Migrations
                     b.Property<DateTime?>("ModifiedOn");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdentityId")
-                        .IsUnique()
-                        .HasFilter("[IdentityId] IS NOT NULL");
 
                     b.HasIndex("LocationCode");
 
@@ -232,7 +228,11 @@ namespace Vehifleet.API.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<int>("EmployeeId");
+
                     b.Property<string>("FirstName");
+
+                    b.Property<bool>("IsActive");
 
                     b.Property<string>("LastName");
 
@@ -260,6 +260,9 @@ namespace Vehifleet.API.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId")
+                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -570,13 +573,17 @@ namespace Vehifleet.API.Migrations
 
             modelBuilder.Entity("Vehifleet.Data.Models.Employee", b =>
                 {
-                    b.HasOne("Vehifleet.Data.Models.EmployeeIdentity", "Identity")
-                        .WithOne("Employee")
-                        .HasForeignKey("Vehifleet.Data.Models.Employee", "IdentityId");
-
                     b.HasOne("Vehifleet.Data.Models.Location")
                         .WithMany("Employees")
                         .HasForeignKey("LocationCode");
+                });
+
+            modelBuilder.Entity("Vehifleet.Data.Models.EmployeeIdentity", b =>
+                {
+                    b.HasOne("Vehifleet.Data.Models.Employee", "Employee")
+                        .WithOne("Identity")
+                        .HasForeignKey("Vehifleet.Data.Models.EmployeeIdentity", "EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Vehifleet.Data.Models.Inspection", b =>

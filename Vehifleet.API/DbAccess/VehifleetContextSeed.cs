@@ -24,6 +24,7 @@ namespace Vehifleet.API.DbAccess
             context.SaveChanges();
         }
 
+        /*
         public static void AddEmployees(this VehifleetContext context)
         {
             var employees = new List<Employee>
@@ -94,6 +95,7 @@ namespace Vehifleet.API.DbAccess
             context.Employees.AddRange(employees);
             context.SaveChanges();
         }
+        */
 
         public static void AddVehicleSpecifications(this VehifleetContext context)
         {

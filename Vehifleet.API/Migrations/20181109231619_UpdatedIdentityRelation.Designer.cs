@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vehifleet.API.DbAccess;
 
 namespace Vehifleet.API.Migrations
 {
     [DbContext(typeof(VehifleetContext))]
-    partial class VehifleetContextModelSnapshot : ModelSnapshot
+    [Migration("20181109231619_UpdatedIdentityRelation")]
+    partial class UpdatedIdentityRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,8 +196,6 @@ namespace Vehifleet.API.Migrations
 
                     b.Property<string>("IdentityId");
 
-                    b.Property<bool>("IsActive");
-
                     b.Property<string>("LocationCode");
 
                     b.Property<int>("Mileage");
@@ -233,6 +233,8 @@ namespace Vehifleet.API.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName");
+
+                    b.Property<bool>("IsActive");
 
                     b.Property<string>("LastName");
 

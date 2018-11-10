@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vehifleet.API.DbAccess;
 
 namespace Vehifleet.API.Migrations
 {
     [DbContext(typeof(VehifleetContext))]
-    partial class VehifleetContextModelSnapshot : ModelSnapshot
+    [Migration("20181109223844_IntroducedSecurity")]
+    partial class IntroducedSecurity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,11 +192,16 @@ namespace Vehifleet.API.Migrations
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(16, 2)");
 
+                    b.Property<string>("Department")
+                        .IsRequired();
+
                     b.Property<int>("FuelConsumed");
 
-                    b.Property<string>("IdentityId");
+                    b.Property<int>("IdentityId");
 
-                    b.Property<bool>("IsActive");
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
 
                     b.Property<string>("LocationCode");
 
@@ -206,70 +213,9 @@ namespace Vehifleet.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdentityId")
-                        .IsUnique()
-                        .HasFilter("[IdentityId] IS NOT NULL");
-
                     b.HasIndex("LocationCode");
 
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("Vehifleet.Data.Models.EmployeeIdentity", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Department");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Vehifleet.Data.Models.Inspection", b =>
@@ -505,6 +451,66 @@ namespace Vehifleet.API.Migrations
                     b.ToTable("VehicleSpecifications");
                 });
 
+            modelBuilder.Entity("Vehifleet.Data.Models.VehifleetIdentity", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<int>("EmployeeId");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId")
+                        .IsUnique();
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -515,7 +521,7 @@ namespace Vehifleet.API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Vehifleet.Data.Models.EmployeeIdentity")
+                    b.HasOne("Vehifleet.Data.Models.VehifleetIdentity")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -523,7 +529,7 @@ namespace Vehifleet.API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Vehifleet.Data.Models.EmployeeIdentity")
+                    b.HasOne("Vehifleet.Data.Models.VehifleetIdentity")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -536,7 +542,7 @@ namespace Vehifleet.API.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Vehifleet.Data.Models.EmployeeIdentity")
+                    b.HasOne("Vehifleet.Data.Models.VehifleetIdentity")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -544,7 +550,7 @@ namespace Vehifleet.API.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Vehifleet.Data.Models.EmployeeIdentity")
+                    b.HasOne("Vehifleet.Data.Models.VehifleetIdentity")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -570,10 +576,6 @@ namespace Vehifleet.API.Migrations
 
             modelBuilder.Entity("Vehifleet.Data.Models.Employee", b =>
                 {
-                    b.HasOne("Vehifleet.Data.Models.EmployeeIdentity", "Identity")
-                        .WithOne("Employee")
-                        .HasForeignKey("Vehifleet.Data.Models.Employee", "IdentityId");
-
                     b.HasOne("Vehifleet.Data.Models.Location")
                         .WithMany("Employees")
                         .HasForeignKey("LocationCode");
@@ -612,6 +614,14 @@ namespace Vehifleet.API.Migrations
                     b.HasOne("Vehifleet.Data.Models.VehicleSpecification", "VehicleSpecification")
                         .WithMany("Vehicles")
                         .HasForeignKey("VehicleSpecificationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Vehifleet.Data.Models.VehifleetIdentity", b =>
+                {
+                    b.HasOne("Vehifleet.Data.Models.Employee", "Employee")
+                        .WithOne("Identity")
+                        .HasForeignKey("Vehifleet.Data.Models.VehifleetIdentity", "EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

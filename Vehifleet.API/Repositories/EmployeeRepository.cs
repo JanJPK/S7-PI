@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Vehifleet.API.DbAccess;
+using Vehifleet.Data.Models;
 
 namespace Vehifleet.API.Repositories
 {
@@ -20,6 +22,16 @@ namespace Vehifleet.API.Repositories
         public async Task<bool> CheckIfEmployeeExists(int id)
         {
             return await context.Employees.AnyAsync(e => e.Id == id);
+        }
+
+        public async Task<EntityEntry<Employee>> Insert(Employee employee)
+        {
+            return await context.Employees.AddAsync(employee);            
+        }
+
+        public async Task<int> Save()
+        {
+            return await context.SaveChangesAsync();
         }
     }
 }

@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Vehifleet.Data.Models;
 using Vehifleet.Data.Models.BaseEntities;
 
 namespace Vehifleet.API.DbAccess
 {
-    public class VehifleetContext : DbContext
+    public class VehifleetContext : IdentityDbContext<EmployeeIdentity>
     {
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -29,10 +30,16 @@ namespace Vehifleet.API.DbAccess
             var changedEntries = ChangeTracker.Entries()
                                               .Where(e => e.State == EntityState.Added
                                                        || e.State == EntityState.Modified);
-
+            
             foreach (var entry in changedEntries)
             {
+
                 var entity = entry.Entity as AuditableEntity;
+
+                if (entity == null)
+                {
+                    continue;
+                }
 
                 if (entry.State == EntityState.Added)
                 {
@@ -75,10 +82,6 @@ namespace Vehifleet.API.DbAccess
             //            .WithMany(e => e.ManagedBookings)
             //            .HasForeignKey(b => b.ManagerId)
             //            .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Employee>()
-                        .Property(e => e.IsActive)
-                        .HasDefaultValue(true);
         }
     }    
 }

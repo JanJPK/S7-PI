@@ -13,7 +13,7 @@ namespace Vehifleet.Data.Models
         [ForeignKey("EmployeeIdentity")]
         public string IdentityId { get; set; }
 
-        public virtual EmployeeIdentity Identity { get; set; }
+        public virtual EmployeeUser Identity { get; set; }
 
         public bool IsActive { get; set; }
 

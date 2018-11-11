@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Vehifleet.API.Security
+namespace Vehifleet.Services.Helper
 {
     public class JwtOptions
     {

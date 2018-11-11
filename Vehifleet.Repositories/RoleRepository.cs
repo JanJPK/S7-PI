@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Vehifleet.Data.DbAccess;
@@ -19,12 +21,29 @@ namespace Vehifleet.Repositories
 
         public async Task AddUserToRole(string userId, string roleId)
         {
-            Context.UserRoles.Add(new IdentityUserRole<string>
-            {
-                RoleId = roleId,
-                UserId = userId
-            });
-            await Context.SaveChangesAsync();
+            //Context.UserRoles.Add(new IdentityUserRole<string>
+            //{
+            //    RoleId = roleId,
+            //    UserId = userId
+            //});
+            //await Context.SaveChangesAsync();
         }
+
+        // TODO: Optimize so its faster
+        public async Task<IEnumerable<IdentityRole>> GetByUserId(string userId)
+        {
+            var query = Context.Roles
+                               .Join(Context.UserRoles,
+                                           r => r.Id,
+                                           ur => ur.RoleId,
+                                           (r, ur) => new
+                                           {
+                                               IdentityRole = r,
+                                               IdentityUserRole = ur
+                                           })
+                               .Where(j => j.IdentityUserRole.UserId == userId)
+                               .Select(j => j.IdentityRole);
+            return await query.ToListAsync();            
+        }        
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vehifleet.API.QueryFilters;
 using Vehifleet.Data.Dtos;
@@ -11,6 +12,7 @@ namespace Vehifleet.API.Controllers
 {
     [ApiController]
     [Route("api/vehicles")]
+    [Authorize(Policy = "RequireEmployeeRole")]
     public class VehicleController : ControllerBase
     {
         private readonly IVehicleService vehicleService;

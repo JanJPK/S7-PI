@@ -20,7 +20,7 @@ namespace Vehifleet.Services
 
         public async Task<IEnumerable<Vehicle>> Get(VehicleFilter filter)
         {
-            var query = filter.FilterQuery(vehicleRepository.Get());
+            var query = filter.Filter(vehicleRepository.Get());
 
             return await query
                         .Include(v => v.VehicleSpecification)

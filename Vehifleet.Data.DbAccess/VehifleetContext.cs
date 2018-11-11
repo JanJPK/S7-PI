@@ -9,7 +9,8 @@ using Vehifleet.Data.Models.BaseEntities;
 
 namespace Vehifleet.Data.DbAccess
 {
-    public class VehifleetContext : IdentityDbContext<EmployeeIdentity>
+    public class VehifleetContext 
+        : IdentityDbContext<EmployeeUser>
     {
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -22,7 +23,6 @@ namespace Vehifleet.Data.DbAccess
 
         public VehifleetContext(DbContextOptions<VehifleetContext> options) : base(options)
         {
-            
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -30,10 +30,9 @@ namespace Vehifleet.Data.DbAccess
             var changedEntries = ChangeTracker.Entries()
                                               .Where(e => e.State == EntityState.Added
                                                        || e.State == EntityState.Modified);
-            
+
             foreach (var entry in changedEntries)
             {
-
                 var entity = entry.Entity as AuditableEntity;
 
                 if (entity == null)
@@ -46,6 +45,7 @@ namespace Vehifleet.Data.DbAccess
                     entity.AddedBy = "admin";
                     entity.AddedOn = DateTime.UtcNow;
                 }
+
                 entity.ModifiedBy = "admin";
                 entity.ModifiedOn = DateTime.UtcNow;
             }
@@ -53,35 +53,22 @@ namespace Vehifleet.Data.DbAccess
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {            
-            base.OnModelCreating(modelBuilder);
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
 
-            modelBuilder.Entity<Employee>()
-                        .HasMany(e => e.Bookings)
-                        .WithOne(b => b.Employee)
-                        .HasForeignKey(b => b.EmployeeId)
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();                        
+            builder.Entity<Employee>()
+                   .HasMany(e => e.Bookings)
+                   .WithOne(b => b.Employee)
+                   .HasForeignKey(b => b.EmployeeId)
+                   .OnDelete(DeleteBehavior.Restrict)
+                   .IsRequired();
 
-            modelBuilder.Entity<Employee>()
-                        .HasMany(e => e.ManagedBookings)
-                        .WithOne(b => b.Manager)
-                        .HasForeignKey(b => b.ManagerId)
-                        .OnDelete(DeleteBehavior.Restrict);
-
-            //modelBuilder.Entity<Booking>()
-            //            .HasOne(b => b.Employee)
-            //            .WithMany(e => e.Bookings)
-            //            .HasForeignKey(b => b.EmployeeId)
-            //            .OnDelete(DeleteBehavior.Restrict)
-            //            .IsRequired();
-            
-            //modelBuilder.Entity<Booking>()                        
-            //            .HasOne(b => b.Manager)                        
-            //            .WithMany(e => e.ManagedBookings)
-            //            .HasForeignKey(b => b.ManagerId)
-            //            .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Employee>()
+                   .HasMany(e => e.ManagedBookings)
+                   .WithOne(b => b.Manager)
+                   .HasForeignKey(b => b.ManagerId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
-    }    
+    }
 }

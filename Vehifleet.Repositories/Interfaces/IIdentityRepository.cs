@@ -2,7 +2,7 @@
 
 namespace Vehifleet.Repositories.Interfaces
 {
-    public interface IIdentityRepository : IGenericRepository<EmployeeIdentity, string>
+    public interface IIdentityRepository : IGenericRepository<EmployeeUser, string>
     {        
     }
 }

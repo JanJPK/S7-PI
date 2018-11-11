@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Vehifleet.API.QueryParameters\Vehifleet.API.QueryParameters.csproj" />
     <ProjectReference Include="..\Vehifleet.Data.DbAccess\Vehifleet.Data.DbAccess.csproj" />
     <ProjectReference Include="..\Vehifleet.Data.Dtos\Vehifleet.Data.Dtos.csproj" />
     <ProjectReference Include="..\Vehifleet.Data.Models\Vehifleet.Data.Models.csproj" />

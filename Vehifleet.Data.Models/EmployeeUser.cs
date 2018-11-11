@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace Vehifleet.Data.Models
 {
-    public class EmployeeIdentity : IdentityUser
+    public class EmployeeUser : IdentityUser
     {
         public string FirstName { get; set; }
 

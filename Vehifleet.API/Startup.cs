@@ -7,19 +7,20 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Vehifleet.API.Security;
 using Vehifleet.Data.DbAccess;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
 using Vehifleet.Repositories;
 using Vehifleet.Repositories.Interfaces;
 using Vehifleet.Services;
+using Vehifleet.Services.Helper;
 using Vehifleet.Services.Interfaces;
 
 namespace Vehifleet.API
@@ -50,15 +51,12 @@ namespace Vehifleet.API
                                builder => { builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
             });
 
-            services.AddIdentityCore<EmployeeIdentity>(options => { options.User.RequireUniqueEmail = true; })                    
-                    .AddEntityFrameworkStores<VehifleetContext>()     
+            services.AddIdentityCore<EmployeeUser>(options => { options.User.RequireUniqueEmail = true; })
+                    .AddEntityFrameworkStores<VehifleetContext>()
                     .AddDefaultTokenProviders();
 
             // Jwt
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:Key"]));
-
-            // JwtManager options
-            services.AddSingleton<IJwtManager, JwtManager>();
             services.Configure<JwtOptions>(o =>
             {
                 o.Issuer = Configuration["Jwt:Issuer"];
@@ -104,8 +102,9 @@ namespace Vehifleet.API
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IVehicleService, VehicleService>();
             services.AddScoped<IIdentityRepository, IdentityRepository>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();            
         }
 
@@ -158,7 +157,7 @@ namespace Vehifleet.API
                                  m => m.MapFrom(s => s.VehicleSpecification.Seats))
                       .ForMember(d => d.CanBeBookedUntil,
                                  o => o.MapFrom(s => s.CanBeBookedUntil));
-                config.CreateMap<EmployeeIdentityDto, EmployeeIdentity>();
+                config.CreateMap<EmployeeIdentityDto, EmployeeUser>();
             });
         }
     }

@@ -20,8 +20,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehifleet.Repositories", "V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehifleet.Services", "Vehifleet.Services\Vehifleet.Services.csproj", "{64C0FA7D-4AA6-4575-8301-3B1788BB544E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehifleet.API.QueryParameters", "Vehifleet.API.QueryParameters\Vehifleet.API.QueryParameters.csproj", "{5E57E1EC-3303-4F04-9F2B-9C78A46B4835}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehifleet.API.QueryFilters", "Vehifleet.API.QueryFilters\Vehifleet.API.QueryFilters.csproj", "{A829AD49-8A7C-41E0-A9E7-ACF1D0CEDBA1}"
 EndProject
 Global
@@ -54,10 +52,6 @@ Global
 		{64C0FA7D-4AA6-4575-8301-3B1788BB544E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64C0FA7D-4AA6-4575-8301-3B1788BB544E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64C0FA7D-4AA6-4575-8301-3B1788BB544E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E57E1EC-3303-4F04-9F2B-9C78A46B4835}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E57E1EC-3303-4F04-9F2B-9C78A46B4835}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E57E1EC-3303-4F04-9F2B-9C78A46B4835}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E57E1EC-3303-4F04-9F2B-9C78A46B4835}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A829AD49-8A7C-41E0-A9E7-ACF1D0CEDBA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A829AD49-8A7C-41E0-A9E7-ACF1D0CEDBA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A829AD49-8A7C-41E0-A9E7-ACF1D0CEDBA1}.Release|Any CPU.ActiveCfg = Release|Any CPU

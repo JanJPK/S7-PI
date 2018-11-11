@@ -5,15 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Vehifleet.API.QueryParameters\Vehifleet.API.QueryParameters.csproj" />
+    <ProjectReference Include="..\Vehifleet.API.QueryFilters\Vehifleet.API.QueryFilters.csproj" />
     <ProjectReference Include="..\Vehifleet.Data.Models\Vehifleet.Data.Models.csproj" />
     <ProjectReference Include="..\Vehifleet.Repositories\Vehifleet.Repositories.csproj" />
   </ItemGroup>

@@ -5,7 +5,7 @@ using Vehifleet.Data.Models.Enums;
 
 namespace Vehifleet.API.QueryFilters
 {
-    public class VehicleFilter : IFilter<Vehicle>
+    public class VehicleFilter : IQueryFilter<Vehicle>
     {
         public string Manufacturer { get; set; }
 
@@ -17,7 +17,7 @@ namespace Vehifleet.API.QueryFilters
 
         public string Status { get; set; }
 
-        public IQueryable<Vehicle> FilterQuery(IQueryable<Vehicle> query)
+        public IQueryable<Vehicle> Filter(IQueryable<Vehicle> query)
         {
             if (!string.IsNullOrEmpty(Manufacturer))
             {

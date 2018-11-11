@@ -13,12 +13,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Vehifleet.API.DbAccess;
-using Vehifleet.API.Repositories;
-using Vehifleet.API.Repositories.Interfaces;
 using Vehifleet.API.Security;
+using Vehifleet.Data.DbAccess;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
+using Vehifleet.Repositories;
+using Vehifleet.Repositories.Interfaces;
+using Vehifleet.Services;
+using Vehifleet.Services.Interfaces;
 
 namespace Vehifleet.API
 {
@@ -100,12 +102,11 @@ namespace Vehifleet.API
             // Services
             services.AddDbContext<VehifleetContext>(c => c.UseSqlServer(Configuration["ConnectionStrings:VehifleetDb"]));
             services.AddScoped<IVehicleRepository, VehicleRepository>();
-            services.AddScoped<IInsuranceRepository, InsuranceRepository>();
-            services.AddScoped<IInspectionRepository, InspectionRepository>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IVehicleService, VehicleService>();
             services.AddScoped<IIdentityRepository, IdentityRepository>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,26 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Vehifleet.API.QueryParameters\Vehifleet.API.QueryParameters.csproj" />
-    <ProjectReference Include="..\Vehifleet.Data.DbAccess\Vehifleet.Data.DbAccess.csproj" />
-    <ProjectReference Include="..\Vehifleet.Data.Dtos\Vehifleet.Data.Dtos.csproj" />
     <ProjectReference Include="..\Vehifleet.Data.Models\Vehifleet.Data.Models.csproj" />
     <ProjectReference Include="..\Vehifleet.Repositories\Vehifleet.Repositories.csproj" />
-    <ProjectReference Include="..\Vehifleet.Services\Vehifleet.Services.csproj" />
   </ItemGroup>
 
 </Project>

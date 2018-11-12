@@ -10,12 +10,10 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends BaseService {
+export class UserService {
   apiUrl = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient) {
-    super();
-  }
+  constructor(private httpClient: HttpClient) {}
 
   login(username: string, password: string) {
     const credentials = {

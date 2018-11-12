@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { VehicleSpecificationComponent } from './components/vehicle-specification/vehicle-specification.component';
 import { DashboardLoginComponent } from './components/dashboard/dashboard-login/dashboard-login.component';
 import { DashboardRegisterComponent } from './components/dashboard/dashboard-register/dashboard-register.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,9 +27,11 @@ import { DashboardRegisterComponent } from './components/dashboard/dashboard-reg
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

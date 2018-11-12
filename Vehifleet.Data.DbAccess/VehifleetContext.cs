@@ -25,7 +25,8 @@ namespace Vehifleet.Data.DbAccess
         {
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public Task<int> SaveChangesAsync(IUserAuditService userAuditService, 
+                                                   CancellationToken cancellationToken = default(CancellationToken))
         {
             var changedEntries = ChangeTracker.Entries()
                                               .Where(e => e.State == EntityState.Added
@@ -42,11 +43,11 @@ namespace Vehifleet.Data.DbAccess
 
                 if (entry.State == EntityState.Added)
                 {
-                    entity.AddedBy = "admin";
+                    entity.AddedBy = userAuditService.UserName;
                     entity.AddedOn = DateTime.UtcNow;
                 }
 
-                entity.ModifiedBy = "admin";
+                entity.ModifiedBy = userAuditService.UserName;
                 entity.ModifiedOn = DateTime.UtcNow;
             }
 

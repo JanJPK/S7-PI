@@ -14,13 +14,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utility", "Utility", "{69ED
 		Utility\PasswordSeed.ps1 = Utility\PasswordSeed.ps1
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehifleet.Data.DbAccess", "Vehifleet.Data.DbAccess\Vehifleet.Data.DbAccess.csproj", "{B538B785-2542-41EB-A79B-F82A2E30CFE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehifleet.Data.DbAccess", "Vehifleet.Data.DbAccess\Vehifleet.Data.DbAccess.csproj", "{B538B785-2542-41EB-A79B-F82A2E30CFE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehifleet.Repositories", "Vehifleet.Repositories\Vehifleet.Repositories.csproj", "{1178E2E9-A1F6-45E2-BD25-35197EF90ADC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehifleet.Repositories", "Vehifleet.Repositories\Vehifleet.Repositories.csproj", "{1178E2E9-A1F6-45E2-BD25-35197EF90ADC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehifleet.Services", "Vehifleet.Services\Vehifleet.Services.csproj", "{64C0FA7D-4AA6-4575-8301-3B1788BB544E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehifleet.Services", "Vehifleet.Services\Vehifleet.Services.csproj", "{64C0FA7D-4AA6-4575-8301-3B1788BB544E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehifleet.API.QueryFilters", "Vehifleet.API.QueryFilters\Vehifleet.API.QueryFilters.csproj", "{A829AD49-8A7C-41E0-A9E7-ACF1D0CEDBA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vehifleet.API.QueryFilters", "Vehifleet.API.QueryFilters\Vehifleet.API.QueryFilters.csproj", "{A829AD49-8A7C-41E0-A9E7-ACF1D0CEDBA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehifleet.Helper", "Vehifleet.Helper\Vehifleet.Helper.csproj", "{EE9DCFD6-01E0-4A15-A9DE-EDE86210EFC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 		{A829AD49-8A7C-41E0-A9E7-ACF1D0CEDBA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A829AD49-8A7C-41E0-A9E7-ACF1D0CEDBA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A829AD49-8A7C-41E0-A9E7-ACF1D0CEDBA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE9DCFD6-01E0-4A15-A9DE-EDE86210EFC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE9DCFD6-01E0-4A15-A9DE-EDE86210EFC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE9DCFD6-01E0-4A15-A9DE-EDE86210EFC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE9DCFD6-01E0-4A15-A9DE-EDE86210EFC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

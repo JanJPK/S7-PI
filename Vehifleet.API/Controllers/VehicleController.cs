@@ -12,7 +12,7 @@ namespace Vehifleet.API.Controllers
 {
     [ApiController]
     [Route("api/vehicles")]
-    [Authorize(Policy = "RequireEmployeeRole")]
+    //[Authorize(Policy = "RequireEmployeeRole")]
     public class VehicleController : ControllerBase
     {
         private readonly IVehicleService vehicleService;
@@ -24,27 +24,47 @@ namespace Vehifleet.API.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetVehicles([FromQuery] VehicleFilter filter)
+        public async Task<IActionResult> Get([FromQuery] VehicleFilter filter)
         {
             var vehicles = await vehicleService.Get(filter);
 
             return Ok(Mapper.Map<IEnumerable<VehicleListItemDto>>(vehicles));
         }
 
-        //[HttpGet("{id}", Name = nameof(GetVehicleById))]
-        //public async Task<IActionResult> GetVehicleById(int id)
-        //{
-        //    var vehicle = await vehicleRepository.GetById(id);
-        //
-        //    if (vehicle == null)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    else
-        //    {
-        //        return Ok(Mapper.Map<VehicleDto>(vehicle));
-        //    }
-        //}
+        [HttpGet("bookable")]
+        public async Task<IActionResult> GetBookable()
+        {
+            VehicleFilter filter = new VehicleFilter
+            {
+                Status = "Available",
+                MinBookingDays = 1
+            };
+
+            var vehicles = await vehicleService.Get(filter);
+
+            return Ok(Mapper.Map<IEnumerable<VehicleListItemDto>>(vehicles));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            if (id < 1)
+            {
+                return BadRequest();
+            }
+
+            var vehicle = await vehicleService.GetById(id);
+        
+            if (vehicle == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(Mapper.Map<VehicleDto>(vehicle));
+            }
+        }
+
         //
         //[HttpGet("bookable")]
         //public async Task<IActionResult> GetBookableVehiclesList()

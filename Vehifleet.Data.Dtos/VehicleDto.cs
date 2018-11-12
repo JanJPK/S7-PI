@@ -2,6 +2,10 @@
 
 namespace Vehifleet.Data.Dtos
 {
+    /// <summary>
+    ///     Describes entirety of vehicle.
+    ///     Used in details, edit, add views.s
+    /// </summary>
     public class VehicleDto
     {
         public int Id { get; set; }
@@ -23,6 +27,9 @@ namespace Vehifleet.Data.Dtos
         public string LocationCode { get; set; }
 
         public int Mileage { get; set; }
+
+        public int Horsepower { get; set; }
+        public int Seats { get; set; }
 
         public DateTime? InsuranceExpirationDate { get; set; }
 

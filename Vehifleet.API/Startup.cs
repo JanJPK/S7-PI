@@ -105,6 +105,7 @@ namespace Vehifleet.API
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserAuditService, UserAuditService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();            
         }
 
@@ -142,6 +143,10 @@ namespace Vehifleet.API
                                  m => m.MapFrom(s => s.VehicleSpecification.Manufacturer))
                       .ForMember(d => d.Model,
                                  m => m.MapFrom(s => s.VehicleSpecification.Model))
+                      .ForMember(d => d.Horsepower,
+                                 m => m.MapFrom(s =>s.VehicleSpecification.Horsepower))
+                      .ForMember(d => d.Seats,
+                                 m => m.MapFrom(s => s.VehicleSpecification.Seats))
                       .ForMember(d => d.InsuranceExpirationDate,
                                  m => m.MapFrom(s => s.Insurances.Last().ExpirationDate))
                       .ForMember(d => d.InspectionExpirationDate,

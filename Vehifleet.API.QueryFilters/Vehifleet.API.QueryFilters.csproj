@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Vehifleet.Data.Models\Vehifleet.Data.Models.csproj" />
+    <ProjectReference Include="..\Vehifleet.Helper\Vehifleet.Helper.csproj" />
   </ItemGroup>
 
 </Project>

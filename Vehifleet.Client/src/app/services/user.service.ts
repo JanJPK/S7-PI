@@ -6,12 +6,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { environment } from '../../environments/environment';
+import { EmployeeLogin } from '../classes/employee/employeeLogin';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   apiUrl = environment.apiUrl;
+  employeeLogin: EmployeeLogin;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -24,8 +26,7 @@ export class UserService {
       .post(`${this.apiUrl}login`, JSON.stringify(credentials), {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
-        }),
-        responseType: 'text'
+        })
       })
       .subscribe(response => {
         console.log(response);

@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -9,7 +8,7 @@ import { DashboardLoginComponent } from './components/dashboard/dashboard-login/
 import { DashboardRegisterComponent } from './components/dashboard/dashboard-register/dashboard-register.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { VehicleBookingComponent } from './components/vehicle/vehicle-booking/vehicle-booking.component';
-import { VehicleBookingDetailComponent } from './components/vehicle/vehicle-booking/vehicle-booking-details/vehicle-booking-details.component';
+import { VehicleBookingDetailsComponent } from './components/vehicle/vehicle-booking/vehicle-booking-details/vehicle-booking-details.component';
 import { VehicleManagementComponent } from './components/vehicle/vehicle-management/vehicle-management.component';
 import { VehicleManagementEditComponent } from './components/vehicle/vehicle-management-edit/vehicle-management-edit.component';
 import { VehicleManagementAddComponent } from './components/vehicle/vehicle-management-add/vehicle-management-add.component';
@@ -28,7 +27,7 @@ import { BookingManagementComponent } from './components/booking/booking-managem
     DashboardLoginComponent,
     DashboardRegisterComponent,
     VehicleBookingComponent,
-    VehicleBookingDetailComponent,
+    VehicleBookingDetailsComponent,
     VehicleManagementComponent,
     VehicleManagementEditComponent,
     VehicleManagementAddComponent,

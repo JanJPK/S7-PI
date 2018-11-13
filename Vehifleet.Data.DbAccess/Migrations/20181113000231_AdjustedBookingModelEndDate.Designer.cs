@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vehifleet.Data.DbAccess;
 
 namespace Vehifleet.Data.DbAccess.Migrations
 {
     [DbContext(typeof(VehifleetContext))]
-    partial class VehifleetContextModelSnapshot : ModelSnapshot
+    [Migration("20181113000231_AdjustedBookingModelEndDate")]
+    partial class AdjustedBookingModelEndDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

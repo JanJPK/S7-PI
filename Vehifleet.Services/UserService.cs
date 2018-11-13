@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using Vehifleet.Data.Models;
 using Vehifleet.Repositories.Interfaces;
 using Vehifleet.Services.Helper;
+using Vehifleet.Services.Interfaces;
 
 namespace Vehifleet.Services
 {

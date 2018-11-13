@@ -3,8 +3,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
-using Vehifleet.Services;
 using Vehifleet.Services.Helper;
+using Vehifleet.Services.Interfaces;
 
 namespace Vehifleet.API.Controllers
 {
@@ -37,7 +37,7 @@ namespace Vehifleet.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginCredentials credentials)
         {
-            var token =  await userService.Login(credentials);
+            var token = await userService.Login(credentials);
             if (!string.IsNullOrEmpty(token))
             {
                 return Ok(token);

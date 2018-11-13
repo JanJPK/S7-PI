@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Vehifleet.Data.Models;
 using Vehifleet.Services.Helper;
 
-namespace Vehifleet.Services
+namespace Vehifleet.Services.Interfaces
 {
     public interface IUserService
     {

@@ -7,6 +7,12 @@ using Vehifleet.Repositories.Interfaces;
 
 namespace Vehifleet.Repositories
 {
+    /// <summary>
+    ///     Base class for repositories.
+    ///     Provides implementation for basic CRUD operations.
+    /// </summary>
+    /// <typeparam name="TEntity">Entity type.</typeparam>
+    /// <typeparam name="TKey">Entity PK type (usually string or int).</typeparam>
     public abstract class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : class
     {
         protected VehifleetContext Context;

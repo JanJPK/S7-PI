@@ -29,6 +29,7 @@ namespace Vehifleet.Data.Dtos
         public int Mileage { get; set; }
 
         public int Horsepower { get; set; }
+
         public int Seats { get; set; }
 
         public DateTime? InsuranceExpirationDate { get; set; }

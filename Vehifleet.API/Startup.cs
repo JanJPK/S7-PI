@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,7 +43,8 @@ namespace Vehifleet.API
                      {
                          jsonOptions.SerializerSettings.DateParseHandling = DateParseHandling.DateTimeOffset;
                          jsonOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                     });
+                     })
+                    .AddFluentValidation(o => o.RegisterValidatorsFromAssemblyContaining<BookingDto>());
 
             // Security
             services.AddCors(o =>

@@ -9,36 +9,47 @@ namespace Vehifleet.Data.Dtos.Validators
         {
             RuleFor(b => b.Id)
                .NotNull()
-               .When(b => b.Status > BookingStatus.Created);
+               .When(b => b.Status > BookingStatus.Created)
+               .WithMessage("Id cannot be empty for bookings past Created state.");
 
             RuleFor(b => b.StartDate)
                .LessThan(b => b.EndDate)
-               .When(b => b.EndDate != null);
+               .When(b => b.EndDate != null)
+               .WithMessage("End date cannot be smaller than start date.");
 
             RuleFor(b => b.EndDate)
                .NotNull()
-               .When(b => b.Status >= BookingStatus.AwaitingReview);
+               .When(b => b.Status >= BookingStatus.Submitted)
+               .WithMessage("Cannot submit booking request without end date.");
 
             RuleFor(b => b.ManagerId)
                .NotNull()
-               .When(b => b.Status >= BookingStatus.Submitted);
+               .When(b => b.Status > BookingStatus.Submitted)
+               .WithMessage("Manager Id cannot be empty for bookings past Submitted state.");
 
             RuleFor(b => b.Mileage)
                .NotNull()
-               .When(b => b.Status >= BookingStatus.AwaitingReview);
+               .GreaterThan(0)
+               .When(b => b.Status >= BookingStatus.AwaitingReview)
+               .WithMessage("Valid mileage must be submitted for bookings past Accepted state.");
 
             RuleFor(b => b.FuelConsumed)
                .NotNull()
-               .When(b => b.Status >= BookingStatus.AwaitingReview);
+               .GreaterThan(0)
+               .When(b => b.Status >= BookingStatus.AwaitingReview)
+               .WithMessage("Valid fuel consumption must be submitted for bookings past Accepted state.");
 
             RuleFor(b => b.Cost)
                .NotNull()
-               .When(b => b.Status >= BookingStatus.AwaitingReview);
+               .GreaterThan(0)
+               .When(b => b.Status >= BookingStatus.AwaitingReview)
+               .WithMessage("Valid cost must be submitted for bookings past Accepted state.");
 
             RuleFor(b => b.Notes)
                .NotNull()
                .NotEmpty()
-               .When(b => b.Status >= BookingStatus.NeedsAdjustment);
+               .When(b => b.Status >= BookingStatus.NeedsAdjustment)
+               .WithMessage("Booking returned for adjustments must have a note.");
         }
     }
 }

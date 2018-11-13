@@ -45,6 +45,11 @@ namespace Vehifleet.Services
             return await roleRepository.Get().ToListAsync();
         }
 
+        public async Task<Employee> GetEmployeeById(int id)
+        {
+            return await employeeRepository.GetById(id);
+        }
+
         public async Task AddUserToRole(string userId, string roleId)
         {
             await roleRepository.AddUserToRole(userId, roleId);
@@ -65,7 +70,7 @@ namespace Vehifleet.Services
             }
         }
 
-        public async Task<string> Login(LoginCredentials credentials)
+        public async Task<Employee> Login(LoginCredentials credentials)
         {
             var identity = await userManager.FindByNameAsync(credentials.UserName);
             if (identity == null)
@@ -77,7 +82,9 @@ namespace Vehifleet.Services
             {
                 var claims = await CreateClaims(identity);
                 var token = CreateToken(claims);
-                return new JwtSecurityTokenHandler().WriteToken(token);
+                var employee = await employeeRepository.GetByUserName(identity.UserName);
+                employee.Jwt = new JwtSecurityTokenHandler().WriteToken(token);
+                return employee;
             }
             else
             {

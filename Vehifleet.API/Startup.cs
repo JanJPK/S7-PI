@@ -164,7 +164,18 @@ namespace Vehifleet.API
                                  m => m.MapFrom(s => s.VehicleSpecification.Seats))
                       .ForMember(d => d.CanBeBookedUntil,
                                  o => o.MapFrom(s => s.CanBeBookedUntil));
-                config.CreateMap<EmployeeIdentityDto, EmployeeUser>();
+                config.CreateMap<EmployeeRegisterDto, EmployeeUser>();
+                config.CreateMap<Employee, EmployeeLoginDto>()
+                      .ForMember(d => d.UserName,
+                                 m => m.MapFrom(s => s.Identity.UserName))
+                      .ForMember(d => d.FirstName,
+                                 m => m.MapFrom(s => s.Identity.FirstName))
+                      .ForMember(d => d.LastName,
+                                 m => m.MapFrom(s => s.Identity.LastName))
+                      .ForMember(d => d.Department,
+                                 m => m.MapFrom(s => s.Identity.Department));
+
+
             });
         }
     }

@@ -20,5 +20,8 @@ namespace Vehifleet.Data.Models
         public virtual ICollection<Booking> Bookings { get; set; }
 
         public virtual ICollection<Booking> ManagedBookings { get; set; }
+
+        [NotMapped]
+        public string Jwt { get; set; }
     }
 }

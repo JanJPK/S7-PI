@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Vehifleet.Data.Dtos
 {
-    public class EmployeeIdentityDto
+    public class EmployeeRegisterDto
     {
         public string FirstName { get; set; }
 

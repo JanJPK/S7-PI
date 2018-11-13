@@ -20,11 +20,11 @@ namespace Vehifleet.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] EmployeeIdentityDto identityDto)
+        public async Task<IActionResult> Register([FromBody] EmployeeRegisterDto dto)
         {
-            var identity = Mapper.Map<EmployeeUser>(identityDto);
+            var identity = Mapper.Map<EmployeeUser>(dto);
 
-            if (await userService.CreateUser(identity, identityDto.Password))
+            if (await userService.CreateUser(identity, dto.Password))
             {
                 return Ok();
             }
@@ -37,10 +37,11 @@ namespace Vehifleet.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginCredentials credentials)
         {
-            var token = await userService.Login(credentials);
-            if (!string.IsNullOrEmpty(token))
+            var employee = await userService.Login(credentials);
+            if (employee != null)
             {
-                return Ok(token);
+                
+                return Ok(Mapper.Map<EmployeeLoginDto>(employee));
             }
             else
             {

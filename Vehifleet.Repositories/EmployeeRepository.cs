@@ -17,5 +17,11 @@ namespace Vehifleet.Repositories
             return Set.Include(e => e.Identity)
                       .SingleOrDefaultAsync(e => e.Id == id);
         }
+
+        public async Task<Employee> GetByUserName(string userName)
+        {
+            return await Set.Include(e => e.Identity)
+                      .SingleOrDefaultAsync(e => e.Identity.UserName == userName);
+        }
     }
 }

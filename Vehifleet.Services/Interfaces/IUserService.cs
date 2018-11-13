@@ -9,8 +9,9 @@ namespace Vehifleet.Services.Interfaces
     public interface IUserService
     {
         Task<bool> CreateUser(EmployeeUser identity, string password);
-        Task<string> Login(LoginCredentials credentials);
+        Task<Employee> Login(LoginCredentials credentials);
         Task<IEnumerable<IdentityRole>> GetIdentities();
         Task<IEnumerable<IdentityRole>> GetRoles();
+        Task<Employee> GetEmployeeById(int id);
     }
 }

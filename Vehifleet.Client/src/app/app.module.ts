@@ -19,7 +19,7 @@ import { BookingAddComponent } from './components/booking/booking-add/booking-ad
 import { BookingEditComponent } from './components/booking/booking-edit/booking-edit.component';
 import { BookingPersonalComponent } from './components/booking/booking-personal/booking-personal.component';
 import { BookingManagementComponent } from './components/booking/booking-management/booking-management.component';
-
+import { DashboardUserDetailsComponent } from './components/dashboard/dashboard-user-details/dashboard-user-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +37,8 @@ import { BookingManagementComponent } from './components/booking/booking-managem
     BookingAddComponent,
     BookingEditComponent,
     BookingPersonalComponent,
-    BookingManagementComponent
+    BookingManagementComponent,
+    DashboardUserDetailsComponent
   ],
   imports: [
     BrowserModule,

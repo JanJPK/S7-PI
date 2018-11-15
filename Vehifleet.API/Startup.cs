@@ -173,9 +173,7 @@ namespace Vehifleet.API
                       .ForMember(d => d.LastName,
                                  m => m.MapFrom(s => s.Identity.LastName))
                       .ForMember(d => d.Department,
-                                 m => m.MapFrom(s => s.Identity.Department));
-
-
+                                 m => m.MapFrom(s => s.Identity.Department));                    
             });
         }
     }

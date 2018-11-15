@@ -29,4 +29,8 @@ export class DashboardLoginComponent implements OnInit {
       this.loginForm.controls.password.value
     );
   }
+
+  isLoggedIn(): boolean {
+    return this.userService.isLoggedIn();
+  }
 }

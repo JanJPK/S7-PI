@@ -24,6 +24,11 @@
           <a class="nav-link" routerLink="vehicles/booking">My bookings</a>
         </li>
       </ul>
+      <ul class="navbar-nav ml-auto">
+        <div *ngIf="isLoggedIn()">
+          <li class="nav-item">{{ getUserDisplayName() }}</li>
+        </div>
+      </ul>
     </div>
   </nav>
   <br />

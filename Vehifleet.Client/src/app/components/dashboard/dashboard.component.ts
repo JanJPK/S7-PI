@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  constructor(private userService: UserService) {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  isLoggedIn(): boolean {
+    return this.userService.isLoggedIn();
   }
-
 }

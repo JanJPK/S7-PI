@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { UserService } from './services/user.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
@@ -7,27 +7,21 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Vehifleet';
-  loggedIn: boolean;
   loginForm: FormGroup;
 
-  constructor(
-    private userService: UserService,
-    private formBuilder: FormBuilder
-  ) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      username: [''],
-      password: ['']
-    });
+    this.userService.checkLocalStorage();
+  }
+  isLoggedIn(): boolean {
+    return this.userService.isLoggedIn();
   }
 
-  login() {
-    this.userService.login(
-      this.loginForm.controls.username.value,
-      this.loginForm.controls.password.value
-    );
+  getUserDisplayName(): string {
+    let user = this.userService.getEmployee();
+    return `${user.firstName} ${user.lastName} (${user.department})`;
   }
 }

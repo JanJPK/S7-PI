@@ -70,5 +70,7 @@ namespace Vehifleet.Repositories
                 await Context.SaveChangesAsync();
             }
         }
+
+        public abstract Task<bool> Exists(TKey id);
     }
 }

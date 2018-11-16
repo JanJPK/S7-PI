@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Vehifleet.API.QueryFilters;
 using Vehifleet.Data.Dtos;
+using Vehifleet.Repositories.Interfaces;
 using Vehifleet.Services;
 using Vehifleet.Services.Interfaces;
 
@@ -15,18 +17,25 @@ namespace Vehifleet.API.Controllers
     //[Authorize(Policy = "RequireEmployeeRole")]
     public class VehicleController : ControllerBase
     {
-        private readonly IVehicleService vehicleService;
+        private readonly IVehicleRepository vehicleRepository;
 
-        public VehicleController(IVehicleService vehicleService)
+        public VehicleController(IVehicleRepository vehicleRepository)
         {
-            this.vehicleService = vehicleService;
+            this.vehicleRepository = vehicleRepository;
         }
 
 
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] VehicleFilter filter)
         {
-            var vehicles = await vehicleService.Get(filter);
+            var query = filter.Filter(vehicleRepository.Get());
+
+            var vehicles = await query
+                        .Include(v => v.VehicleSpecification)
+                        .Include(v => v.Insurances)
+                        .Include(v => v.Inspections)
+                        .Include(v => v.Location)
+                        .ToListAsync();
 
             return Ok(Mapper.Map<IEnumerable<VehicleListItemDto>>(vehicles));
         }
@@ -40,7 +49,14 @@ namespace Vehifleet.API.Controllers
                 MinBookingDays = 1
             };
 
-            var vehicles = await vehicleService.Get(filter);
+            var query = filter.Filter(vehicleRepository.Get());
+
+            var vehicles = await query
+                                .Include(v => v.VehicleSpecification)
+                                .Include(v => v.Insurances)
+                                .Include(v => v.Inspections)
+                                .Include(v => v.Location)
+                                .ToListAsync();
 
             return Ok(Mapper.Map<IEnumerable<VehicleListItemDto>>(vehicles));
         }
@@ -53,11 +69,11 @@ namespace Vehifleet.API.Controllers
                 return BadRequest();
             }
 
-            var vehicle = await vehicleService.GetById(id);
+            var vehicle = await vehicleRepository.GetById(id);
         
             if (vehicle == null)
             {
-                return BadRequest();
+                return NotFound();
             }
             else
             {
@@ -65,16 +81,9 @@ namespace Vehifleet.API.Controllers
             }
         }
 
-        //
-        //[HttpGet("bookable")]
-        //public async Task<IActionResult> GetBookableVehiclesList()
-        //{
-        //    var vehicles = await vehicleRepository.Get();
-        //    var bookableVehicles = vehicles.Where(v => v.Insurances.Last().ExpirationDate > DateTime.Today &&
-        //                                               v.Inspections.Last().ExpirationDate > DateTime.Today &&
-        //                                               v.Status == VehicleStatus.Available);
-        //
-        //    return Ok(Mapper.Map<IEnumerable<VehicleListItemDto>>(bookableVehicles));
-        //}
+        public async Task<IActionResult> Insert([FromBody] VehicleDto vehicleDto)
+        {
+
+        }
     }
 }

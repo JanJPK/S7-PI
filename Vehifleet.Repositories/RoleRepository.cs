@@ -44,6 +44,11 @@ namespace Vehifleet.Repositories
                                .Where(j => j.IdentityUserRole.UserId == userId)
                                .Select(j => j.IdentityRole);
             return await query.ToListAsync();            
-        }        
+        }
+
+        public override Task<bool> Exists(string id)
+        {
+            return Set.AnyAsync(r => r.Id == id);
+        }
     }
 }

@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Vehifleet.Data.DbAccess;
 using Vehifleet.Data.Models;
 using Vehifleet.Data.Models.Enums;
+using Vehifleet.Repositories.Interfaces;
 
 namespace Vehifleet.Repositories
 {
-    public class BookingRepository : GenericRepository<Booking, int>
+    public class BookingRepository : GenericRepository<Booking, int>, IBookingRepository
     {
         public BookingRepository(VehifleetContext context) : base(context)
         {
@@ -44,6 +45,11 @@ namespace Vehifleet.Repositories
             }
 
             await Update(booking);
+        }
+
+        public override Task<bool> Exists(int id)
+        {
+            return Set.AnyAsync(b => b.Id == id);
         }
     }
 }

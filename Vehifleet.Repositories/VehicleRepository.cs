@@ -24,16 +24,9 @@ namespace Vehifleet.Repositories
                         .SingleOrDefaultAsync(v => v.Id == id);
         }
 
-        public async Task UpdateVehicleStatusById(int id, VehicleStatus status)
+        public override Task<bool> Exists(int id)
         {
-            var vehicle = await Set.SingleOrDefaultAsync(v => v.Id == id);
-
-            if (vehicle != null)
-            {
-                vehicle.Status = status;
-            }
-
-            await Update(vehicle);
+            return Set.AnyAsync(v => v.Id == id);
         }
     }
 }

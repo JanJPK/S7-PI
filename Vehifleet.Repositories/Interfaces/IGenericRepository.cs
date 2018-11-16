@@ -14,5 +14,6 @@ namespace Vehifleet.Repositories.Interfaces
         Task Update(IEnumerable<TEntity> entities);
         Task Delete(TEntity entity);
         Task Delete(TKey id);
+        Task<bool> Exists(TKey id);
     }
 }

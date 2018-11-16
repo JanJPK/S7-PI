@@ -16,5 +16,10 @@ namespace Vehifleet.Repositories
         {
             return Set.SingleOrDefaultAsync(i => i.Id == id);
         }
+
+        public override Task<bool> Exists(string id)
+        {
+            return Set.AnyAsync(i => i.Id == id);
+        }
     }
 }

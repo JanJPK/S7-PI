@@ -101,11 +101,16 @@ namespace Vehifleet.API
 
             // Services
             services.AddDbContext<VehifleetContext>(c => c.UseSqlServer(Configuration["ConnectionStrings:VehifleetDb"]));
-            services.AddScoped<IVehicleRepository, VehicleRepository>();
-            services.AddScoped<IVehicleService, VehicleService>();
-            services.AddScoped<IIdentityRepository, IdentityRepository>();
+            services.AddScoped<IGenericRepository<Booking, int>, BookingRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IGenericRepository<EmployeeUser, string>, IdentityRepository>();
+            services.AddScoped<IGenericRepository<Inspection, int>, InspectionRepository>();
+            services.AddScoped<IGenericRepository<Insurance, int>, InsuranceRepository>();
+            services.AddScoped<IGenericRepository<Location, string>, LocationRepository>();
+            services.AddScoped<IGenericRepository<Maintenance, int>, MaintenanceRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IGenericRepository<Vehicle, int>, VehicleRepository>();
+            services.AddScoped<IGenericRepository<VehicleSpecification, int>, VehicleSpecificationRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserAuditService, UserAuditService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();            

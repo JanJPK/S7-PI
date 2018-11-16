@@ -23,5 +23,10 @@ namespace Vehifleet.Repositories
             return await Set.Include(e => e.Identity)
                       .SingleOrDefaultAsync(e => e.Identity.UserName == userName);
         }
+
+        public override Task<bool> Exists(int id)
+        {
+            return Set.AnyAsync(e => e.Id == id);
+        }
     }
 }

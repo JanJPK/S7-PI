@@ -15,7 +15,7 @@ namespace Vehifleet.API.QueryFilters
 
         public IEnumerable<string> LocationCode { get; set; }
 
-        public int MinBookingDays { get; set; }
+        public int? MinBookingDays { get; set; }
 
         public string Status { get; set; }
 
@@ -36,7 +36,7 @@ namespace Vehifleet.API.QueryFilters
                 query = query.Where(v => LocationCode.Any(l => l == v.LocationCode));
             }
 
-            if (MinBookingDays > 0)
+            if (MinBookingDays == null && MinBookingDays > 0)
             {
                 query = query.Where(v => (v.CanBeBookedUntil - DateTime.UtcNow).Days > MinBookingDays);
             }

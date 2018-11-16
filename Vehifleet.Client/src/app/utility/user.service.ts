@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from './base.service';
-import { baseDirectiveCreate } from '@angular/core/src/render3/instructions';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { EmployeeLogin } from '../classes/employee/employeeLogin';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { decode } from 'jwt-decode';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +13,7 @@ export class UserService {
   employeeLogin: EmployeeLogin;
   jwtHelper: JwtHelperService;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private logger: LoggerService) {
     this.jwtHelper = new JwtHelperService();
   }
 
@@ -27,7 +22,7 @@ export class UserService {
       UserName: username,
       Password: password
     };
-    console.log(credentials);
+    this.logger.info(`Login; username: ${username}`);
     this.httpClient
       .post(`${this.apiUrl}login`, JSON.stringify(credentials), {
         headers: new HttpHeaders({
@@ -35,8 +30,10 @@ export class UserService {
         })
       })
       .subscribe(response => {
-        console.log(response);
-        console.log(this.jwtHelper.decodeToken(this.getToken()));
+        this.logger.info(`Login response: ${response}`);
+        this.logger.info(
+          `login token: ${this.jwtHelper.decodeToken(this.getToken())}`
+        );
         this.employeeLogin = <EmployeeLogin>response;
         let token = this.employeeLogin.jwt;
         localStorage.setItem('jwt', token);
@@ -45,18 +42,24 @@ export class UserService {
         //this.router.navigate(['/']);
       }),
       err => {
+        this.logger.warn(`Failed login: ${err}`);
         //this.invalidLogin = true;
-        console.log('login error');
       };
   }
 
+  logout() {
+    console.log('Logging out.');
+    this.employeeLogin = null;
+    localStorage.removeItem('jwt');
+  }
+
   checkLocalStorage() {
-    console.log('Checking local storage.');
+    this.logger.info('Checking local storage');
     if (!this.jwtHelper.isTokenExpired(this.getToken())) {
       this.employeeLogin = JSON.parse(localStorage.getItem('user'));
-      console.log(this.employeeLogin);
+      this.logger.info(`Recovered employee: ${this.employeeLogin}`);
     } else {
-      console.log('Token expired.');
+      this.logger.info('Recovered token is expired');
       localStorage.removeItem('user');
     }
   }
@@ -69,28 +72,30 @@ export class UserService {
     return this.employeeLogin;
   }
 
-  logout() {
-    console.log('Logging out.');
-    this.employeeLogin = null;
-    localStorage.removeItem('jwt');
-  }
-
   isLoggedIn(): boolean {
+    this.logger.info('Verifying user login');
     if (!this.employeeLogin) {
       return false;
     }
     if (!this.jwtHelper.isTokenExpired(this.getToken())) {
-      console.log('User is logged in, token is not expired.');
+      this.logger.info('Token is not expired');
       return true;
     } else {
+      this.logger.warn('Token is expired');
       this.logout();
       return false;
     }
   }
 
   hasRole(roles: string[]): boolean {
+    if (!this.isLoggedIn()) {
+      return false;
+    }
+
+    this.logger.info(`Verifying user roles; need ${roles}`);
     let tokenRoles = this.jwtHelper.decodeToken(this.getToken()).role;
-    console.log(`Roles found: ${tokenRoles}`);
+    this.logger.info(`Roles found: ${tokenRoles}`);
+
     for (let role of tokenRoles) {
       if (role.indexOf(role) > -1) {
         return true;

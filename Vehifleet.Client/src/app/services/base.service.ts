@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
+import { LoggerService } from '../utility/logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,16 @@ import { catchError } from 'rxjs/operators';
 export abstract class BaseService<TEntity, TEntityListItem, TKey> {
   protected apiUrl: string;
 
-  constructor(protected http: HttpClient, protected apiType: string) {
+  constructor(
+    protected http: HttpClient,
+    protected apiType: string,
+    protected logger: LoggerService
+  ) {
     this.apiUrl = `${environment.apiUrl}${apiType}/`;
   }
 
   get(filter: any = null): Observable<TEntityListItem[]> {
+    this.logger.info(`get() @ ${this.apiUrl}; filter: ${filter}`);
     if (filter) {
       let params = new URLSearchParams();
       for (let key in filter) {
@@ -31,7 +37,7 @@ export abstract class BaseService<TEntity, TEntityListItem, TKey> {
   }
 
   getById(id: TKey): Observable<TEntity> {
-    this.log(`getById: ${id} url: ${this.apiUrl}`);
+    this.logger.info(`getById (${id}) @ ${this.apiUrl}`);
     return this.http
       .get<TEntity>(`${this.getUrl()}${id}`)
       .pipe(catchError(this.handleError('getById', null)));
@@ -47,8 +53,7 @@ export abstract class BaseService<TEntity, TEntityListItem, TKey> {
 
   handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      this.logger.error(error);
 
       // TODO: better job of transforming error for user consumption
       //this.log(`${operation} failed: ${error.message}`);
@@ -56,9 +61,5 @@ export abstract class BaseService<TEntity, TEntityListItem, TKey> {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
-  }
-
-  log(message: string) {
-    console.info(message);
   }
 }

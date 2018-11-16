@@ -1,5 +1,5 @@
 import { Component, NgModule, OnInit } from '@angular/core';
-import { UserService } from './services/user.service';
+import { UserService } from './utility/user.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({

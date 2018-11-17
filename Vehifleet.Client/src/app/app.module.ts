@@ -22,6 +22,11 @@ import { BookingManagementComponent } from './components/booking/booking-managem
 import { DashboardUserDetailsComponent } from './components/dashboard/dashboard-user-details/dashboard-user-details.component';
 import { ConsoleLoggerService } from './utility/console-logger.service';
 import { LoggerService } from './utility/logger.service';
+import {
+  NgbModule,
+  NgbDateAdapter,
+  NgbDateNativeAdapter
+} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -48,9 +53,13 @@ import { LoggerService } from './utility/logger.service';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
-  providers: [{ provide: LoggerService, useClass: ConsoleLoggerService }],
+  providers: [
+    { provide: LoggerService, useClass: ConsoleLoggerService },
+    { provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

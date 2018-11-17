@@ -82,10 +82,10 @@ const routes: Routes = [
     data: { expectedRoles: ['Administrator', 'Manager'] }
   },
   {
-    path: 'bookings/manage/add',
+    path: 'bookings/manage/add/:vehicleId',
     component: BookingAddComponent,
     canActivate: [AuthGuard],
-    data: { expectedRoles: ['Administrator', 'Manager'] }
+    data: { expectedRoles: [] }
   }
 ];
 

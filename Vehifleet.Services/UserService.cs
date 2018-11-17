@@ -17,13 +17,13 @@ namespace Vehifleet.Services
     public class UserService : IUserService
     {
         private readonly UserManager<EmployeeUser> userManager;
-        private readonly IIdentityRepository identityRepository;
+        private readonly IGenericRepository<EmployeeUser, string> identityRepository;
         private readonly IEmployeeRepository employeeRepository;
         private readonly IRoleRepository roleRepository;
         private readonly JwtOptions jwtOptions;
 
         public UserService(UserManager<EmployeeUser> userManager,
-                           IIdentityRepository identityRepository,
+                           IGenericRepository<EmployeeUser, string> identityRepository,
                            IEmployeeRepository employeeRepository,
                            IRoleRepository roleRepository,
                            IOptions<JwtOptions> jwtOptions)

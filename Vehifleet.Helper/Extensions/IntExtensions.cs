@@ -6,5 +6,6 @@
         {
             return number != null && number > 0;
         }
+
     }
 }

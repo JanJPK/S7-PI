@@ -12,21 +12,32 @@ namespace Vehifleet.Data.DbAccess
     public class VehifleetContext 
         : IdentityDbContext<EmployeeUser>
     {
+        private readonly IUserAuditService userAuditService;
+
         public DbSet<Booking> Bookings { get; set; }
+
         public DbSet<Employee> Employees { get; set; }
+
         public DbSet<Inspection> Inspections { get; set; }
+
         public DbSet<Insurance> Insurances { get; set; }
+
         public DbSet<Location> Locations { get; set; }
+
         public DbSet<Maintenance> Maintenances { get; set; }
+
         public DbSet<Vehicle> Vehicles { get; set; }
+
         public DbSet<VehicleSpecification> VehicleSpecifications { get; set; }
 
-        public VehifleetContext(DbContextOptions<VehifleetContext> options) : base(options)
+        public VehifleetContext(DbContextOptions<VehifleetContext> options, 
+                                IUserAuditService userAuditService
+        ) : base(options)
         {
+            this.userAuditService = userAuditService;
         }
 
-        public Task<int> SaveChangesAsync(IUserAuditService userAuditService, 
-                                                   CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var changedEntries = ChangeTracker.Entries()
                                               .Where(e => e.State == EntityState.Added
@@ -43,11 +54,13 @@ namespace Vehifleet.Data.DbAccess
 
                 if (entry.State == EntityState.Added)
                 {
-                    entity.AddedBy = userAuditService.UserName;
+                    //entity.AddedBy = userAuditService.UserName;
+                    entity.AddedBy = "admin";
                     entity.AddedOn = DateTime.UtcNow;
                 }
 
                 entity.ModifiedBy = userAuditService.UserName;
+
                 entity.ModifiedOn = DateTime.UtcNow;
             }
 

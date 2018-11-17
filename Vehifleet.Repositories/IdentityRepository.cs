@@ -6,7 +6,7 @@ using Vehifleet.Repositories.Interfaces;
 
 namespace Vehifleet.Repositories
 {
-    public class IdentityRepository : GenericRepository<EmployeeUser, string>, IIdentityRepository
+    public class IdentityRepository : GenericRepository<EmployeeUser, string>
     {
         public IdentityRepository(VehifleetContext context) : base(context)
         {

@@ -7,7 +7,7 @@ using Vehifleet.Repositories.Interfaces;
 
 namespace Vehifleet.Repositories
 {
-    public class BookingRepository : GenericRepository<Booking, int>, IBookingRepository
+    public class BookingRepository : GenericRepository<Booking, int>
     {
         public BookingRepository(VehifleetContext context) : base(context)
         {

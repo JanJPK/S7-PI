@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vehifleet.Data.DbAccess;
 using Vehifleet.Data.Models;
@@ -7,7 +8,7 @@ using Vehifleet.Repositories.Interfaces;
 
 namespace Vehifleet.Repositories
 {
-    public class VehicleRepository : GenericRepository<Vehicle, int>, IVehicleRepository
+    public class VehicleRepository : GenericRepository<Vehicle, int>
     {
         public VehicleRepository(VehifleetContext context) : base(context)
         {

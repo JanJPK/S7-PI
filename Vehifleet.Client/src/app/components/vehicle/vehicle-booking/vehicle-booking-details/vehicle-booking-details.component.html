@@ -77,16 +77,49 @@
             />
           </div>
         </div>
-        <br />
-        <div class="formg-group row">
-          <div class="col-4">
-            <button class="btn btn-primary btn-lg">Book</button>
-          </div>
-          <div class="col-4">
-            <button class="btn btn-primary btn-lg">Edit</button>
-          </div>
-        </div>
+        <!--
+          <br />
+            <div class="formg-group row">
+              <div class="col-4">
+                <a routerLink="/bookings/manage/add/{{selectedVehicle.id}}">
+                  <button class="btn btn-primary btn-lg">Book</button>
+                </a>
+              </div>
+            </div>
+        -->
       </fieldset>
+    </form>
+  </div>
+</div>
+<div class="card border-primary mb-3" style="max-width: 20rem;">
+  <div class="card-header"><h4>New booking</h4></div>
+
+  <div class="card-body">
+    <form [formGroup]="bookingForm">
+      <label>
+        Start date:
+        <input
+          type="text"
+          formControlName="startDate"
+          ngbDatepicker
+          #sd="ngbDatepicker"
+          (click)="sd.toggle()"
+          [minDate]="startDateMin"
+          [maxDate]="startDateMax"
+        />
+      </label>
+      <label>
+        End date:
+        <input
+          type="text"
+          formControlName="endDate"
+          ngbDatepicker
+          #ed="ngbDatepicker"
+          (click)="ed.toggle()"
+          [minDate]="endDateMin"
+          [maxDate]="endDateMax"
+        />
+      </label>
     </form>
   </div>
 </div>

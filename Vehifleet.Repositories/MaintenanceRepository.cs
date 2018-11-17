@@ -6,7 +6,7 @@ using Vehifleet.Repositories.Interfaces;
 
 namespace Vehifleet.Repositories
 {
-    public class MaintenanceRepository : GenericRepository<Maintenance, int>, IMaintenanceRepository
+    public class MaintenanceRepository : GenericRepository<Maintenance, int>
     {
         public MaintenanceRepository(VehifleetContext context) : base(context)
         {

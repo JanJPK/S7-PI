@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using Vehifleet.Data.Models.BaseEntities;
 using Vehifleet.Data.Models.Enums;
 
@@ -17,10 +16,10 @@ namespace Vehifleet.Data.Models
         public int VehicleSpecificationId { get; set; }
 
         public VehicleSpecification VehicleSpecification { get; set; }
-        
+
         [ForeignKey("Location")]
         public string LocationCode { get; set; }
-        
+
         public Location Location { get; set; }
 
         [Required]
@@ -36,6 +35,8 @@ namespace Vehifleet.Data.Models
         [Required]
         public string ChassisCode { get; set; }
 
+        public DateTime CanBeBookedUntil { get; set; }
+
         public virtual ICollection<Booking> Bookings { get; set; }
 
         public virtual ICollection<Inspection> Inspections { get; set; }
@@ -44,9 +45,16 @@ namespace Vehifleet.Data.Models
 
         public virtual ICollection<Maintenance> Maintenances { get; set; }
 
-        [NotMapped]
-        public DateTime CanBeBookedUntil => Insurances.Last().ExpirationDate < Inspections.Last().ExpirationDate
-                                                 ? Insurances.Last().ExpirationDate
-                                                 : Inspections.Last().ExpirationDate;
+
+        //[NotMapped]
+        //public Insurance CurrentInsurance => Insurances.OrderByDescending(i => i.ExpirationDate).First();
+
+        //[NotMapped]
+        //public Inspection CurrentInspection => Inspections.OrderByDescending(i => i.ExpirationDate).First();
+
+        //[NotMapped]
+        //public DateTime CanBeBookedUntil => CurrentInsurance.ExpirationDate < CurrentInspection.ExpirationDate
+        //                                         ? CurrentInsurance.ExpirationDate
+        //                                         : CurrentInspection.ExpirationDate;
     }
 }

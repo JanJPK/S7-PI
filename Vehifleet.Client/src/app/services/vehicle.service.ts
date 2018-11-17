@@ -6,6 +6,7 @@ import { Vehicle } from '../classes/vehicle/vehicle';
 import { VehicleListItem } from '../classes/vehicle/vehicle-list-item';
 import { BaseService } from './base.service';
 import { VehicleListFilter } from '../classes/vehicle/vehicle-list-filter';
+import { LoggerService } from '../utility/logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class VehicleService extends BaseService<
   VehicleListItem,
   number
 > {
-  constructor(http: HttpClient) {
-    super(http, 'vehicles');
+  constructor(http: HttpClient, logger: LoggerService) {
+    super(http, 'vehicles', logger);
   }
 
   getBookable(): Observable<VehicleListItem[]> {

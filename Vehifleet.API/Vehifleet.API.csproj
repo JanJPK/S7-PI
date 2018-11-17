@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Vehifleet.Data.DbAccess\Vehifleet.Data.DbAccess.csproj" />
     <ProjectReference Include="..\Vehifleet.Data.Dtos\Vehifleet.Data.Dtos.csproj" />
     <ProjectReference Include="..\Vehifleet.Data.Models\Vehifleet.Data.Models.csproj" />
+    <ProjectReference Include="..\Vehifleet.Helper\Vehifleet.Helper.csproj" />
     <ProjectReference Include="..\Vehifleet.Repositories\Vehifleet.Repositories.csproj" />
     <ProjectReference Include="..\Vehifleet.Services\Vehifleet.Services.csproj" />
   </ItemGroup>

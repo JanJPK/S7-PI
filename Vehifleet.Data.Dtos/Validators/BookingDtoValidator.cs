@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using Vehifleet.Data.Models.Enums;
 
 namespace Vehifleet.Data.Dtos.Validators
@@ -7,10 +8,18 @@ namespace Vehifleet.Data.Dtos.Validators
     {
         public BookingDtoValidator()
         {
-            RuleFor(b => b.Id)
-               .NotNull()
-               .When(b => b.Status > BookingStatus.Created)
-               .WithMessage("Id cannot be empty for bookings past Created state.");
+            //RuleFor(b => b.Id)
+            //   .GreaterThan(0)
+            //   .When(b => b.Status > BookingStatus.Created)
+            //   .WithMessage("Invalid employee Id.");
+
+            RuleFor(b => b.VehicleId)
+               .GreaterThan(0)
+               .WithMessage("Invalid vehicle Id.");
+
+            RuleFor(b => b.EmployeeId)
+               .GreaterThan(0)
+               .WithMessage("Invalid employee Id.");                                    
 
             RuleFor(b => b.StartDate)
                .LessThan(b => b.EndDate)
@@ -23,7 +32,7 @@ namespace Vehifleet.Data.Dtos.Validators
                .WithMessage("Cannot submit booking request without end date.");
 
             RuleFor(b => b.ManagerId)
-               .NotNull()
+               .GreaterThan(0)
                .When(b => b.Status > BookingStatus.Submitted)
                .WithMessage("Manager Id cannot be empty for bookings past Submitted state.");
 

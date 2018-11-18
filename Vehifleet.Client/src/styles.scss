@@ -11,3 +11,24 @@ $accentColor: #3a5066;
 .table-responsive {
   max-height: calc(80vh);
 }
+
+.tableFixed {
+  overflow-y: auto;
+  max-height: calc(80vh);
+}
+
+.tableFixed table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tableFixed th,
+.tableFixed td {
+  padding: 8px 16px;
+}
+
+.tableFixed th {
+  position: sticky;
+  top: 0;
+  background: $accentColor;
+}

@@ -27,6 +27,7 @@ import {
   NgbDateAdapter,
   NgbDateNativeAdapter
 } from '@ng-bootstrap/ng-bootstrap';
+import { VehicleBookingFilterComponent } from './components/vehicle/vehicle-booking/vehicle-booking-filter/vehicle-booking-filter.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {
     BookingEditComponent,
     BookingPersonalComponent,
     BookingManagementComponent,
-    DashboardUserDetailsComponent
+    DashboardUserDetailsComponent,
+    VehicleBookingFilterComponent
   ],
   imports: [
     BrowserModule,

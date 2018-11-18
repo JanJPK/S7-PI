@@ -33,13 +33,13 @@ namespace Vehifleet.Repositories
 
         public virtual async Task Insert(TEntity entity)
         {
-            await Set.AddAsync(entity);
+            Set.Add(entity);
             await Context.SaveChangesAsync();
         }
 
         public virtual async Task Insert(IEnumerable<TEntity> entities)
         {
-            await Set.AddRangeAsync(entities);
+            Set.AddRange(entities);
             await Context.SaveChangesAsync();
         }
 

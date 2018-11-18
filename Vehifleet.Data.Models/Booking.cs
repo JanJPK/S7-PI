@@ -34,5 +34,6 @@ namespace Vehifleet.Data.Models
         public DateTime? EndDate { get; set; }
 
         public string Notes { get; set; }
+
     }
 }

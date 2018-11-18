@@ -95,7 +95,7 @@
   <div class="card-header"><h4>New booking</h4></div>
 
   <div class="card-body">
-    <form [formGroup]="bookingForm">
+    <form [formGroup]="bookingForm" (ngSubmit)="submit()">
       <fieldset>
         <div class="formg-group row">
           <label class="col-6 col-form-label">
@@ -128,9 +128,26 @@
         <br />
         <div class="formg-group row">
           <div class="col-4">
-            <a routerLink="/bookings/personal">
-              <button class="btn btn-primary btn-lg">Book</button>
-            </a>
+            <!-- <a routerLink="/bookings/personal"> -->
+            <button
+              class="btn btn-primary btn-lg"
+              type="submit"
+              [disabled]="!bookingForm.valid"
+            >
+              Book
+            </button>
+            <!-- </a> -->
+            <!--
+              <div
+                *ngIf="
+                  bookingForm.errors?.startDateBiggerThanEndDate &&
+                  (bookingForm.touched || bookingForm.dirty)
+                "
+                class="invalid-feedback"
+              >
+                Start date cannot be larger than end date.
+              </div>
+            -->
           </div>
         </div>
       </fieldset>

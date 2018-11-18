@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams
+} from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
@@ -22,12 +26,12 @@ export abstract class BaseService<TEntity, TEntityListItem, TKey> {
   get(filter: any = null): Observable<TEntityListItem[]> {
     this.logger.info(`get() @ ${this.apiUrl}; filter: ${filter}`);
     if (filter) {
-      let params = new URLSearchParams();
-      for (let key in filter) {
-        params.set(key, filter[key]);
-      }
+      // let params = new HttpParams();
+      // for (let key in filter) {
+      //   params.set(key, filter[key]);
+      // }
       return this.http
-        .get<TEntityListItem[]>(this.apiUrl)
+        .get<TEntityListItem[]>(this.apiUrl, { params: filter })
         .pipe(catchError(this.handleError('get', [])));
     } else {
       return this.http
@@ -41,6 +45,21 @@ export abstract class BaseService<TEntity, TEntityListItem, TKey> {
     return this.http
       .get<TEntity>(`${this.getUrl()}${id}`)
       .pipe(catchError(this.handleError('getById', null)));
+  }
+
+  create(entity: TEntity): Observable<TKey> {
+    this.logger.info(`create @ ${this.apiUrl}`);
+    console.log(entity);
+    return this.http
+      .post<TEntity>(this.getUrl(), entity)
+      .pipe(catchError(this.handleError('create', null)));
+  }
+
+  update(entity: TEntity, id: TKey) {
+    this.logger.info(`update @ ${this.apiUrl}`);
+    this.http
+      .put<TEntity>(`${this.getUrl()}${id}`, entity)
+      .pipe(catchError(this.handleError('update', null)));
   }
 
   getUrl(address: string = null): string {

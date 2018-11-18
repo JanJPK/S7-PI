@@ -18,6 +18,7 @@ using Newtonsoft.Json.Serialization;
 using Vehifleet.Data.DbAccess;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
+using Vehifleet.Data.Models.Enums;
 using Vehifleet.Repositories;
 using Vehifleet.Repositories.Interfaces;
 using Vehifleet.Services;
@@ -164,6 +165,24 @@ namespace Vehifleet.API
                                  m => m.MapFrom(s => s.VehicleSpecification.Horsepower))
                       .ForMember(d => d.Seats,
                                  m => m.MapFrom(s => s.VehicleSpecification.Seats));
+
+                config.CreateMap<BookingDto, Booking>()
+                      .ForMember(d => d.Employee, o => o.Ignore())
+                      .ForMember(d => d.Manager, o => o.Ignore())
+                      .ForMember(d => d.Vehicle, o => o.Ignore())
+                      .ForMember(d => d.AddedOn, o => o.Ignore())
+                      .ForMember(d => d.AddedBy, o => o.Ignore())
+                      .ForMember(d => d.ModifiedOn, o => o.Ignore())
+                      .ForMember(d => d.ModifiedBy, o => o.Ignore());
+
+                config.CreateMap<Booking, BookingListItemDto>()
+                      .ForMember(d => d.Vehicle,
+                                 m => m.MapFrom(s => s.Vehicle.VehicleSpecification.Name))
+                      .ForMember(d => d.EmployeeUserName,
+                                 m => m.MapFrom(s => s.Employee.Identity.UserName))
+                      .ForMember(d => d.Status, 
+                                 m => m.MapFrom(s => s.Status.ToString()));
+
                 config.CreateMap<EmployeeRegisterDto, EmployeeUser>();
                 config.CreateMap<Employee, EmployeeLoginDto>()
                       .ForMember(d => d.UserName,
@@ -174,14 +193,7 @@ namespace Vehifleet.API
                                  m => m.MapFrom(s => s.Identity.LastName))
                       .ForMember(d => d.Department,
                                  m => m.MapFrom(s => s.Identity.Department));
-                config.CreateMap<BookingDto, Booking>()
-                      .ForMember(d => d.Employee, o => o.Ignore())
-                      .ForMember(d => d.Manager, o => o.Ignore())
-                      .ForMember(d => d.Vehicle, o => o.Ignore())
-                      .ForMember(d => d.AddedOn, o => o.Ignore())
-                      .ForMember(d => d.AddedBy, o => o.Ignore())
-                      .ForMember(d => d.ModifiedOn, o => o.Ignore())
-                      .ForMember(d => d.ModifiedBy, o => o.Ignore());
+                
 
             });
         }

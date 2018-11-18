@@ -8,13 +8,13 @@ export class DatepickerConverterService {
   constructor() {}
 
   dateToNgbDate(date: Date): NgbDateStruct {
-    console.log(`Input date: ${date}`);
+    //console.log(`Input date: ${date}`);
     let ngbDate = {
       year: date.getUTCFullYear(),
       month: date.getUTCMonth() + 1,
       day: date.getUTCDate()
     };
-    this.logNgbDate(ngbDate);
+    //this.logNgbDate(ngbDate);
     return ngbDate;
   }
 

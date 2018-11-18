@@ -10,7 +10,6 @@ import { VehicleManagementAddComponent } from './components/vehicle/vehicle-mana
 import { BookingPersonalComponent } from './components/booking/booking-personal/booking-personal.component';
 import { BookingManagementComponent } from './components/booking/booking-management/booking-management.component';
 import { BookingEditComponent } from './components/booking/booking-edit/booking-edit.component';
-import { BookingAddComponent } from './components/booking/booking-add/booking-add.component';
 import { VehicleSpecificationAddComponent } from './components/vehicle-specification/vehicle-specification-add/vehicle-specification-add.component';
 import { VehicleSpecificationEditComponent } from './components/vehicle-specification/vehicle-specification-edit/vehicle-specification-edit.component';
 import { VehicleSpecificationComponent } from './components/vehicle-specification/vehicle-specification/vehicle-specification.component';

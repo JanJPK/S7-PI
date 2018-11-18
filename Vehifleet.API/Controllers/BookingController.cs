@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Transactions;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Vehifleet.API.QueryFilters;
-using Vehifleet.Data.DbAccess;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
 using Vehifleet.Data.Models.Enums;
@@ -44,12 +40,16 @@ namespace Vehifleet.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] BookingFilter filter)
         {
-            var query = bookingRepository.Get();
+            var query = bookingRepository.Get()
+                                         .Include(b => b.Vehicle)
+                                         .ThenInclude(v => v.VehicleSpecification)
+                                         .Include(b => b.Employee)
+                                         .ThenInclude(e => e.Identity);
 
             var bookings = await filter.Filter(query)
                                        .ToListAsync();
 
-            return Ok(Mapper.Map<IEnumerable<BookingListDto>>(bookings));
+            return Ok(Mapper.Map<IEnumerable<BookingListItemDto>>(bookings));
         }
 
         [HttpGet("{id}")]
@@ -67,13 +67,13 @@ namespace Vehifleet.API.Controllers
             }
         }
 
-        [HttpPost("add")]
         public async Task<IActionResult> Create([FromBody] BookingDto bookingDto)
         {
             if (!await vehicleRepository.Exists(bookingDto.VehicleId))
             {
                 return NotFound("No such vehicle.");
             }
+
             if (!await employeeRepository.Exists(bookingDto.EmployeeId))
             {
                 return NotFound("No such employee.");
@@ -84,7 +84,7 @@ namespace Vehifleet.API.Controllers
             vehicle.Status = VehicleStatus.Available;
             await bookingRepository.Insert(booking);
             await vehicleRepository.Update(vehicle);
-            return Ok();
+            return Ok(booking.Id);
         }
 
         [HttpPut("{id}")]
@@ -95,6 +95,7 @@ namespace Vehifleet.API.Controllers
             {
                 return NotFound();
             }
+
             if (oldBooking.Status == BookingStatus.Completed)
             {
                 return BadRequest("Cannot update completed bookings.");
@@ -117,15 +118,15 @@ namespace Vehifleet.API.Controllers
             }
             else
             {
-                await bookingRepository.Update(booking);                
+                await bookingRepository.Update(booking);
             }
 
             return Ok();
         }
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PartialUpdate(int id, [FromBody]JsonPatchDocument<BookingUpdateDto> patch)
-        {            
+        public async Task<IActionResult> PartialUpdate(int id, [FromBody] JsonPatchDocument<BookingUpdateDto> patch)
+        {
             return NotFound();
         }
 

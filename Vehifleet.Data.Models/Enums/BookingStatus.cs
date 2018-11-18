@@ -11,6 +11,6 @@
         Rejected = 3,
         Accepted = 4,
         AwaitingReview = 5,
-        Completed = 6
+        Completed = 6        
     }
 }

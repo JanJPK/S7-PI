@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Vehifleet.Data.Models;
 using Vehifleet.Data.Models.Enums;
 using Vehifleet.Helper.Extensions;
@@ -14,6 +15,10 @@ namespace Vehifleet.API.QueryFilters
         public int? VehicleId { get; set; }
 
         public BookingStatus? Status { get; set; }
+
+        public DateTime? FromDate { get; set; }
+
+        public DateTime? ToDate { get; set; }
 
         public IQueryable<Booking> Filter(IQueryable<Booking> query)
         {
@@ -35,6 +40,16 @@ namespace Vehifleet.API.QueryFilters
             if (Status != null)
             {
                 query = query.Where(b => b.Status == Status);
+            }
+
+            if (FromDate != null)
+            {
+                query = query.Where(b => b.StartDate < FromDate);
+            }
+
+            if (ToDate != null)
+            {
+                query = query.Where(b => b.EndDate < ToDate);
             }
 
             return query;

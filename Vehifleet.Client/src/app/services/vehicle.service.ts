@@ -19,10 +19,4 @@ export class VehicleService extends BaseService<
   constructor(http: HttpClient, logger: LoggerService) {
     super(http, 'vehicles', logger);
   }
-
-  getBookable(): Observable<VehicleListItem[]> {
-    return this.http
-      .get<VehicleListItem[]>(this.getUrl('bookable'))
-      .pipe(catchError(this.handleError('get', [])));
-  }
 }

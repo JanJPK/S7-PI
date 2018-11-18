@@ -73,12 +73,12 @@ export class UserService {
   }
 
   isLoggedIn(): boolean {
-    this.logger.info('Verifying user login');
+    //this.logger.info('Verifying user login');
     if (!this.employeeLogin) {
       return false;
     }
     if (!this.jwtHelper.isTokenExpired(this.getToken())) {
-      this.logger.info('Token is not expired');
+      //this.logger.info('Token is not expired');
       return true;
     } else {
       this.logger.warn('Token is expired');

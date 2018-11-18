@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { EmployeeLogin } from '../classes/employee/employeeLogin';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { LoggerService } from './logger.service';
+import { LoggerService } from './logger/logger.service';
 
 @Injectable({
   providedIn: 'root'

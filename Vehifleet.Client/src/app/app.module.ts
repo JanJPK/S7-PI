@@ -20,8 +20,8 @@ import { BookingEditComponent } from './components/booking/booking-edit/booking-
 import { BookingPersonalComponent } from './components/booking/booking-personal/booking-personal.component';
 import { BookingManagementComponent } from './components/booking/booking-management/booking-management.component';
 import { DashboardUserDetailsComponent } from './components/dashboard/dashboard-user-details/dashboard-user-details.component';
-import { ConsoleLoggerService } from './utility/console-logger.service';
-import { LoggerService } from './utility/logger.service';
+import { ConsoleLoggerService } from './utility/logger/console-logger.service';
+import { LoggerService } from './utility/logger/logger.service';
 import {
   NgbModule,
   NgbDateAdapter,

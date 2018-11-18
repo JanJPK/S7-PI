@@ -28,37 +28,37 @@ const routes: Routes = [
     data: { expectedRoles: [] }
   },
   {
-    path: 'vehicles/manage',
+    path: 'vehicles/',
     component: VehicleManagementComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
   },
   {
-    path: 'vehicles/manage/:id',
+    path: 'vehicles/:id',
     component: VehicleManagementEditComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
   },
   {
-    path: 'vehicles/manage/add',
+    path: 'vehicles/add',
     component: VehicleManagementAddComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
   },
   {
-    path: 'vehiclespecs/manage',
+    path: 'vehiclespecs',
     component: VehicleSpecificationComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
   },
   {
-    path: 'vehiclespecs/manage/:id',
+    path: 'vehiclespecs/:id',
     component: VehicleSpecificationEditComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
   },
   {
-    path: 'vehiclespecs/manage/add',
+    path: 'vehiclespecs/add',
     component: VehicleSpecificationAddComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
@@ -70,22 +70,16 @@ const routes: Routes = [
     data: { expectedRoles: [] }
   },
   {
-    path: 'bookings/manage',
+    path: 'bookings/',
     component: BookingManagementComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
   },
   {
-    path: 'bookings/manage/:id',
+    path: 'bookings/:id',
     component: BookingEditComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
-  },
-  {
-    path: 'bookings/manage/add/:vehicleId',
-    component: BookingAddComponent,
-    canActivate: [AuthGuard],
-    data: { expectedRoles: [] }
   }
 ];
 

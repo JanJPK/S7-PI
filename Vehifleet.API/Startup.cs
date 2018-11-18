@@ -146,30 +146,24 @@ namespace Vehifleet.API
         {
             Mapper.Initialize(config =>
             {
-                //config.CreateMap<Vehicle, VehicleDto>()
-                //      .ForMember(d => d.Manufacturer,
-                //                 m => m.MapFrom(s => s.VehicleSpecification.Manufacturer))
-                //      .ForMember(d => d.Model,
-                //                 m => m.MapFrom(s => s.VehicleSpecification.Model))
-                //      .ForMember(d => d.Horsepower,
-                //                 m => m.MapFrom(s =>s.VehicleSpecification.Horsepower))
-                //      .ForMember(d => d.Seats,
-                //                 m => m.MapFrom(s => s.VehicleSpecification.Seats))
-                //      .ForMember(d => d.InsuranceExpirationDate,
-                //                 m => m.MapFrom(s => s.CurrentInsurance.ExpirationDate))
-                //      .ForMember(d => d.InspectionExpirationDate,
-                //                 m => m.MapFrom(s => s.CurrentInspection.ExpirationDate));
-                //config.CreateMap<Vehicle, VehicleListItemDto>()
-                //      .ForMember(d => d.Manufacturer,
-                //                 m => m.MapFrom(s => s.VehicleSpecification.Manufacturer))
-                //      .ForMember(d => d.Model,
-                //                 m => m.MapFrom(s => s.VehicleSpecification.Model))
-                //      .ForMember(d => d.Horsepower,
-                //                 m => m.MapFrom(s => s.VehicleSpecification.Horsepower))
-                //      .ForMember(d => d.Seats,
-                //                 m => m.MapFrom(s => s.VehicleSpecification.Seats))
-                //      .ForMember(d => d.CanBeBookedUntil,
-                //                 o => o.MapFrom(s => s.CanBeBookedUntil));
+                config.CreateMap<Vehicle, VehicleDto>()
+                      .ForMember(d => d.Manufacturer,
+                                 m => m.MapFrom(s => s.VehicleSpecification.Manufacturer))
+                      .ForMember(d => d.Model,
+                                 m => m.MapFrom(s => s.VehicleSpecification.Model))
+                      .ForMember(d => d.Horsepower,
+                                 m => m.MapFrom(s => s.VehicleSpecification.Horsepower))
+                      .ForMember(d => d.Seats,
+                                 m => m.MapFrom(s => s.VehicleSpecification.Seats));
+                config.CreateMap<Vehicle, VehicleListItemDto>()
+                      .ForMember(d => d.Manufacturer,
+                                 m => m.MapFrom(s => s.VehicleSpecification.Manufacturer))
+                      .ForMember(d => d.Model,
+                                 m => m.MapFrom(s => s.VehicleSpecification.Model))
+                      .ForMember(d => d.Horsepower,
+                                 m => m.MapFrom(s => s.VehicleSpecification.Horsepower))
+                      .ForMember(d => d.Seats,
+                                 m => m.MapFrom(s => s.VehicleSpecification.Seats));
                 config.CreateMap<EmployeeRegisterDto, EmployeeUser>();
                 config.CreateMap<Employee, EmployeeLoginDto>()
                       .ForMember(d => d.UserName,

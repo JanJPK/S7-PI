@@ -11,6 +11,5 @@ export class Vehicle {
   mileage: number;
   horsepower: number;
   seats: number;
-  insuranceExpirationDate: Date;
-  inspectionExpirationDate: Date;
+  canBeBookedUntil: Date;
 }

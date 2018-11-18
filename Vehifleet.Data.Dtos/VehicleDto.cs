@@ -31,9 +31,7 @@ namespace Vehifleet.Data.Dtos
         public int Horsepower { get; set; }
 
         public int Seats { get; set; }
-
-        public DateTime? InsuranceExpirationDate { get; set; }
-
-        public DateTime? InspectionExpirationDate { get; set; }
+        
+        public DateTime CanBeBookedUntil { get; set; }
     }
 }

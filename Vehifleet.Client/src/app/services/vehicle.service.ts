@@ -6,7 +6,7 @@ import { Vehicle } from '../classes/vehicle/vehicle';
 import { VehicleListItem } from '../classes/vehicle/vehicle-list-item';
 import { BaseService } from './base.service';
 import { VehicleListFilter } from '../classes/vehicle/vehicle-list-filter';
-import { LoggerService } from '../utility/logger.service';
+import { LoggerService } from '../utility/logger/logger.service';
 
 @Injectable({
   providedIn: 'root'

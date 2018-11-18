@@ -1,4 +1,4 @@
-\documentclass[eng,printmode]{mgr}
+\documentclass[eng,printmode,openany]{mgr}
 \usepackage[utf8]{inputenc}
 \usepackage{polski}
 \usepackage[polish]{babel}
@@ -42,60 +42,58 @@
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-\chapter{Lorem ipsum}
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nam neque. Morbi interdum. Sed nibh nunc, imperdiet non, malesuada blandit, tempor vel, odio. Aenean in leo ut nulla tempor blandit. Praesent bibendum. Praesent varius imperdiet dolor. Etiam urna eros, lacinia at, scelerisque quis, fringilla vel, lectus. Ut sit amet dui ac pede lobortis varius. Integer mattis, neque non ornare consequat, libero tellus luctus elit, a tempor pede massa nec orci. Aenean ante lacus, feugiat in, lacinia sit amet, lobortis at, leo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Morbi ac ipsum eget est rutrum porttitor. Duis sapien. Sed vel quam. Nullam volutpat facilisis magna. 
+% cel, zakres pracy
+\chapter{Wstęp}
+Celem niniejszej pracy dyplomowej jest opracowanie projektu, implementacja oraz wdrożenie systemu umożliwiającego zarządzanie flotą samochodów. Pierwszym etapem projektu jest zebrane wymagań funkcjonalnych i niefunkcjonalnych, określenie zakresu pracy oraz przegląd istniejących rozwiązań. Drugi etap projektu to wybór technologii i projekt architektury. Ostatnim celem jest implementacja systemu.
 
-Proin iaculis. Proin eu risus et metus hendrerit fermentum. Cras a magna. Nullam at massa sit amet nibh tempor pretium. Donec neque sapien, viverra vel, vestibulum a, vestibulum eu, dolor. Quisque imperdiet pellentesque odio. Praesent eget erat. Praesent tempus odio vitae elit. Nunc sit amet elit. Proin id sapien. Proin a ipsum. Cras rutrum sem eget sapien. Maecenas eu ligula ut turpis ullamcorper mollis. Morbi quam ante, adipiscing eget, sagittis id, molestie id, odio. Maecenas tristique. 
+Temat projektu został wybrany ze względu na chęć wykorzystania wiedzy z dziedziny motoryzacji w celu stworzenia aplikacji ułatwiającej zarządzanie pojazdami. Z uwagi na rosnącą popularność rozwiązań związanych z wypożyczaniem samochodów celem projektu jest system, który można opisać jako wewnątrzfirmową wypożyczalnie umożliwiająca jak największe wykorzystanie dostępnej floty pojazdów przez pracowników, którzy nie mają potrzeby posiadania firmowego samochodu na wyłączność. 
 
-Praesent rutrum sem non mauris. Vivamus ut eros. Vivamus lobortis, justo et varius imperdiet, sapien mi aliquam enim, non ultricies nulla nulla sit amet nibh. Nulla a mauris eget augue congue imperdiet. Quisque sit amet arcu. Sed nonummy. Nullam metus nibh, mattis eget, sollicitudin in, eleifend eu, purus. Sed adipiscing lorem nec turpis. Maecenas sem lorem, fermentum id, sodales vel, cursus at, turpis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque fermentum lacus vitae nulla. Sed velit. 
-
-Ut tincidunt odio quis metus. Nam elementum felis sit amet tortor. Suspendisse nec mi in velit mollis congue. Proin tempor ultrices massa. Donec tincidunt. Ut ornare, urna ac lobortis venenatis, nunc dolor posuere ligula, eget tristique risus arcu id orci. Suspendisse in magna sed turpis tincidunt tempus. Etiam vulputate. Morbi fermentum sapien vel sapien. Nullam feugiat velit ac nunc. Nullam nec leo. 
-
-Vivamus mattis turpis et leo. Curabitur gravida. Aenean venenatis ipsum. Nunc ut tortor. Vivamus rutrum, eros a imperdiet eleifend, lacus sem bibendum neque, vel mollis mauris diam quis arcu. In elit. Ut nec leo. Etiam ac ligula. Pellentesque diam sem, condimentum vitae, interdum in, suscipit sit amet, nisl. Sed libero augue, tristique viverra, laoreet in, faucibus eget, mauris. 
-
-Vivamus sit amet nisi. Integer semper arcu sit amet magna. Proin purus metus, sagittis quis, pulvinar vel, varius sit amet, diam. Duis malesuada. Nunc vulputate felis a nulla. Morbi at massa. Maecenas sed nisi sit amet massa sollicitudin hendrerit. Phasellus dapibus dapibus elit. Vestibulum erat tellus, dapibus sagittis, accumsan ut, volutpat vestibulum, est. Vivamus auctor. Nam consectetuer. Ut in neque quis est rutrum dapibus. Morbi sodales purus ac ligula. Phasellus condimentum ante at felis. 
-
-Curabitur vehicula imperdiet risus. Sed mauris eros, convallis ac, porta ac, vestibulum porttitor, est. Maecenas id mauris. Duis eget quam id turpis sagittis dapibus. Nam tempor nunc ac erat. Donec semper tellus vel pede. Proin consequat. Proin vel velit at nisi luctus egestas. Suspendisse vel erat quis urna sodales auctor. Mauris adipiscing, risus in blandit commodo, erat mi condimentum pede, cursus tristique sem nulla sed nibh. Aliquam et nisl. Nunc ornare. Quisque blandit dolor vitae mauris. Aliquam semper. Pellentesque in massa. Sed fermentum hendrerit dolor. Maecenas pharetra velit. 
-
-Pellentesque hendrerit, tortor sit amet consectetuer ullamcorper, purus risus mollis libero, vel vehicula nibh enim sit amet erat. Mauris vestibulum, augue et fermentum laoreet, libero nulla egestas risus, et vulputate tellus velit vitae diam. Phasellus faucibus nisl nec dui. Donec dignissim. Curabitur tincidunt. Vestibulum pede. Sed sem ipsum, placerat at, pellentesque a, scelerisque at, ipsum. Etiam lacinia risus ut dui. Praesent iaculis tempus nulla. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed laoreet rhoncus mi. 
+W rozdziale pierwszym zawarto wstęp oraz krótki opis celu projektu. Rozdział drugi zawiera opis biznesowy problemu, porównanie z istniejącymi rozwiązaniami oraz wymagania. W kolejnym, trzecim rozdziale znajduje się techniczny opis projektu — wykorzystane technologie i narzędzia oraz architektura systemu.
 
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
-\chapter{Quisque nibh sapien}
-Quisque nibh sapien, lobortis posuere, dignissim id, ultricies ut, est. Cras nec nunc nec ligula placerat ullamcorper. Maecenas consequat consequat nisi. Etiam varius. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut risus velit, vulputate aliquet, tristique nec, ullamcorper et, justo. In hac habitasse platea dictumst. Suspendisse rhoncus venenatis eros. Proin nec lorem nec sem auctor lobortis. Quisque ac dolor. Suspendisse potenti. Maecenas fermentum sem non neque. Cras nonummy commodo libero. Sed in erat. 
+\chapter{Specyfikacja problemu}
+\section{Przegląd istniejących rozwiązań}
+\section{Założenia projektowe}
+\section{Wymagania funkcjonalne}
+\section{Wymagania niefunkcjonalne}
 
-\section{Nulla quis enim ut erat rutrum feugiat}
-Nulla quis enim ut erat rutrum feugiat. Suspendisse lacinia tempor mi. Vestibulum nec lacus sed est rutrum cursus. Cras ultrices est eget pede. Sed ullamcorper ultrices tellus. Nulla lectus. Nunc consectetuer, quam quis sagittis vulputate, dui leo molestie augue, a commodo tellus tortor a turpis. Nam et ipsum. Ut placerat aliquet enim. Suspendisse potenti. Etiam volutpat tortor in mauris. Praesent dapibus congue arcu. 
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 
-\section{Aliquam quis sem}
-Aliquam quis sem. Phasellus tincidunt fringilla metus. Sed id purus. Ut consectetuer urna nec sapien. Sed sed odio sed lectus imperdiet ultricies. Suspendisse semper congue pede. Etiam facilisis sapien nec dolor. Pellentesque sodales rutrum lorem. Aliquam tristique diam ac lacus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis sit amet pede. Suspendisse ut dui. Aliquam massa quam, facilisis in, vulputate non, imperdiet quis, diam. Nullam feugiat. Morbi non dolor et eros fringilla gravida. Pellentesque rhoncus, odio ac fringilla varius, ante nunc hendrerit massa, sed varius est est eu massa. 
+%----------------------------------------------------------------------------------------
+%	SECTION 3
+%----------------------------------------------------------------------------------------
+\chapter{Projekt systemu}
+\section{Technologie}
+Interfejs użytkownika wykorzystuje platformę \textit{Angular 7}. Podstawowymi elementami w \textit{Angular} są komponenty, każdy z nich złożony z: pliku klasy \textit{TypeScript} zawierającej logikę, wzorca \textit{htm} opisującego wygląd widoku oraz opcjonalnego stylu \textit{css}; w przypadku jego braku styl brany jest z komponentu-rodzica. Warto zwrócić uwagę na język programowania wykorzystywany przez platformę \textit{Angular} — \textit{TypeScript}, będący rozszerzeniem języka \textit{JavaScript}. \textit{TypeScript} dodaje silniejsze typowanie i kładzie większy nacisk na programowanie obiektowe, jednocześnie pozostając w pełni kompatybilnym z \textit{JavaScript}, do którego jest kompilowany i  następnie uruchamiany jest w przeglądarce. Proces kompilacji pozwala na usunięcie wielu błędów, które w przypadku \textit{JavaScript} zostałyby zauważone dopiero po uruchomieniu aplikacji.
 
-\begin{itemize}
-\item Mauris nonummy lorem at orci.
-\item Donec accumsan aliquam libero.
-\end{itemize}
+Interfejs programistyczny oparty został na technologii \textit{ASP.NET Core 2.1} — jest to nowoczesna platforma oferująca działanie na wielu systemach operacyjnych oraz większa wydajność względem starszych rozwiązań firmy Microsoft. Wykorzystany język programowania to obiektowy, kompilowany i statycznie typowany \textit{C\# 7.3}. Bardzo ważnym elementem tej części projektu jest \textit{EF (Entity Framework) Core 2.1}, framework ORM (Object-Relational Mapping) pozwalający na konwersję miedzy tabelami bazy danych a klasami \textit{C\#}. Jedną z najważniejszych funkcjonalności \textit{EF Core} jest wykorzystana w niniejszym projekcie możliwość utworzenia bazy danych przy użyciu konwencji \textit{Code First}; baza danych jest automatycznie generowana na podstawie klas \text{C\#} znajdujących się w projekcie. 
+\section{Narzędzia}
+W trakcie realizacji projektu wykorzystane zostały narzędzia najczęściej używane przy wybranych technologiach.
 
-Proin euismod. Curabitur adipiscing ipsum ac augue. Maecenas hendrerit tortor non velit suscipit laoreet. Aenean tempus. Nunc convallis. Aenean sed erat. Etiam massa nulla, interdum pretium, faucibus nec, sollicitudin vitae, lorem. Quisque vulputate cursus pede. Phasellus enim ipsum, lacinia vel, sodales ac, faucibus et, tortor. Aliquam hendrerit. Aliquam erat volutpat. Quisque dui lorem, placerat eu, commodo et, condimentum sed, nibh. Nulla eu orci in nibh pretium tincidunt. Pellentesque mi massa, fringilla eu, vehicula consectetuer, sodales a, nisi. 
+Do zarządzania kodem został wykorzystany system kontroli wersji \textit{Git}. Lokalna kopia projektu była synchronizowana ze zdalnym, prywatnym repozytorium znajdującym się na serwisie \text{GitHub}. Wykorzystane rozwiązanie pozwala na łatwy dostęp do wcześniejszych wersji projektu oraz zmniejsza ryzyko utraty kodu, gdyż nie jest on przechowywany tylko w jednym miejscu.
 
+Ze względu na wykorzystane technologie, kod był rozwijany z pomocą narzędzi Microsoft, oferujących najlepsze wsparcie dla \textit{TypeScript} oraz \textit{C\#}. Aplikacja klienta była rozwijana przy użyciu \textit{Visual Studio Code 1.28}, nowoczesnego edytora który sprawdza się znakomicie przy tworzeniu interfejsów użytkownika ze względu na zintegrowaną konsolę pozwalającą na łatwe zarządzanie paczkami oraz wiele łatwość dostosowywania do potrzeb użytkownika. W trakcie pracy wykorzystano wiele rozszerzeń, najważniejsze z nich to \textit{TSLint}, linter wykrywający błędy w kodzie \textit{TypeScript} oraz \textit{GitLens} — rozszerzenie wspomagające zarządzanie repozytorium \textit{Git}. Do rozwoju serwisów wykorzystano \textit{Visual Studio 2017} pozwalające na łatwe debugowanie kodu oraz analizę aspektów takich jak wykorzystanie zasobów przez program. \textit{Visual Studio} zostało wzbogacone o narzędzie \textit{JetBrains ReSharper} automatycznie formatujące pliki projektu według zadanego wzorca, zapewniając spójność i przejrzystość kodu.
 
-\chapter{Nulla a nisl at nisl dignissim facilisis}
-Nulla a nisl at nisl dignissim facilisis. In sit amet mi. Nunc ullamcorper, ligula vel aliquam pretium, nulla mauris euismod ipsum, sit amet tempus massa nulla non elit. Donec congue. Nulla purus. Aenean dui orci, ornare quis, interdum sed, molestie ac, tellus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Quisque mollis diam nec elit. Maecenas nec enim. Maecenas facilisis urna quis arcu. Fusce posuere. 
-
-Nam laoreet sagittis massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi nulla. Cras eu dolor. Praesent et purus. Praesent mi turpis, ullamcorper ut, adipiscing eget, dictum ut, felis. Phasellus a metus. Etiam vulputate gravida pede. Aenean sit amet massa quis libero dapibus mattis. Suspendisse potenti. Cras placerat. 
+Interfejs programistyczny testowany był przy pomocy \textit{Postman 6.5.2}, aplikacji pozwalającej na wysyłanie oraz zarządzanie zapytaniami HTTP.
 
 %----------------------------------------------------------------------------------------
 %	APPENDIX
 %----------------------------------------------------------------------------------------
-\appendix
-\chapter{Donec cursus nulla vitae pede}
-Donec cursus nulla vitae pede. Etiam quam pede, aliquet ut, pellentesque sed, sagittis non, est. Quisque egestas malesuada risus. Maecenas ultricies libero a quam. Nullam feugiat arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. In interdum, risus ut gravida sollicitudin, leo sapien commodo dui, non consectetuer nisl nunc ac massa. Mauris a orci in eros venenatis euismod. Curabitur orci. Quisque pharetra, dui sed dignissim hendrerit, nibh ante malesuada eros, sed tincidunt magna lorem a tellus. Aliquam erat volutpat. Aenean pulvinar, metus et mattis dictum, massa lacus semper purus, quis vehicula augue mi et leo. Ut eu ipsum. Sed dictum dapibus nisi. Cras mattis.
+%\appendix
+%\chapter{Donec cursus nulla vitae pede}
+%Donec cursus nulla vitae pede. Etiam quam pede, aliquet ut, pellentesque sed, sagittis non, est. Quisque egestas malesuada risus. Maecenas ultricies libero a quam. Nullam feugiat arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. In interdum, risus ut gravida sollicitudin, leo sapien commodo dui, non consectetuer nisl nunc ac massa. Mauris a orci in eros venenatis euismod. Curabitur orci. Quisque pharetra, dui sed dignissim hendrerit, nibh ante malesuada eros, sed tincidunt magna lorem a tellus. Aliquam erat volutpat. Aenean pulvinar, metus et mattis dictum, massa lacus semper purus, quis vehicula augue mi et leo. Ut eu ipsum. Sed dictum dapibus nisi. Cras mattis.
 
 %----------------------------------------------------------------------------------------
 %	END
 %----------------------------------------------------------------------------------------
 \addcontentsline{toc}{chapter}{Bibliografia} %utworzenie w spisie tre¶ci pozycji Bibliografia
 \bibliography{bibliografia} % wstawia bibliografię korzystaj±c z pliku bibliografia.bib - dotyczy BibTeXa, jeżeli nie korzystamy z BibTeXa należy użyć otoczenia thebibliography
+
+%https://angular.io/guide/architecture 3.2
+%https://msdn.microsoft.com/en-us/magazine/dn890374.aspx
+%https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-2.1
 
 %opcjonalnie może się tu pojawić spis rysunków i tabel
 % \listoffigures

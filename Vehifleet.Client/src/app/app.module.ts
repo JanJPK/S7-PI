@@ -7,17 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { DashboardLoginComponent } from './components/dashboard/dashboard-login/dashboard-login.component';
 import { DashboardRegisterComponent } from './components/dashboard/dashboard-register/dashboard-register.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { VehicleBookingComponent } from './components/vehicle/vehicle-booking/vehicle-booking.component';
-import { VehicleBookingDetailsComponent } from './components/vehicle/vehicle-booking/vehicle-booking-details/vehicle-booking-details.component';
-import { VehicleManagementComponent } from './components/vehicle/vehicle-management/vehicle-management.component';
-import { VehicleManagementEditComponent } from './components/vehicle/vehicle-management-edit/vehicle-management-edit.component';
-import { VehicleManagementAddComponent } from './components/vehicle/vehicle-management-add/vehicle-management-add.component';
-import { VehicleSpecificationComponent } from './components/vehicle-specification/vehicle-specification/vehicle-specification.component';
-import { VehicleSpecificationEditComponent } from './components/vehicle-specification/vehicle-specification-edit/vehicle-specification-edit.component';
-import { VehicleSpecificationAddComponent } from './components/vehicle-specification/vehicle-specification-add/vehicle-specification-add.component';
-import { BookingEditComponent } from './components/booking/booking-edit/booking-edit.component';
-import { BookingPersonalComponent } from './components/booking/booking-personal/booking-personal.component';
-import { BookingManagementComponent } from './components/booking/booking-management/booking-management.component';
 import { DashboardUserDetailsComponent } from './components/dashboard/dashboard-user-details/dashboard-user-details.component';
 import { ConsoleLoggerService } from './utility/logger/console-logger.service';
 import { LoggerService } from './utility/logger/logger.service';
@@ -26,7 +15,19 @@ import {
   NgbDateAdapter,
   NgbDateNativeAdapter
 } from '@ng-bootstrap/ng-bootstrap';
-import { VehicleBookingFilterComponent } from './components/vehicle/vehicle-booking/vehicle-booking-filter/vehicle-booking-filter.component';
+import { BookingListComponent } from './components/booking/booking-list/booking-list.component';
+import { BookingListPersonalComponent } from './components/booking/booking-list-personal/booking-list-personal.component';
+import { BookingDetailComponent } from './components/booking/booking-detail/booking-detail.component';
+import { VehicleListComponent } from './components/vehicle/vehicle-list/vehicle-list.component';
+import { VehicleListBookingComponent } from './components/vehicle/vehicle-list-booking/vehicle-list-booking.component';
+import { VehicleDetailComponent } from './components/vehicle/vehicle-detail/vehicle-detail.component';
+import { VehicleListBookingDetailsComponent } from './components/vehicle/vehicle-list-booking/vehicle-list-booking-details/vehicle-list-booking-details.component';
+import { VehicleModelListComponent } from './components/vehicle-model/vehicle-model-list/vehicle-model-list.component';
+import { VehicleModelDetailComponent } from './components/vehicle-model/vehicle-model-detail/vehicle-model-detail.component';
+import { InsuranceListComponent } from './components/insurance/insurance-list/insurance-list.component';
+import { InsuranceDetailComponent } from './components/insurance/insurance-detail/insurance-detail.component';
+import { MaintenanceListComponent } from './components/maintenance/maintenance-list/maintenance-list.component';
+import { MaintenanceDetailComponent } from './components/maintenance/maintenance-detail/maintenance-detail.component';
 
 @NgModule({
   declarations: [
@@ -34,19 +35,20 @@ import { VehicleBookingFilterComponent } from './components/vehicle/vehicle-book
     DashboardComponent,
     DashboardLoginComponent,
     DashboardRegisterComponent,
-    VehicleBookingComponent,
-    VehicleBookingDetailsComponent,
-    VehicleManagementComponent,
-    VehicleManagementEditComponent,
-    VehicleManagementAddComponent,
-    VehicleSpecificationComponent,
-    VehicleSpecificationEditComponent,
-    VehicleSpecificationAddComponent,
-    BookingEditComponent,
-    BookingPersonalComponent,
-    BookingManagementComponent,
     DashboardUserDetailsComponent,
-    VehicleBookingFilterComponent
+    BookingListComponent,
+    BookingListPersonalComponent,
+    BookingDetailComponent,
+    VehicleListComponent,
+    VehicleListBookingComponent,
+    VehicleDetailComponent,
+    VehicleListBookingDetailsComponent,
+    VehicleModelListComponent,
+    VehicleModelDetailComponent,
+    InsuranceListComponent,
+    InsuranceDetailComponent,
+    MaintenanceListComponent,
+    MaintenanceDetailComponent
   ],
   imports: [
     BrowserModule,

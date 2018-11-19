@@ -3,17 +3,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DashboardLoginComponent } from './components/dashboard/dashboard-login/dashboard-login.component';
 import { DashboardRegisterComponent } from './components/dashboard/dashboard-register/dashboard-register.component';
-import { VehicleBookingComponent } from './components/vehicle/vehicle-booking/vehicle-booking.component';
-import { VehicleManagementComponent } from './components/vehicle/vehicle-management/vehicle-management.component';
-import { VehicleManagementEditComponent } from './components/vehicle/vehicle-management-edit/vehicle-management-edit.component';
-import { VehicleManagementAddComponent } from './components/vehicle/vehicle-management-add/vehicle-management-add.component';
-import { BookingPersonalComponent } from './components/booking/booking-personal/booking-personal.component';
-import { BookingManagementComponent } from './components/booking/booking-management/booking-management.component';
-import { BookingEditComponent } from './components/booking/booking-edit/booking-edit.component';
-import { VehicleSpecificationAddComponent } from './components/vehicle-specification/vehicle-specification-add/vehicle-specification-add.component';
-import { VehicleSpecificationEditComponent } from './components/vehicle-specification/vehicle-specification-edit/vehicle-specification-edit.component';
-import { VehicleSpecificationComponent } from './components/vehicle-specification/vehicle-specification/vehicle-specification.component';
 import { AuthGuardService as AuthGuard } from './auth-guard.service';
+import { VehicleListBookingComponent } from './components/vehicle/vehicle-list-booking/vehicle-list-booking.component';
+import { VehicleListComponent } from './components/vehicle/vehicle-list/vehicle-list.component';
+import { VehicleDetailComponent } from './components/vehicle/vehicle-detail/vehicle-detail.component';
+import { BookingListPersonalComponent } from './components/booking/booking-list-personal/booking-list-personal.component';
+import { BookingListComponent } from './components/booking/booking-list/booking-list.component';
+import { BookingDetailComponent } from './components/booking/booking-detail/booking-detail.component';
+import { VehicleModelListComponent } from './components/vehicle-model/vehicle-model-list/vehicle-model-list.component';
+import { VehicleModelDetailComponent } from './components/vehicle-model/vehicle-model-detail/vehicle-model-detail.component';
+import { MaintenanceDetailComponent } from './components/maintenance/maintenance-detail/maintenance-detail.component';
+import { InsuranceDetailComponent } from './components/insurance/insurance-detail/insurance-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -22,61 +22,61 @@ const routes: Routes = [
   { path: 'dashboard/register', component: DashboardRegisterComponent },
   {
     path: 'vehicles/booking',
-    component: VehicleBookingComponent,
+    component: VehicleListBookingComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: [] }
   },
   {
     path: 'vehicles/',
-    component: VehicleManagementComponent,
+    component: VehicleListComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
   },
   {
     path: 'vehicles/:id',
-    component: VehicleManagementEditComponent,
-    canActivate: [AuthGuard],
-    data: { expectedRoles: ['Administrator', 'Manager'] }
-  },
-  {
-    path: 'vehicles/add',
-    component: VehicleManagementAddComponent,
-    canActivate: [AuthGuard],
-    data: { expectedRoles: ['Administrator', 'Manager'] }
-  },
-  {
-    path: 'vehiclespecs',
-    component: VehicleSpecificationComponent,
-    canActivate: [AuthGuard],
-    data: { expectedRoles: ['Administrator', 'Manager'] }
-  },
-  {
-    path: 'vehiclespecs/:id',
-    component: VehicleSpecificationEditComponent,
-    canActivate: [AuthGuard],
-    data: { expectedRoles: ['Administrator', 'Manager'] }
-  },
-  {
-    path: 'vehiclespecs/add',
-    component: VehicleSpecificationAddComponent,
+    component: VehicleDetailComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
   },
   {
     path: 'bookings/personal',
-    component: BookingPersonalComponent,
+    component: BookingListPersonalComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: [] }
   },
   {
     path: 'bookings/',
-    component: BookingManagementComponent,
+    component: BookingListComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
   },
   {
     path: 'bookings/:id',
-    component: BookingEditComponent,
+    component: BookingDetailComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRoles: [] }
+  },
+  {
+    path: 'vehiclemodels/',
+    component: VehicleModelListComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRoles: ['Administrator', 'Manager'] }
+  },
+  {
+    path: 'vehiclemodels/:id',
+    component: VehicleModelDetailComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRoles: ['Administrator', 'Manager'] }
+  },
+  {
+    path: 'insurances/:id',
+    component: InsuranceDetailComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRoles: ['Administrator', 'Manager'] }
+  },
+  {
+    path: 'maintenances/:id',
+    component: MaintenanceDetailComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
   }

@@ -29,7 +29,7 @@ namespace Vehifleet.API.Controllers
             var query = filter.Filter(vehicleRepository.Get());
 
             var vehicles = await query
-                                .Include(v => v.VehicleSpecification)
+                                .Include(v => v.VehicleModel)
                                 .Include(v => v.Location)
                                 .ToListAsync();
 
@@ -48,7 +48,7 @@ namespace Vehifleet.API.Controllers
             var query = filter.Filter(vehicleRepository.Get());
 
             var vehicles = await query
-                                .Include(v => v.VehicleSpecification)
+                                .Include(v => v.VehicleModel)
                                 .Include(v => v.Location)
                                 .ToListAsync();
 

@@ -145,11 +145,13 @@ namespace Vehifleet.Data.DbAccess.Migrations
 
                     b.Property<int>("EmployeeId");
 
-                    b.Property<DateTime?>("EndDate");
+                    b.Property<DateTime>("EndDate");
 
                     b.Property<int>("FuelConsumed");
 
                     b.Property<int?>("ManagerId");
+
+                    b.Property<string>("ManagerNotes");
 
                     b.Property<int>("Mileage");
 
@@ -157,7 +159,8 @@ namespace Vehifleet.Data.DbAccess.Migrations
 
                     b.Property<DateTime?>("ModifiedOn");
 
-                    b.Property<string>("Notes");
+                    b.Property<string>("Purpose")
+                        .IsRequired();
 
                     b.Property<DateTime>("StartDate");
 
@@ -196,8 +199,6 @@ namespace Vehifleet.Data.DbAccess.Migrations
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<string>("LocationCode");
-
                     b.Property<int>("Mileage");
 
                     b.Property<string>("ModifiedBy");
@@ -210,12 +211,10 @@ namespace Vehifleet.Data.DbAccess.Migrations
                         .IsUnique()
                         .HasFilter("[IdentityId] IS NOT NULL");
 
-                    b.HasIndex("LocationCode");
-
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Vehifleet.Data.Models.EmployeeUser", b =>
+            modelBuilder.Entity("Vehifleet.Data.Models.EmployeeIdentity", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -272,43 +271,6 @@ namespace Vehifleet.Data.DbAccess.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Vehifleet.Data.Models.Inspection", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AddedBy")
-                        .IsRequired();
-
-                    b.Property<DateTime>("AddedOn");
-
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(16, 2)");
-
-                    b.Property<DateTime>("ExpirationDate");
-
-                    b.Property<int>("Mileage");
-
-                    b.Property<string>("ModifiedBy");
-
-                    b.Property<DateTime?>("ModifiedOn");
-
-                    b.Property<string>("Notes");
-
-                    b.Property<bool>("Passed");
-
-                    b.Property<DateTime>("StartDate");
-
-                    b.Property<int>("VehicleId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VehicleId");
-
-                    b.ToTable("Inspections");
-                });
-
             modelBuilder.Entity("Vehifleet.Data.Models.Insurance", b =>
                 {
                     b.Property<int>("Id")
@@ -323,18 +285,20 @@ namespace Vehifleet.Data.DbAccess.Migrations
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(16, 2)");
 
-                    b.Property<DateTime>("ExpirationDate");
+                    b.Property<DateTime>("EndDate");
 
                     b.Property<string>("InsuranceId")
                         .IsRequired();
+
+                    b.Property<string>("Insurer")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<int>("Mileage");
 
                     b.Property<string>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedOn");
-
-                    b.Property<string>("Notes");
 
                     b.Property<DateTime>("StartDate");
 
@@ -358,10 +322,16 @@ namespace Vehifleet.Data.DbAccess.Migrations
                     b.Property<DateTime>("AddedOn");
 
                     b.Property<string>("Address")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(40);
 
                     b.Property<string>("City")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(30);
+
+                    b.Property<string>("LocationName")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("ModifiedBy");
 
@@ -385,21 +355,23 @@ namespace Vehifleet.Data.DbAccess.Migrations
 
                     b.Property<bool>("Completed");
 
-                    b.Property<DateTime>("DateEnd");
-
-                    b.Property<DateTime>("DateStart");
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(16, 2)");
 
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<int>("Distance");
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<int>("Mileage");
 
                     b.Property<string>("ModifiedBy");
 
                     b.Property<DateTime?>("ModifiedOn");
 
-                    b.Property<string>("Type")
-                        .IsRequired();
+                    b.Property<bool>("Regular");
+
+                    b.Property<DateTime>("StartDate");
 
                     b.Property<int>("VehicleId");
 
@@ -431,6 +403,8 @@ namespace Vehifleet.Data.DbAccess.Migrations
 
                     b.Property<int>("FuelConsumed");
 
+                    b.Property<DateTime>("InspectionValidUntil");
+
                     b.Property<string>("LicensePlate")
                         .IsRequired()
                         .HasMaxLength(20);
@@ -445,7 +419,7 @@ namespace Vehifleet.Data.DbAccess.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<int>("VehicleSpecificationId");
+                    b.Property<int>("VehicleModelId");
 
                     b.Property<int>("YearOfManufacture");
 
@@ -453,12 +427,12 @@ namespace Vehifleet.Data.DbAccess.Migrations
 
                     b.HasIndex("LocationCode");
 
-                    b.HasIndex("VehicleSpecificationId");
+                    b.HasIndex("VehicleModelId");
 
                     b.ToTable("Vehicles");
                 });
 
-            modelBuilder.Entity("Vehifleet.Data.Models.VehicleSpecification", b =>
+            modelBuilder.Entity("Vehifleet.Data.Models.VehicleModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -476,13 +450,13 @@ namespace Vehifleet.Data.DbAccess.Migrations
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(16, 2)");
 
-                    b.Property<int>("DistanceBetweenOilChange");
+                    b.Property<string>("Engine")
+                        .IsRequired()
+                        .HasMaxLength(60);
 
                     b.Property<int>("FuelConsumed");
 
                     b.Property<int>("Horsepower");
-
-                    b.Property<string>("MaintenanceNotes");
 
                     b.Property<string>("Manufacturer")
                         .IsRequired()
@@ -504,7 +478,7 @@ namespace Vehifleet.Data.DbAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleSpecifications");
+                    b.ToTable("VehicleModels");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -517,7 +491,7 @@ namespace Vehifleet.Data.DbAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Vehifleet.Data.Models.EmployeeUser")
+                    b.HasOne("Vehifleet.Data.Models.EmployeeIdentity")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -525,7 +499,7 @@ namespace Vehifleet.Data.DbAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Vehifleet.Data.Models.EmployeeUser")
+                    b.HasOne("Vehifleet.Data.Models.EmployeeIdentity")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -538,7 +512,7 @@ namespace Vehifleet.Data.DbAccess.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Vehifleet.Data.Models.EmployeeUser")
+                    b.HasOne("Vehifleet.Data.Models.EmployeeIdentity")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -546,7 +520,7 @@ namespace Vehifleet.Data.DbAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Vehifleet.Data.Models.EmployeeUser")
+                    b.HasOne("Vehifleet.Data.Models.EmployeeIdentity")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -572,21 +546,9 @@ namespace Vehifleet.Data.DbAccess.Migrations
 
             modelBuilder.Entity("Vehifleet.Data.Models.Employee", b =>
                 {
-                    b.HasOne("Vehifleet.Data.Models.EmployeeUser", "Identity")
+                    b.HasOne("Vehifleet.Data.Models.EmployeeIdentity", "Identity")
                         .WithOne("Employee")
                         .HasForeignKey("Vehifleet.Data.Models.Employee", "IdentityId");
-
-                    b.HasOne("Vehifleet.Data.Models.Location")
-                        .WithMany("Employees")
-                        .HasForeignKey("LocationCode");
-                });
-
-            modelBuilder.Entity("Vehifleet.Data.Models.Inspection", b =>
-                {
-                    b.HasOne("Vehifleet.Data.Models.Vehicle", "Vehicle")
-                        .WithMany("Inspections")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Vehifleet.Data.Models.Insurance", b =>
@@ -611,9 +573,9 @@ namespace Vehifleet.Data.DbAccess.Migrations
                         .WithMany()
                         .HasForeignKey("LocationCode");
 
-                    b.HasOne("Vehifleet.Data.Models.VehicleSpecification", "VehicleSpecification")
+                    b.HasOne("Vehifleet.Data.Models.VehicleModel", "VehicleModel")
                         .WithMany("Vehicles")
-                        .HasForeignKey("VehicleSpecificationId")
+                        .HasForeignKey("VehicleModelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

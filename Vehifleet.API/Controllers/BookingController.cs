@@ -21,13 +21,13 @@ namespace Vehifleet.API.Controllers
         private readonly IGenericRepository<Booking, int> bookingRepository;
         private readonly IGenericRepository<Vehicle, int> vehicleRepository;
         private readonly IEmployeeRepository employeeRepository;
-        private readonly IGenericRepository<VehicleSpecification, int> vehicleSpecificationRepository;
+        private readonly IGenericRepository<VehicleModel, int> vehicleSpecificationRepository;
         private readonly IStatusService statusService;
 
         public BookingController(IGenericRepository<Booking, int> bookingRepository,
                                  IGenericRepository<Vehicle, int> vehicleRepository,
                                  IEmployeeRepository employeeRepository,
-                                 IGenericRepository<VehicleSpecification, int> vehicleSpecificationRepository,
+                                 IGenericRepository<VehicleModel, int> vehicleSpecificationRepository,
                                  IStatusService statusService)
         {
             this.bookingRepository = bookingRepository;
@@ -42,7 +42,7 @@ namespace Vehifleet.API.Controllers
         {
             var query = bookingRepository.Get()
                                          .Include(b => b.Vehicle)
-                                         .ThenInclude(v => v.VehicleSpecification)
+                                         .ThenInclude(v => v.VehicleModel)
                                          .Include(b => b.Employee)
                                          .ThenInclude(e => e.Identity);
 
@@ -105,7 +105,7 @@ namespace Vehifleet.API.Controllers
             if (booking.Status == BookingStatus.Completed)
             {
                 var vehicle = await vehicleRepository.GetById(booking.VehicleId);
-                var vehicleSpecification = await vehicleSpecificationRepository.GetById(vehicle.VehicleSpecificationId);
+                var vehicleSpecification = await vehicleSpecificationRepository.GetById(vehicle.VehicleModelId);
                 var employee = await employeeRepository.GetById(booking.EmployeeId);
                 vehicleSpecification.AddGeneratedCosts(booking);
                 vehicle.AddGeneratedCosts(booking);

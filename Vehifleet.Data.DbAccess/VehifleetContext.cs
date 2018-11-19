@@ -10,15 +10,13 @@ using Vehifleet.Data.Models.BaseEntities;
 namespace Vehifleet.Data.DbAccess
 {
     public class VehifleetContext 
-        : IdentityDbContext<EmployeeUser>
+        : IdentityDbContext<EmployeeIdentity>
     {
         private readonly IUserAuditService userAuditService;
 
         public DbSet<Booking> Bookings { get; set; }
 
-        public DbSet<Employee> Employees { get; set; }
-
-        public DbSet<Inspection> Inspections { get; set; }
+        public DbSet<Employee> Employees { get; set; }       
 
         public DbSet<Insurance> Insurances { get; set; }
 
@@ -28,7 +26,7 @@ namespace Vehifleet.Data.DbAccess
 
         public DbSet<Vehicle> Vehicles { get; set; }
 
-        public DbSet<VehicleSpecification> VehicleSpecifications { get; set; }
+        public DbSet<VehicleModel> VehicleModels { get; set; }
 
         public VehifleetContext(DbContextOptions<VehifleetContext> options, 
                                 IUserAuditService userAuditService
@@ -54,13 +52,11 @@ namespace Vehifleet.Data.DbAccess
 
                 if (entry.State == EntityState.Added)
                 {
-                    //entity.AddedBy = userAuditService.UserName;
-                    entity.AddedBy = "admin";
+                    entity.AddedBy = userAuditService.UserName;                    
                     entity.AddedOn = DateTime.UtcNow;
                 }
 
                 entity.ModifiedBy = userAuditService.UserName;
-
                 entity.ModifiedOn = DateTime.UtcNow;
             }
 

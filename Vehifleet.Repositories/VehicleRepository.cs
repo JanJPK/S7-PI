@@ -1,10 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vehifleet.Data.DbAccess;
 using Vehifleet.Data.Models;
-using Vehifleet.Data.Models.Enums;
-using Vehifleet.Repositories.Interfaces;
 
 namespace Vehifleet.Repositories
 {
@@ -17,9 +14,8 @@ namespace Vehifleet.Repositories
         public override async Task<Vehicle> GetById(int id)
         {
             return await Set
-                        .Include(v => v.VehicleSpecification)
+                        .Include(v => v.VehicleModel)
                         .Include(v => v.Insurances)
-                        .Include(v => v.Inspections)
                         .Include(v => v.Location)
                         .AsNoTracking()
                         .SingleOrDefaultAsync(v => v.Id == id);

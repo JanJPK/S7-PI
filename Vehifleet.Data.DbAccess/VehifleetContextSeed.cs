@@ -9,99 +9,35 @@ namespace Vehifleet.Data.DbAccess
 {
     public static class VehifleetContextSeed
     {
-        private static readonly Random rng = new Random();
+        #region Static data
 
-        public static void CleanDatabase(this VehifleetContext context)
-        {
-            context.Insurances.RemoveRange(context.Insurances);
-            context.Inspections.RemoveRange(context.Inspections);
-            context.Vehicles.RemoveRange(context.Vehicles);
-            context.VehicleSpecifications.RemoveRange(context.VehicleSpecifications);
-            context.Employees.RemoveRange(context.Employees);
-            context.Locations.RemoveRange(context.Locations);
-            context.Maintenances.RemoveRange(context.Maintenances);
-            context.Bookings.RemoveRange(context.Bookings);
-            context.SaveChanges();
-        }
+        private static readonly Random Rng = new Random();
 
-        /*
-        public static void AddEmployees(this VehifleetContext context)
+        private static readonly List<string> Insurers = new List<string>
         {
-            var employees = new List<Employee>
+            "Protecto",
+            "AutoAssistance",
+            "Goldberg Insurance"
+        };
+
+        private static readonly List<string> PlatePrefixes = new List<string>
+        {
+            "WRO",
+            "OPO",
+            "DWR",
+            "PBK",
+            "GMD"
+        };
+
+        private static readonly char[] AllowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+
+        #endregion
+
+        public static void AddVehicleModels(this VehifleetContext context)
+        {
+            var vehicleModels = new List<VehicleModel>
             {
-                new Employee
-                {
-                    AddedBy = "admin",
-                    AddedOn = DateTime.UtcNow,
-                    IsManager = true,
-                    Name = "Jan",
-                    LastName = "Pajdak",
-                    Role = "Administrator",
-                    Department = "IT",
-                    Username = "admin",
-                    PasswordSalt = Convert.FromBase64String("Tuas4ANg37qH/2Fe8ehn1QgpG8GfBn/jKiDLCkX/u6U="),
-                    PasswordHash = Convert.FromBase64String("trTTG4JwPqG6W22XRAjqS6zoWJJZ4MfKkM1xlJppTOw="),
-                    Mileage = 0,
-                    FuelConsumed = 0,
-                    Cost = 0,
-                },
-                new Employee
-                {
-                    AddedBy = "admin",
-                    AddedOn = DateTime.UtcNow,
-                    IsManager = false,
-                    Name = "Łukasz",
-                    LastName = "Dzik",
-                    Role = "HR Advisor",
-                    Department = "HR",
-                    Username = "ldzik",
-                    PasswordSalt = Convert.FromBase64String("HU9o4lh1afzrP26OgcvI+gtvAx0KbD4YF+W22qpb/5c="),
-                    PasswordHash = Convert.FromBase64String("tKdjFaA2veWxSR47YkFcvdIxk5mwDlhRbxeDwAMDO+Q="),
-                    Mileage = 0,
-                    FuelConsumed = 0,
-                    Cost = 0,
-                },
-                new Employee
-                {
-                    AddedBy = "admin",
-                    AddedOn = DateTime.UtcNow,
-                    IsManager = true,
-                    Name = "Krzysztof",
-                    LastName = "Sarna",
-                    Department = "Sales",
-                    Username = "ksarna",
-                    PasswordSalt = Convert.FromBase64String("iSaAQFSnQ55a7kBQVXLG4xlToDRfBDn4xDAKKbYcwqE="),
-                    PasswordHash = Convert.FromBase64String("6Mo8Svl9gRNEYLmewQdwiu5wRxjM6Zeug6Cdc8S8a7I="),
-                    Mileage = 0,
-                    FuelConsumed = 0,
-                    Cost = 0,
-                },
-                new Employee
-                {
-                    AddedBy = "admin",
-                    AddedOn = DateTime.UtcNow,
-                    IsManager = false,
-                    Name = "Wojciech",
-                    LastName = "Struś",
-                    Department = "Sales",
-                    Username = "wstrus",
-                    PasswordSalt = Convert.FromBase64String("2x6PLBVWyxXke+62mifu7rcwHaItMdCSIcfT8cQ+e/o="),
-                    PasswordHash = Convert.FromBase64String("YWaTtJLU/qUViifqrelfZryAewhEHFaohunFWsGpwHQ="),
-                    Mileage = 0,
-                    FuelConsumed = 0,
-                    Cost = 0,
-                }
-            };
-            context.Employees.AddRange(employees);
-            context.SaveChanges();
-        }
-        */
-
-        public static void AddVehicleSpecifications(this VehifleetContext context)
-        {
-            var vehicleSpecifications = new List<VehicleSpecification>
-            {
-                new VehicleSpecification
+                new VehicleModel
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
@@ -113,10 +49,9 @@ namespace Vehifleet.Data.DbAccess
                     Weight = 1200,
                     Mileage = 0,
                     FuelConsumed = 0,
-                    Cost = 0,
-                    DistanceBetweenOilChange = 15000
+                    Cost = 0
                 },
-                new VehicleSpecification
+                new VehicleModel
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
@@ -128,10 +63,9 @@ namespace Vehifleet.Data.DbAccess
                     Weight = 1150,
                     Mileage = 0,
                     FuelConsumed = 0,
-                    Cost = 0,
-                    DistanceBetweenOilChange = 14000
+                    Cost = 0
                 },
-                new VehicleSpecification
+                new VehicleModel
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
@@ -143,10 +77,9 @@ namespace Vehifleet.Data.DbAccess
                     Weight = 1300,
                     Mileage = 0,
                     FuelConsumed = 0,
-                    Cost = 0,
-                    DistanceBetweenOilChange = 15000
+                    Cost = 0
                 },
-                new VehicleSpecification
+                new VehicleModel
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
@@ -158,10 +91,9 @@ namespace Vehifleet.Data.DbAccess
                     Weight = 1300,
                     Mileage = 0,
                     FuelConsumed = 0,
-                    Cost = 0,
-                    DistanceBetweenOilChange = 17000
+                    Cost = 0
                 },
-                new VehicleSpecification
+                new VehicleModel
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
@@ -173,10 +105,9 @@ namespace Vehifleet.Data.DbAccess
                     Weight = 1270,
                     Mileage = 0,
                     FuelConsumed = 0,
-                    Cost = 0,
-                    DistanceBetweenOilChange = 15000
+                    Cost = 0
                 },
-                new VehicleSpecification
+                new VehicleModel
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
@@ -188,10 +119,9 @@ namespace Vehifleet.Data.DbAccess
                     Weight = 1300,
                     Mileage = 0,
                     FuelConsumed = 0,
-                    Cost = 0,
-                    DistanceBetweenOilChange = 15000
+                    Cost = 0
                 },
-                new VehicleSpecification
+                new VehicleModel
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
@@ -203,10 +133,9 @@ namespace Vehifleet.Data.DbAccess
                     Weight = 1400,
                     Mileage = 0,
                     FuelConsumed = 0,
-                    Cost = 0,
-                    DistanceBetweenOilChange = 15000
+                    Cost = 0
                 },
-                new VehicleSpecification
+                new VehicleModel
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
@@ -218,10 +147,9 @@ namespace Vehifleet.Data.DbAccess
                     Weight = 1200,
                     Mileage = 0,
                     FuelConsumed = 0,
-                    Cost = 0,
-                    DistanceBetweenOilChange = 15000
+                    Cost = 0
                 },
-                new VehicleSpecification
+                new VehicleModel
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
@@ -233,10 +161,9 @@ namespace Vehifleet.Data.DbAccess
                     Weight = 1250,
                     Mileage = 0,
                     FuelConsumed = 0,
-                    Cost = 0,
-                    DistanceBetweenOilChange = 15000
+                    Cost = 0
                 },
-                new VehicleSpecification
+                new VehicleModel
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
@@ -248,11 +175,10 @@ namespace Vehifleet.Data.DbAccess
                     Weight = 1100,
                     Mileage = 0,
                     FuelConsumed = 0,
-                    Cost = 0,
-                    DistanceBetweenOilChange = 15000
+                    Cost = 0
                 },
             };
-            context.VehicleSpecifications.AddRange(vehicleSpecifications);
+            context.VehicleModels.AddRange(vehicleModels);
             context.SaveChanges();
         }
 
@@ -267,6 +193,7 @@ namespace Vehifleet.Data.DbAccess
                     Address = "Brzozowa 45",
                     City = "Wrocław",
                     LocationCode = "WRO-1",
+                    LocationName = "Grey Towers"
                 },
                 new Location
                 {
@@ -275,6 +202,7 @@ namespace Vehifleet.Data.DbAccess
                     Address = "Świerkowa 21",
                     City = "Wrocław",
                     LocationCode = "WRO-2",
+                    LocationName = "GMD Building"
                 },
                 new Location
                 {
@@ -283,6 +211,7 @@ namespace Vehifleet.Data.DbAccess
                     Address = "Smogowa 96",
                     City = "Kraków",
                     LocationCode = "KRK-1",
+                    LocationName = "Smog Center"
                 },
                 new Location
                 {
@@ -291,6 +220,7 @@ namespace Vehifleet.Data.DbAccess
                     Address = "Lipowa 88",
                     City = "Wrocław",
                     LocationCode = "WRO-3",
+                    LocationName = "Exquisite Center"
                 },
                 new Location
                 {
@@ -299,10 +229,41 @@ namespace Vehifleet.Data.DbAccess
                     Address = "Garncarska 4",
                     City = "Opole",
                     LocationCode = "OPO-1",
+                    LocationName = "Golden Tower"
                 }
             };
             context.Locations.AddRange(locations);
             context.SaveChanges();
+        }
+
+        #region Vehicle seeding
+
+        public static string GeneratePlate()
+        {
+            StringBuilder plate = new StringBuilder();
+            plate.Append($"{PlatePrefixes[Rng.Next(PlatePrefixes.Count)]} ");
+            char[] postfix =
+            {
+                AllowedChars[Rng.Next(0, AllowedChars.Length)],
+                AllowedChars[Rng.Next(0, AllowedChars.Length)],
+                AllowedChars[Rng.Next(0, AllowedChars.Length)],
+                AllowedChars[Rng.Next(0, AllowedChars.Length)],
+            };
+
+            string platePostfix = new string(postfix);
+            plate.Append(platePostfix);
+            return plate.ToString();
+        }
+
+        public static string GenerateChassisCode()
+        {
+            StringBuilder code = new StringBuilder();
+            for (int j = 0; j < 12; j++)
+            {
+                code.Append(AllowedChars[Rng.Next(0, AllowedChars.Length)]);
+            }
+
+            return code.ToString();
         }
 
         public static void AddVehicles(this VehifleetContext context, int vehicleCount = 30)
@@ -311,77 +272,50 @@ namespace Vehifleet.Data.DbAccess
                                       .OrderByDescending(v => v.Id)
                                       .First().Id;
             newVehicleId++;
-            int lastVehicleSpecificationId = context.VehicleSpecifications
+            int lastVehicleSpecificationId = context.VehicleModels
                                                     .OrderByDescending(v => v.Id)
                                                     .First().Id;
             var locations = context.Locations.ToList();
             var vehicles = new List<Vehicle>();
             var insurances = new List<Insurance>();
-            var inspections = new List<Inspection>();
-            var platePrefix = new List<string>
-            {
-                "WRO",
-                "OPO",
-                "DWR",
-                "PBK",
-                "GMD"
-            };
 
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
             for (int i = 0; i < vehicleCount; i++)
             {
-                StringBuilder plate = new StringBuilder();
-                plate.Append($"{platePrefix[rng.Next(platePrefix.Count)]} ");
-                char[] postfix = 
-                {
-                    chars[rng.Next(0, chars.Length)],
-                    chars[rng.Next(0, chars.Length)],
-                    chars[rng.Next(0, chars.Length)],
-                    chars[rng.Next(0, chars.Length)],
-                };
-                string platePostfix = new string(postfix);
-                plate.Append(platePostfix);
-
-                StringBuilder code = new StringBuilder();
-                for (int j = 0; j < 12; j++)
-                {
-                    code.Append(chars[rng.Next(0, chars.Length)]);
-                }
-
-                int yearOfManufacture = rng.Next(2015, 2019);
-                int mileage = (2018 - yearOfManufacture) * rng.Next(3000, 7000);
-                int fuelConsumed = (int) (rng.Next(40, 70) * mileage / 1000);
+                var plate = GeneratePlate();
+                var code = GenerateChassisCode();
+                int yearOfManufacture = Rng.Next(2015, 2019);
+                int mileage = (2018 - yearOfManufacture) * Rng.Next(3000, 7000);
+                int fuelConsumed = (int) (Rng.Next(40, 70) * mileage / 1000);
                 decimal cost = fuelConsumed * 6;
                 vehicles.Add(new Vehicle
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
-                    VehicleSpecificationId = rng.Next(1, lastVehicleSpecificationId),
-                    ChassisCode = code.ToString(),
-                    LicensePlate = plate.ToString(),
+                    VehicleModelId = Rng.Next(1, lastVehicleSpecificationId),
+                    ChassisCode = code,
+                    LicensePlate = plate,
                     YearOfManufacture = yearOfManufacture,
                     Status = VehicleStatus.Available,
                     Mileage = mileage,
                     FuelConsumed = fuelConsumed,
                     Cost = cost,
-                    LocationCode = locations[rng.Next(0, locations.Count)].LocationCode
+                    LocationCode = locations[Rng.Next(0, locations.Count)].LocationCode,
+                    InspectionValidUntil = new DateTime(2019, Rng.Next(0, 12), Rng.Next(0, 20))
                 });
 
                 AddInsurances(vehicles.Last(), newVehicleId, insurances);
-                AddInspections(vehicles.Last(), newVehicleId, inspections);
                 newVehicleId++;
             }
 
             context.Vehicles.AddRange(vehicles);
             context.SaveChanges();
             context.Insurances.AddRange(insurances);
-            context.Inspections.AddRange(inspections);
             context.SaveChanges();
         }
 
         public static void AddInsurances(Vehicle vehicle, int vehicleId, List<Insurance> insurances)
         {
-            DateTime start = new DateTime(vehicle.YearOfManufacture, rng.Next(1, 12), rng.Next(1, 25));
+            DateTime start = new DateTime(vehicle.YearOfManufacture, Rng.Next(1, 12), Rng.Next(1, 25));
             int mileagePart = vehicle.Mileage / (2019 - vehicle.YearOfManufacture);
             while (true)
             {
@@ -390,15 +324,16 @@ namespace Vehifleet.Data.DbAccess
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
-                    Cost = rng.Next(600, 800),
+                    Cost = Rng.Next(600, 800),
                     StartDate = start,
-                    ExpirationDate = end,
-                    InsuranceId = $"FXA-{start.Year}" +
+                    EndDate = end,
+                    Insurer = Insurers[Rng.Next(0, Insurers.Count)],
+                    InsuranceId = $"INS-{start.Year}" +
                                   $"-{start.Month}" +
                                   $"-{start.Day}" +
-                                  $"-{1000 + rng.Next(0, 200) + start.Day}",
+                                  $"-{1000 + Rng.Next(0, 200) + start.Day}",
                     VehicleId = vehicleId,
-                    Mileage = (start.Year * mileagePart)
+                    Mileage = start.Year * mileagePart
                 });
                 if (end.Year == 2019)
                 {
@@ -411,33 +346,6 @@ namespace Vehifleet.Data.DbAccess
             }
         }
 
-        public static void AddInspections(Vehicle vehicle, int vehicleId, List<Inspection> inspections)
-        {
-            DateTime start = new DateTime(vehicle.YearOfManufacture, rng.Next(1, 12), rng.Next(1, 25));
-            int mileagePart = vehicle.Mileage / (2019 - vehicle.YearOfManufacture);
-            while (true)
-            {
-                DateTime end = start.AddYears(1);
-                inspections.Add(new Inspection
-                {
-                    AddedBy = "admin",
-                    AddedOn = DateTime.UtcNow,
-                    Cost = 100,
-                    StartDate = start,
-                    ExpirationDate = end,
-                    VehicleId = vehicleId,
-                    Mileage = start.Year * mileagePart,
-                    Passed = true
-                });
-                if (end.Year == 2019)
-                {
-                    return;
-                }
-                else
-                {
-                    start = end;
-                }
-            }
-        }
+        #endregion
     }
 }

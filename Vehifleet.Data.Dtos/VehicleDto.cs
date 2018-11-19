@@ -1,4 +1,5 @@
 ﻿using System;
+using Vehifleet.Data.Models;
 
 namespace Vehifleet.Data.Dtos
 {
@@ -8,13 +9,9 @@ namespace Vehifleet.Data.Dtos
     /// </summary>
     public class VehicleDto
     {
-        public int Id { get; set; }
+        public int Id { get; set; }        
 
-        public int VehicleSpecificationId { get; set; }
-
-        public string Manufacturer { get; set; }
-
-        public string Model { get; set; }
+        public VehicleModel VehicleModel { get; set; }
 
         public string Status { get; set; }
 
@@ -27,10 +24,6 @@ namespace Vehifleet.Data.Dtos
         public string LocationCode { get; set; }
 
         public int Mileage { get; set; }
-
-        public int Horsepower { get; set; }
-
-        public int Seats { get; set; }
         
         public DateTime CanBeBookedUntil { get; set; }
     }

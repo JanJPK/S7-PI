@@ -36,29 +36,29 @@ namespace Vehifleet.Data.Dtos.Validators
                .When(b => b.Status > BookingStatus.Submitted)
                .WithMessage("Manager Id cannot be empty for bookings past Submitted state.");
 
-            RuleFor(b => b.Mileage)
-               .NotNull()
-               .GreaterThan(0)
-               .When(b => b.Status >= BookingStatus.AwaitingReview)
-               .WithMessage("Valid mileage must be submitted for bookings past Accepted state.");
+            //RuleFor(b => b.Mileage)
+            //   .NotNull()
+            //   .GreaterThan(0)
+            //   .When(b => b.Status >= BookingStatus.AwaitingReview)
+            //   .WithMessage("Valid mileage must be submitted for bookings past Accepted state.");
 
-            RuleFor(b => b.FuelConsumed)
-               .NotNull()
-               .GreaterThan(0)
-               .When(b => b.Status >= BookingStatus.AwaitingReview)
-               .WithMessage("Valid fuel consumption must be submitted for bookings past Accepted state.");
+            //RuleFor(b => b.FuelConsumed)
+            //   .NotNull()
+            //   .GreaterThan(0)
+            //   .When(b => b.Status >= BookingStatus.AwaitingReview)
+            //   .WithMessage("Valid fuel consumption must be submitted for bookings past Accepted state.");
 
-            RuleFor(b => b.Cost)
-               .NotNull()
-               .GreaterThan(0)
-               .When(b => b.Status >= BookingStatus.AwaitingReview)
-               .WithMessage("Valid cost must be submitted for bookings past Accepted state.");
+            //RuleFor(b => b.Cost)
+            //   .NotNull()
+            //   .GreaterThan(0)
+            //   .When(b => b.Status >= BookingStatus.AwaitingReview)
+            //   .WithMessage("Valid cost must be submitted for bookings past Accepted state.");
 
-            RuleFor(b => b.Notes)
-               .NotNull()
-               .NotEmpty()
-               .When(b => b.Status >= BookingStatus.NeedsAdjustment)
-               .WithMessage("Booking returned for adjustments must have a note.");
+            //RuleFor(b => b.Notes)
+            //   .NotNull()
+            //   .NotEmpty()
+            //   .When(b => b.Status >= BookingStatus.NeedsAdjustment)
+            //   .WithMessage("Booking returned for adjustments must have a note.");
         }
     }
 }

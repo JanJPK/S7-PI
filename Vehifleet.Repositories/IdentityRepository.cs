@@ -6,13 +6,13 @@ using Vehifleet.Repositories.Interfaces;
 
 namespace Vehifleet.Repositories
 {
-    public class IdentityRepository : GenericRepository<EmployeeUser, string>
+    public class IdentityRepository : GenericRepository<EmployeeIdentity, string>
     {
         public IdentityRepository(VehifleetContext context) : base(context)
         {
         }
 
-        public override Task<EmployeeUser> GetById(string id)
+        public override Task<EmployeeIdentity> GetById(string id)
         {
             return Set.SingleOrDefaultAsync(i => i.Id == id);
         }

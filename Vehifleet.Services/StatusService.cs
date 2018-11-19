@@ -20,12 +20,10 @@ namespace Vehifleet.Services
                 {BookingStatus.Created, new[] {BookingStatus.Submitted}},
                 {
                     BookingStatus.Submitted,
-                    new[] {BookingStatus.Accepted, BookingStatus.Rejected, BookingStatus.NeedsAdjustment}
-                },
-                {BookingStatus.NeedsAdjustment, new[] {BookingStatus.Submitted}},
+                    new[] {BookingStatus.Accepted, BookingStatus.Rejected}
+                },                
                 {BookingStatus.Rejected, null},
-                {BookingStatus.Accepted, new[] {BookingStatus.AwaitingReview}},
-                {BookingStatus.AwaitingReview, new[] {BookingStatus.Completed}},
+                {BookingStatus.Accepted, new[] {BookingStatus.Completed}}
             };
 
         public IEnumerable<BookingStatus> GetBookingStatuses()

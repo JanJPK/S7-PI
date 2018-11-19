@@ -5,7 +5,10 @@ using Vehifleet.Data.Models.BaseEntities;
 
 namespace Vehifleet.Data.Models
 {
-    public class VehicleSpecification : CostGeneratingEntity
+    /// <summary>
+    ///     Vehicle technical specifications.
+    /// </summary>
+    public class VehicleModel : CostGeneratingEntity
     {
         [Key]
         public int Id { get; set; }
@@ -23,6 +26,10 @@ namespace Vehifleet.Data.Models
         public string ConfigurationCode { get; set; }
 
         [Required]
+        [MaxLength(60)]
+        public string Engine { get; set; }
+        
+        [Required]
         public int Horsepower { get; set; }
 
         [Required]
@@ -30,11 +37,6 @@ namespace Vehifleet.Data.Models
 
         [Required]
         public int Weight { get; set; }
-
-        [Required]
-        public int DistanceBetweenOilChange { get; set; }
-
-        public string MaintenanceNotes { get; set; }
 
         public virtual ICollection<Vehicle> Vehicles { get; set;  }
 

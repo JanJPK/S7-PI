@@ -5,6 +5,9 @@ using Vehifleet.Data.Models.BaseEntities;
 
 namespace Vehifleet.Data.Models
 {
+    /// <summary>
+    ///     Employee data related to business logic only.
+    /// </summary>
     public class Employee : CostGeneratingEntity
     {
         [Key]
@@ -13,7 +16,7 @@ namespace Vehifleet.Data.Models
         [ForeignKey("EmployeeIdentity")]
         public string IdentityId { get; set; }
 
-        public virtual EmployeeUser Identity { get; set; }
+        public virtual EmployeeIdentity Identity { get; set; }
 
         public bool IsActive { get; set; }
 

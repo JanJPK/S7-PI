@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 using AutoMapper;
 using FluentValidation.AspNetCore;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +16,6 @@ using Newtonsoft.Json.Serialization;
 using Vehifleet.Data.DbAccess;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
-using Vehifleet.Data.Models.Enums;
 using Vehifleet.Repositories;
 using Vehifleet.Repositories.Interfaces;
 using Vehifleet.Services;
@@ -51,10 +48,10 @@ namespace Vehifleet.API
             services.AddCors(o =>
             {
                 o.AddPolicy("AllowAllOriginsHeadersAndMethods",
-                               builder => { builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
+                            builder => { builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); });
             });
 
-            services.AddIdentityCore<EmployeeUser>(options => { options.User.RequireUniqueEmail = true; })
+            services.AddIdentityCore<EmployeeIdentity>(options => { options.User.RequireUniqueEmail = true; })
                     .AddEntityFrameworkStores<VehifleetContext>()
                     .AddDefaultTokenProviders();
 
@@ -86,7 +83,7 @@ namespace Vehifleet.API
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = key,
 
-                    ValidateLifetime = true,                    
+                    ValidateLifetime = true,
                     RequireExpirationTime = false,
                     ClockSkew = TimeSpan.Zero
                 };
@@ -94,7 +91,7 @@ namespace Vehifleet.API
             });
 
             services.AddAuthorization(o =>
-            {                
+            {
                 o.AddPolicy("RequireEmployeeRole", p => p.RequireRole("Employee"));
                 o.AddPolicy("requireElevatedRights", p => p.RequireRole("Administrator", "Manager"));
                 //o.AddPolicy("ApiUser", policy => policy.RequireClaim("rol", "api_access"));
@@ -104,18 +101,17 @@ namespace Vehifleet.API
             services.AddDbContext<VehifleetContext>(c => c.UseSqlServer(Configuration["ConnectionStrings:VehifleetDb"]));
             services.AddScoped<IGenericRepository<Booking, int>, BookingRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            services.AddScoped<IGenericRepository<EmployeeUser, string>, IdentityRepository>();
-            services.AddScoped<IGenericRepository<Inspection, int>, InspectionRepository>();
+            services.AddScoped<IGenericRepository<EmployeeIdentity, string>, IdentityRepository>();
             services.AddScoped<IGenericRepository<Insurance, int>, InsuranceRepository>();
             services.AddScoped<IGenericRepository<Location, string>, LocationRepository>();
             services.AddScoped<IGenericRepository<Maintenance, int>, MaintenanceRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IGenericRepository<Vehicle, int>, VehicleRepository>();
-            services.AddScoped<IGenericRepository<VehicleSpecification, int>, VehicleSpecificationRepository>();
+            services.AddScoped<IGenericRepository<VehicleModel, int>, VehicleModelRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserAuditService, UserAuditService>();
             services.AddScoped<IStatusService, StatusService>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();            
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -147,25 +143,24 @@ namespace Vehifleet.API
         {
             Mapper.Initialize(config =>
             {
-                config.CreateMap<Vehicle, VehicleDto>()
-                      .ForMember(d => d.Manufacturer,
-                                 m => m.MapFrom(s => s.VehicleSpecification.Manufacturer))
-                      .ForMember(d => d.Model,
-                                 m => m.MapFrom(s => s.VehicleSpecification.Model))
-                      .ForMember(d => d.Horsepower,
-                                 m => m.MapFrom(s => s.VehicleSpecification.Horsepower))
-                      .ForMember(d => d.Seats,
-                                 m => m.MapFrom(s => s.VehicleSpecification.Seats));
+                config.CreateMap<Vehicle, VehicleDto>();
+                config.CreateMap<VehicleDto, Vehicle>()
+                      .ForMember(d => d.Bookings, m => m.Ignore())
+                      .ForMember(d => d.Insurances, m => m.Ignore())
+                      .ForMember(d => d.Maintenances, m => m.Ignore())
+                      .ForMember(d => d.Location, m => m.Ignore())
+                      .ForMember(d => d.VehicleModel, m => m.Ignore());
                 config.CreateMap<Vehicle, VehicleListItemDto>()
                       .ForMember(d => d.Manufacturer,
-                                 m => m.MapFrom(s => s.VehicleSpecification.Manufacturer))
+                                 m => m.MapFrom(s => s.VehicleModel.Manufacturer))
                       .ForMember(d => d.Model,
-                                 m => m.MapFrom(s => s.VehicleSpecification.Model))
+                                 m => m.MapFrom(s => s.VehicleModel.Model))
                       .ForMember(d => d.Horsepower,
-                                 m => m.MapFrom(s => s.VehicleSpecification.Horsepower))
+                                 m => m.MapFrom(s => s.VehicleModel.Horsepower))
                       .ForMember(d => d.Seats,
-                                 m => m.MapFrom(s => s.VehicleSpecification.Seats));
+                                 m => m.MapFrom(s => s.VehicleModel.Seats));
 
+                config.CreateMap<Booking, BookingDto>();
                 config.CreateMap<BookingDto, Booking>()
                       .ForMember(d => d.Employee, o => o.Ignore())
                       .ForMember(d => d.Manager, o => o.Ignore())
@@ -174,16 +169,15 @@ namespace Vehifleet.API
                       .ForMember(d => d.AddedBy, o => o.Ignore())
                       .ForMember(d => d.ModifiedOn, o => o.Ignore())
                       .ForMember(d => d.ModifiedBy, o => o.Ignore());
-
                 config.CreateMap<Booking, BookingListItemDto>()
                       .ForMember(d => d.Vehicle,
-                                 m => m.MapFrom(s => s.Vehicle.VehicleSpecification.Name))
+                                 m => m.MapFrom(s => s.Vehicle.VehicleModel.Name))
                       .ForMember(d => d.EmployeeUserName,
                                  m => m.MapFrom(s => s.Employee.Identity.UserName))
-                      .ForMember(d => d.Status, 
+                      .ForMember(d => d.Status,
                                  m => m.MapFrom(s => s.Status.ToString()));
 
-                config.CreateMap<EmployeeRegisterDto, EmployeeUser>();
+                config.CreateMap<EmployeeRegisterDto, EmployeeIdentity>();
                 config.CreateMap<Employee, EmployeeLoginDto>()
                       .ForMember(d => d.UserName,
                                  m => m.MapFrom(s => s.Identity.UserName))
@@ -193,8 +187,6 @@ namespace Vehifleet.API
                                  m => m.MapFrom(s => s.Identity.LastName))
                       .ForMember(d => d.Department,
                                  m => m.MapFrom(s => s.Identity.Department));
-                
-
             });
         }
     }

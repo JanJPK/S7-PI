@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Vehifleet.Data.Models.BaseEntities;
 
 namespace Vehifleet.Data.Models
@@ -10,11 +9,15 @@ namespace Vehifleet.Data.Models
         public string LocationCode { get; set; }
 
         [Required]
+        [MaxLength(50)]
+        public string LocationName { get; set; }
+
+        [Required]
+        [MaxLength(30)]
         public string City { get; set; }
 
         [Required]
+        [MaxLength(40)]
         public string Address { get; set; }
-
-        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

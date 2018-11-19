@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Vehifleet.Data.Models.BaseEntities;
 using Vehifleet.Data.Models.Enums;
 
 namespace Vehifleet.Data.Models
 {
+    /// <summary>
+    ///     Single booking of a vehicle.
+    /// </summary>
     public class Booking : CostGeneratingEntity
     {
         [Key]
@@ -21,6 +23,7 @@ namespace Vehifleet.Data.Models
 
         public virtual Employee Employee { get; set; }
 
+        // Accepting manager.
         public int? ManagerId { get; set; }
 
         public virtual Employee Manager { get; set; }
@@ -31,9 +34,12 @@ namespace Vehifleet.Data.Models
         [Required]
         public DateTime StartDate { get; set; }
 
-        public DateTime? EndDate { get; set; }
+        [Required]
+        public DateTime EndDate { get; set; }
 
-        public string Notes { get; set; }
+        [Required]
+        public string Purpose { get; set; }
 
+        public string ManagerNotes { get; set; }
     }
 }

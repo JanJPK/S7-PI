@@ -5,13 +5,13 @@ using Vehifleet.Data.Models;
 
 namespace Vehifleet.Repositories
 {
-    public class VehicleSpecificationRepository : GenericRepository<VehicleSpecification, int>
+    public class VehicleModelRepository : GenericRepository<VehicleModel, int>
     {
-        public VehicleSpecificationRepository(VehifleetContext context) : base(context)
+        public VehicleModelRepository(VehifleetContext context) : base(context)
         {
         }
 
-        public override Task<VehicleSpecification> GetById(int id)
+        public override Task<VehicleModel> GetById(int id)
         {
             return Set.SingleOrDefaultAsync(vs => vs.Id == id);
         }

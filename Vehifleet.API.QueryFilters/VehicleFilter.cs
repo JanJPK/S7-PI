@@ -23,12 +23,12 @@ namespace Vehifleet.API.QueryFilters
         {
             if (Manufacturer.NotNullOrEmpty())
             {
-                query = query.Where(v => Manufacturer.Any(m => m == v.VehicleSpecification.Manufacturer));
+                query = query.Where(v => Manufacturer.Any(m => m == v.VehicleModel.Manufacturer));
             }
 
             if (Model.NotNullOrEmpty())
             {
-                query = query.Where(v => Model.Any(m => m == v.VehicleSpecification.Model));
+                query = query.Where(v => Model.Any(m => m == v.VehicleModel.Model));
             }
 
             if (LocationCode.NotNullOrEmpty())
@@ -38,7 +38,7 @@ namespace Vehifleet.API.QueryFilters
 
             if (MinBookingDays == null && MinBookingDays > 0)
             {
-                query = query.Where(v => (v.CanBeBookedUntil - DateTime.UtcNow).Days > MinBookingDays);
+                query = query.Where(v => (v.InspectionValidUntil - DateTime.UtcNow).Days > MinBookingDays);
             }
 
             if (Enum.TryParse(Status, out VehicleStatus status))

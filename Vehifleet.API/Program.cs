@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -18,19 +17,18 @@ namespace Vehifleet.API
             using (var scope = host.Services.CreateScope())
             {
                 try
-                {                    
+                {
                     var context = scope.ServiceProvider.GetService<VehifleetContext>();
-                    var configuration = scope.ServiceProvider.GetService<IConfiguration>();                    
+                    var configuration = scope.ServiceProvider.GetService<IConfiguration>();
                     if (Convert.ToBoolean(configuration["Database:SeedOnStartup"]))
                     {
-                        context.CleanDatabase();
                         //context.SeedDatabase();
                     }
                 }
                 catch (Exception ex)
                 {
                     var logger = scope.ServiceProvider.GetService<ILogger<Program>>();
-                    logger.LogError(ex, "Exception occured during database migration or seeding.");                    
+                    logger.LogError(ex, "Exception occured during database migration or seeding.");
                 }
             }
 

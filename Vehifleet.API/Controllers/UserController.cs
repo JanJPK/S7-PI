@@ -22,7 +22,7 @@ namespace Vehifleet.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] EmployeeRegisterDto dto)
         {
-            var identity = Mapper.Map<EmployeeUser>(dto);
+            var identity = Mapper.Map<EmployeeIdentity>(dto);
 
             if (await userService.CreateUser(identity, dto.Password))
             {

@@ -16,14 +16,14 @@ namespace Vehifleet.Services
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<EmployeeUser> userManager;
-        private readonly IGenericRepository<EmployeeUser, string> identityRepository;
+        private readonly UserManager<EmployeeIdentity> userManager;
+        private readonly IGenericRepository<EmployeeIdentity, string> identityRepository;
         private readonly IEmployeeRepository employeeRepository;
         private readonly IRoleRepository roleRepository;
         private readonly JwtOptions jwtOptions;
 
-        public UserService(UserManager<EmployeeUser> userManager,
-                           IGenericRepository<EmployeeUser, string> identityRepository,
+        public UserService(UserManager<EmployeeIdentity> userManager,
+                           IGenericRepository<EmployeeIdentity, string> identityRepository,
                            IEmployeeRepository employeeRepository,
                            IRoleRepository roleRepository,
                            IOptions<JwtOptions> jwtOptions)
@@ -56,7 +56,7 @@ namespace Vehifleet.Services
         }
 
         // TODO: Refactor entire registering process with SecureString / byte[] for password       
-        public async Task<bool> CreateUser(EmployeeUser identity, string password)
+        public async Task<bool> CreateUser(EmployeeIdentity identity, string password)
         {
             var result = await userManager.CreateAsync(identity, password);
             if (result.Succeeded)
@@ -92,7 +92,7 @@ namespace Vehifleet.Services
             }
         }
 
-        private async Task<IEnumerable<Claim>> CreateClaims(EmployeeUser identity)
+        private async Task<IEnumerable<Claim>> CreateClaims(EmployeeIdentity identity)
         {
             //var genericIdentity = new GenericIdentity(identity.UserName, "Token");
             var claims = new List<Claim>

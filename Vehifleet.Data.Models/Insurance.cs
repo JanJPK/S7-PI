@@ -5,6 +5,9 @@ using Vehifleet.Data.Models.BaseEntities;
 
 namespace Vehifleet.Data.Models
 {
+    /// <summary>
+    ///     Insurance of a vehicle.
+    /// </summary>
     public class Insurance : AuditableEntity
     {
         [Key]
@@ -19,13 +22,15 @@ namespace Vehifleet.Data.Models
         public DateTime StartDate { get; set; }
 
         [Required]
-        public DateTime ExpirationDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(16, 2)")]
         public decimal Cost { get; set; }
 
-        public string Notes { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string Insurer { get; set; }
 
         [Required]
         public string InsuranceId { get; set; }

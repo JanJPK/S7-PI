@@ -11,7 +11,7 @@ namespace Vehifleet.Data.Dtos
     {
         public int Id { get; set; }        
 
-        public VehicleModel VehicleModel { get; set; }
+        public int VehicleModelId { get; set; }
 
         public string Status { get; set; }
 
@@ -23,8 +23,11 @@ namespace Vehifleet.Data.Dtos
 
         public string LocationCode { get; set; }
 
-        public int Mileage { get; set; }
-        
+        public DateTime InspectionValidUntil { get; set; }
+
         public DateTime CanBeBookedUntil { get; set; }
+
+        public int Mileage { get; set; }
+
     }
 }

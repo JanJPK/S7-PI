@@ -21,20 +21,20 @@ namespace Vehifleet.Data.Dtos.Validators
                .GreaterThan(0)
                .WithMessage("Invalid employee Id.");                                    
 
-            RuleFor(b => b.StartDate)
-               .LessThan(b => b.EndDate)
-               .When(b => b.EndDate != null)
-               .WithMessage("End date cannot be smaller than start date.");
+            //RuleFor(b => b.StartDate)
+            //   .LessThan(b => b.EndDate)
+            //   .When(b => b.EndDate != null)
+            //   .WithMessage("End date cannot be smaller than start date.");
 
-            RuleFor(b => b.EndDate)
-               .NotNull()
-               .When(b => b.Status >= BookingStatus.Submitted)
-               .WithMessage("Cannot submit booking request without end date.");
-
-            RuleFor(b => b.ManagerId)
-               .GreaterThan(0)
-               .When(b => b.Status > BookingStatus.Submitted)
-               .WithMessage("Manager Id cannot be empty for bookings past Submitted state.");
+            //RuleFor(b => b.EndDate)
+            //   .NotNull()
+            //   .When(b => b.Status >= BookingStatus.Submitted)
+            //   .WithMessage("Cannot submit booking request without end date.");
+            //
+            //RuleFor(b => b.ManagerId)
+            //   .GreaterThan(0)
+            //   .When(b => b.Status > BookingStatus.Submitted)
+            //   .WithMessage("Manager Id cannot be empty for bookings past Submitted state.");
 
             //RuleFor(b => b.Mileage)
             //   .NotNull()

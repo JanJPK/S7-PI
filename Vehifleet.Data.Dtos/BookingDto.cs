@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Vehifleet.Data.Models.Enums;
 
 namespace Vehifleet.Data.Dtos
 {
@@ -17,12 +16,16 @@ namespace Vehifleet.Data.Dtos
         public int? ManagerId { get; set; }
 
         [Required]
-        public BookingStatus Status { get; set; }
+        public string Status { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
 
-        public DateTime? EndDate { get; set; }
+        [Required]
+        public DateTime EndDate { get; set; }
+
+        [Required]
+        public string Purpose { get; set; }
 
         public string Notes { get; set; }
 

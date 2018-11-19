@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vehifleet.API.QueryFilters;
@@ -67,6 +66,7 @@ namespace Vehifleet.API.Controllers
             }
         }
 
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] BookingDto bookingDto)
         {
             if (!await vehicleRepository.Exists(bookingDto.VehicleId))
@@ -124,12 +124,6 @@ namespace Vehifleet.API.Controllers
             return Ok();
         }
 
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> PartialUpdate(int id, [FromBody] JsonPatchDocument<BookingUpdateDto> patch)
-        {
-            return NotFound();
-        }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -148,7 +142,6 @@ namespace Vehifleet.API.Controllers
             vehicle.Status = VehicleStatus.Available;
             await bookingRepository.Delete(id);
             await vehicleRepository.Update(vehicle);
-
             return Ok();
         }
     }

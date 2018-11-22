@@ -38,6 +38,10 @@ namespace Vehifleet.Data.Models
         [Required]
         public int Weight { get; set; }
 
+        [Required]
+        [Column(TypeName = "decimal(16, 2)")]
+        public decimal PurchaseCost { get; set; }
+
         public virtual ICollection<Vehicle> Vehicles { get; set;  }
 
         [NotMapped]

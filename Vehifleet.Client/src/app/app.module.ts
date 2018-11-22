@@ -28,6 +28,7 @@ import { InsuranceListComponent } from './components/insurance/insurance-list/in
 import { InsuranceDetailComponent } from './components/insurance/insurance-detail/insurance-detail.component';
 import { MaintenanceListComponent } from './components/maintenance/maintenance-list/maintenance-list.component';
 import { MaintenanceDetailComponent } from './components/maintenance/maintenance-detail/maintenance-detail.component';
+import { VehicleListFilterComponent } from './components/vehicle/vehicle-list-filter/vehicle-list-filter.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MaintenanceDetailComponent } from './components/maintenance/maintenance
     InsuranceListComponent,
     InsuranceDetailComponent,
     MaintenanceListComponent,
-    MaintenanceDetailComponent
+    MaintenanceDetailComponent,
+    VehicleListFilterComponent
   ],
   imports: [
     BrowserModule,

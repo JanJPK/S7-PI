@@ -18,6 +18,12 @@ export class DatepickerConverterService {
     return ngbDate;
   }
 
+  addDays(date: Date, days: number): Date {
+    var newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + days);
+    return newDate;
+  }
+
   logNgbDate(date: NgbDateStruct) {
     console.log(`${date.day} ${date.month} ${date.year}`);
   }

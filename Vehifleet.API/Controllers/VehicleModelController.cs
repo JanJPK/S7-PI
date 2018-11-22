@@ -12,7 +12,7 @@ using Vehifleet.Repositories.Interfaces;
 namespace Vehifleet.API.Controllers
 {
     [ApiController]
-    [Route("api/vehiclemodels")]
+    [Route("api/vehicle-models")]
     //[Authorize(Policy = "RequireEmployeeRole")]
     public class VehicleModelController : ControllerBase
     {
@@ -33,7 +33,7 @@ namespace Vehifleet.API.Controllers
 
             var vehicleModels = await query.ToListAsync();
 
-            return Ok(Mapper.Map<IEnumerable<VehicleModelListItemDto>>(vehicleModels));
+            return Ok(Mapper.Map<IEnumerable<VehicleModelDto>>(vehicleModels));
         }
 
         [HttpGet("{id}")]

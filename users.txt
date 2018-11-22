@@ -1,0 +1,48 @@
+
+"FirstName": "Jan",
+"LastName": "Pajdak",
+"Department": "IT",
+"Email": "jpajdak@somedomain.com",
+"PhoneNumber": "123 456 789",
+"UserName": "admin",
+"Password": "Admin!@#4"
+
+"FirstName": "Sebastian",
+"LastName": "Sebastianowski",
+"Department": "Sales",
+"Email": "ssebastianowski@somedomain.com",
+"PhoneNumber": "123 456 789",
+"UserName": "ssebastianowski",
+"Password": "Pass!@#4"
+
+"FirstName": "Marek",
+"LastName": "Markowski",
+"Department": "Sales",
+"Email": "mmarkowski@somedomain.com",
+"PhoneNumber": "123 456 789",
+"UserName": "mmarkowski",
+"Password": "Pass!@#4"
+
+"FirstName": "Zygmunt",
+"LastName": "Zygmuntowski",
+"Department": "Sales",
+"Email": "zzygmuntowski@somedomain.com",
+"PhoneNumber": "123 456 789",
+"UserName": "zzygmuntowski",
+"Password": "Pass!@#4"
+
+"FirstName": "Krzysztof",
+"LastName": "Krzysztofowski",
+"Department": "Management",
+"Email": "kkrzysztofowski@somedomain.com",
+"PhoneNumber": "123 456 789",
+"UserName": "kkrzysztofowski",
+"Password": "Pass!@#4"
+
+"FirstName": "Wojciech",
+"LastName": "Wojciechowski",
+"Department": "Management",
+"Email": "wwojciechowski@somedomain.com",
+"PhoneNumber": "123 456 789",
+"UserName": "wwojciechowski",
+"Password": "Pass!@#4"

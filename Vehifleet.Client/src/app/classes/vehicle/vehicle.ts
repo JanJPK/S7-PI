@@ -1,6 +1,6 @@
 export class Vehicle {
   id: number;
-  vehicleSpecificationId: number;
+  vehicleModelId: number;
   manufacturer: string;
   model: string;
   status: string;
@@ -11,5 +11,6 @@ export class Vehicle {
   mileage: number;
   horsepower: number;
   seats: number;
+  engine: string;
   canBeBookedUntil: Date;
 }

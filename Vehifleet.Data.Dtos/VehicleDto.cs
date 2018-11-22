@@ -13,6 +13,18 @@ namespace Vehifleet.Data.Dtos
 
         public int VehicleModelId { get; set; }
 
+        public string Manufacturer { get; set; }
+
+        public string Model { get; set; }
+
+        public int Seats { get; set; }
+
+        public int Horsepower { get; set; }
+
+        public string Engine { get; set; }
+
+        //public VehicleModel VehicleModel { get; set; }
+
         public string Status { get; set; }
 
         public string LicensePlate { get; set; }

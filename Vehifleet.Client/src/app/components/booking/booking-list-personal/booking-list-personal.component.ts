@@ -4,6 +4,7 @@ import { BookingService } from 'src/app/services/booking.service';
 import { Booking } from 'src/app/classes/booking/booking';
 import { BookingListFilter } from 'src/app/classes/booking/booking-list-filter';
 import { BookingListItem } from 'src/app/classes/booking/booking-list-item';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-booking-list-personal',
@@ -16,7 +17,8 @@ export class BookingListPersonalComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private bookingService: BookingService
+    private bookingService: BookingService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -29,5 +31,9 @@ export class BookingListPersonalComponent implements OnInit {
     this.bookingService
       .get(filter)
       .subscribe(bookings => (this.bookings = bookings));
+  }
+
+  selectBooking(id: number) {
+    this.router.navigate([`/bookings/${id}`]);
   }
 }

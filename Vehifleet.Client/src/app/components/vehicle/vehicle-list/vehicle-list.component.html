@@ -1,3 +1,41 @@
-<p>
-  vehicle-list works!
-</p>
+<div class="row">
+  <div class="col-8">
+    <div class="card border-light mb-3">
+      <div class="card-header">
+        <app-vehicle-list-filter></app-vehicle-list-filter>
+      </div>
+
+      <div class="card-body">
+        <div class="tableFixed">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Manufacturer</th>
+                <th>Model</th>
+                <th>YOM</th>
+                <th>Seats</th>
+                <th>Horsepower</th>
+                <th>Location</th>
+                <th>Available until</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let vehicle of vehicles"
+                (click)="selectVehicle(vehicle.id)"
+              >
+                <td>{{ vehicle.manufacturer }}</td>
+                <td>{{ vehicle.model }}</td>
+                <td>{{ vehicle.yearOfManufacture }}</td>
+                <td>{{ vehicle.seats }}</td>
+                <td>{{ vehicle.horsepower }}</td>
+                <td>{{ vehicle.locationCode }}</td>
+                <td>{{ vehicle.canBeBookedUntil | date: format:timezone }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

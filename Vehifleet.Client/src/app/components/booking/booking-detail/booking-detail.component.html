@@ -1,3 +1,51 @@
-<p>
-  booking-detail works!
-</p>
+<div class="row">
+  <div class="col">
+    <div *ngIf="booking">
+      <div class="card border-light mb-3" style="max-width: 30rem;">
+        <div class="card-header">
+          <div *ngIf="newBooking; else: booking"><h4>New booking</h4></div>
+          <ng-template #booking>
+            <h4>Booking #{{ booking.id }}</h4>
+          </ng-template>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="bookingForm">
+            <fieldset>
+              <div class="formg-group row">
+                <label class="col-6 col-form-label">Start date:</label>
+                <div class="col-6">
+                  <input
+                    type="text"
+                    formControlName="startDate"
+                    ngbDatepicker
+                    #sd="ngbDatepicker"
+                    (click)="sd.toggle()"
+                    [minDate]="startDateMin"
+                    [maxDate]="startDateMax"
+                  />
+                </div>
+              </div>
+              <div class="formg-group row">
+                <label class="col-6 col-form-label">Enddate:</label>
+                <div class="col-6">
+                  <input
+                    type="text"
+                    formControlName="endDate"
+                    ngbDatepicker
+                    #ed="ngbDatepicker"
+                    (click)="ed.toggle()"
+                    [minDate]="endDateMin"
+                    [maxDate]="endDateMax"
+                  />
+                </div>
+              </div>
+            </fieldset>
+          </form>
+          <p>{{ booking.id }}</p>
+          <p>{{ booking.vehicleId }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

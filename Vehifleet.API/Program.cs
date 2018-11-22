@@ -19,7 +19,7 @@ namespace Vehifleet.API
                 try
                 {
                     var context = scope.ServiceProvider.GetService<VehifleetContext>();
-                    var configuration = scope.ServiceProvider.GetService<IConfiguration>();
+                    var configuration = scope.ServiceProvider.GetService<IConfiguration>();                    
                     if (Convert.ToBoolean(configuration["Database:SeedOnStartup"]))
                     {
                         //context.SeedDatabase();

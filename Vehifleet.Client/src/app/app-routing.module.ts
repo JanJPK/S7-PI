@@ -16,7 +16,7 @@ import { MaintenanceDetailComponent } from './components/maintenance/maintenance
 import { InsuranceDetailComponent } from './components/insurance/insurance-detail/insurance-detail.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'dashboard/login', component: DashboardLoginComponent },
   { path: 'dashboard/register', component: DashboardRegisterComponent },
@@ -27,7 +27,7 @@ const routes: Routes = [
     data: { expectedRoles: [] }
   },
   {
-    path: 'vehicles/',
+    path: 'vehicles',
     component: VehicleListComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
@@ -45,7 +45,7 @@ const routes: Routes = [
     data: { expectedRoles: [] }
   },
   {
-    path: 'bookings/',
+    path: 'bookings',
     component: BookingListComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
@@ -57,13 +57,13 @@ const routes: Routes = [
     data: { expectedRoles: [] }
   },
   {
-    path: 'vehiclemodels/',
+    path: 'vehicle-models',
     component: VehicleModelListComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
   },
   {
-    path: 'vehiclemodels/:id',
+    path: 'vehicle-models/:id',
     component: VehicleModelDetailComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }

@@ -1,3 +1,78 @@
-<p>
-  vehicle-detail works!
-</p>
+<div class="row justify-content-center">
+  <div *ngIf="vehicle">
+    <div class="card border-light">
+      <div class="card-header">
+        <h4>
+          {{ vehicle.manufacturer }} {{ vehicle.model }} ({{
+            vehicle.yearOfManufacture
+          }})
+        </h4>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="vehicleForm">
+          <fieldset>
+            <div class="form-group">
+              <label>Status:</label> <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Location code:</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Can be booked until:</label>
+              <input type="text" class="form-control" />
+            </div>
+          </fieldset>
+        </form>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="vehicleForm">
+          <fieldset>
+            <div class="form-group">
+              <label>License plate:</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Year of manufacture:</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Chassis code:</label>
+              <input type="text" class="form-control" />
+            </div>
+          </fieldset>
+        </form>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="vehicleForm">
+          <fieldset>
+            <div class="form-group">
+              <label>Cost (PLN):</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Fuel consumed (litres):</label>
+              <input type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Mileage (km):</label>
+              <input type="text" class="form-control" />
+            </div>
+          </fieldset>
+        </form>
+      </div>
+
+      <div class="card-body">
+        <div class="btn-group" role="group">
+          <button class="btn btn-primary mb-3">Update</button>
+          <button class="btn btn-danger mb-3">Delete</button>
+        </div>
+      </div>
+
+      <div class="card-footer text-muted">2 days ago</div>
+    </div>
+  </div>
+</div>

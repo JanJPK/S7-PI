@@ -27,53 +27,61 @@ export class BookingDetailComponent implements OnInit {
   bookingForm = new FormGroup(
     {
       startDate: new FormControl('', Validators.required),
-      endDate: new FormControl('', Validators.required)
+      endDate: new FormControl('', Validators.required),
+      status: new FormControl(''),
+      purpose: new FormControl('', Validators.required),
+      notes: new FormControl('')
     },
     { validators: timeSpanValidator }
   );
-  newBooking: boolean;
+  isNewBooking: boolean;
   startDateMin: NgbDateStruct;
   startDateMax: NgbDateStruct;
   endDateMin: NgbDateStruct;
   endDateMax: NgbDateStruct;
 
   ngOnInit() {
-    let vehicleId: number;
-    let id: number;
-    id = +this.route.snapshot.paramMap.get('id');
+    this.getBooking();
+  }
+
+  getBooking() {
+    const id = +this.route.snapshot.paramMap.get('id');
     if (id != 0) {
-      this.newBooking = false;
+      // Loading booking
+      this.isNewBooking = false;
       this.bookingService.getById(id).subscribe(booking => {
         this.booking = booking;
         this.vehicleService
           .getById(this.booking.vehicleId)
           .subscribe(vehicle => {
             this.vehicle = vehicle;
-            this.setUpDatepicker();
-            console.log(this.booking);
-            this.bookingForm.patchValue({
-              startDate: this.booking.startDate,
-              endDate: this.booking.endDate
-            });
+            this.setUpForm();
           });
       });
     } else {
-      this.newBooking = true;
+      // Creating new booking
+      this.isNewBooking = true;
       this.booking = new Booking();
-      vehicleId = +this.route.snapshot.paramMap.get('vehicleId');
+      this.booking.status = 'Created';
+      this.booking.startDate = new Date();
+      this.booking.endDate = this.datepickerConverter.addDays(new Date(), 2);
+      const vehicleId = +this.route.snapshot.paramMap.get('vehicleId');
       this.vehicleService.getById(vehicleId).subscribe(vehicle => {
         this.vehicle = vehicle;
-        this.setUpDatepicker();
+        this.setUpForm();
       });
     }
   }
 
-  submit() {
-    this.booking.startDate = new Date(this.bookingForm.get('startDate').value);
-    this.booking.endDate = new Date(this.bookingForm.get('endDate').value);
-    this.booking.status = 'Created';
-    let bookingId: number;
-    this.bookingService.create(this.booking).subscribe(id => (bookingId = id));
+  setUpForm() {
+    this.bookingForm.patchValue({
+      startDate: this.booking.startDate,
+      endDate: this.booking.endDate,
+      status: this.booking.status,
+      purpose: this.booking.purpose,
+      notes: this.booking.notes
+    });
+    this.setUpDatepicker();
   }
 
   setUpDatepicker() {
@@ -94,5 +102,16 @@ export class BookingDetailComponent implements OnInit {
       endDateMax = this.datepickerConverter.addDays(endDateMax, -1);
     }
     this.endDateMax = this.datepickerConverter.dateToNgbDate(endDateMax);
+  }
+
+  isCurrentStatus(status: string): boolean {
+    return this.booking.status == status;
+  }
+
+  submit() {
+    this.booking.startDate = new Date(this.bookingForm.get('startDate').value);
+    this.booking.endDate = new Date(this.bookingForm.get('endDate').value);
+    let bookingId: number;
+    this.bookingService.create(this.booking).subscribe(id => (bookingId = id));
   }
 }

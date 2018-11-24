@@ -32,3 +32,8 @@ $accentColor: #3a5066;
   top: 0;
   background: $accentColor;
 }
+
+.card {
+  max-width: calc(40vw);
+  min-width: calc(30vw);
+}

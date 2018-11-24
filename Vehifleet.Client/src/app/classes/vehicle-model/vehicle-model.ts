@@ -7,4 +7,15 @@ export class VehicleModel {
   horsepower: number;
   seats: number;
   weight: number;
+
+  // Auditable:
+  addedBy: string;
+  addedOn: Date;
+  modifiedBy: string;
+  modifiedOn: Date;
+
+  // CostGenerating:
+  cost: number;
+  fuelConsumed: number;
+  mileage: number;
 }

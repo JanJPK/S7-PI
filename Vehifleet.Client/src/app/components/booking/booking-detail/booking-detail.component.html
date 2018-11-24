@@ -1,51 +1,91 @@
-<div class="row">
-  <div class="col">
-    <div *ngIf="booking">
-      <div class="card border-light mb-3" style="max-width: 30rem;">
-        <div class="card-header">
-          <div *ngIf="newBooking; else: booking"><h4>New booking</h4></div>
-          <ng-template #booking>
-            <h4>Booking #{{ booking.id }}</h4>
-          </ng-template>
+<div class="row justify-content-center">
+  <div *ngIf="booking">
+    <div class="card border-light">
+      <div class="card-header">
+        <div *ngIf="isNewBooking; else: existingBooking">
+          <h4>New booking</h4>
         </div>
+        <ng-template #existingBooking>
+          <h4>Booking ${{ booking.id }}</h4>
+        </ng-template>
+      </div>
 
-        <div class="card-body">
-          <form [formGroup]="bookingForm">
-            <fieldset>
-              <div class="formg-group row">
-                <label class="col-6 col-form-label">Start date:</label>
-                <div class="col-6">
-                  <input
-                    type="text"
-                    formControlName="startDate"
-                    ngbDatepicker
-                    #sd="ngbDatepicker"
-                    (click)="sd.toggle()"
-                    [minDate]="startDateMin"
-                    [maxDate]="startDateMax"
-                  />
-                </div>
-              </div>
-              <div class="formg-group row">
-                <label class="col-6 col-form-label">Enddate:</label>
-                <div class="col-6">
-                  <input
-                    type="text"
-                    formControlName="endDate"
-                    ngbDatepicker
-                    #ed="ngbDatepicker"
-                    (click)="ed.toggle()"
-                    [minDate]="endDateMin"
-                    [maxDate]="endDateMax"
-                  />
-                </div>
-              </div>
-            </fieldset>
-          </form>
-          <p>{{ booking.id }}</p>
-          <p>{{ booking.vehicleId }}</p>
+      <div class="card-body">
+        <form [formGroup]="bookingForm">
+          <fieldset>
+            <div class="form-group">
+              <label>Status:</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="status"
+              />
+            </div>
+            <div class="form-group">
+              <label>Start date:</label>
+              <input
+                type="text"
+                formControlName="startDate"
+                ngbDatepicker
+                #sd="ngbDatepicker"
+                (click)="sd.toggle()"
+                [minDate]="startDateMin"
+                [maxDate]="startDateMax"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label>End date:</label>
+              <input
+                type="text"
+                formControlName="endDate"
+                ngbDatepicker
+                #ed="ngbDatepicker"
+                (click)="ed.toggle()"
+                [minDate]="endDateMin"
+                [maxDate]="endDateMax"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label>Purpose:</label>
+              <textarea
+                type="text"
+                rows="5"
+                class="form-control"
+                formControlName="purpose"
+              ></textarea>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="vehicleForm">
+          <fieldset>
+            <div class="form-group">
+              <label>Manager notes:</label>
+              <textarea
+                type="text"
+                rows="5"
+                class="form-control"
+                formControlName="notes"
+              ></textarea>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+
+      <div class="card-body">
+        <div class="btn-group" role="group">
+          <div *ngIf="isCurrentState('Created')">
+            <button class="btn btn-primary mb-3">Submit</button>
+            <button class="btn btn-danger mb-3">Delete</button>
+          </div>
         </div>
       </div>
+
+      <div class="card-footer text-muted">2 days ago</div>
     </div>
   </div>
 </div>

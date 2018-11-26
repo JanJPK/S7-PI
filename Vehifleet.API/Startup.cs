@@ -16,6 +16,7 @@ using Newtonsoft.Json.Serialization;
 using Vehifleet.Data.DbAccess;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
+using Vehifleet.Helper.Extensions;
 using Vehifleet.Repositories;
 using Vehifleet.Repositories.Interfaces;
 using Vehifleet.Services;
@@ -144,6 +145,8 @@ namespace Vehifleet.API
             Mapper.Initialize(config =>
             {
                 config.CreateMap<Vehicle, VehicleDto>()
+                      .ForMember(d => d.Status, 
+                                 m => m.MapFrom(d => d.Status.ToString().AddSpaces()))
                       .ForMember(d => d.Engine, 
                                  m => m.MapFrom(s => s.VehicleModel.Engine))
                       .ForMember(d => d.Horsepower,
@@ -155,6 +158,8 @@ namespace Vehifleet.API
                       .ForMember(d => d.Model,
                                  m => m.MapFrom(s => s.VehicleModel.Model));                
                 config.CreateMap<VehicleDto, Vehicle>()
+                      .ForMember(d => d.Status, 
+                                 m => m.MapFrom(s => s.Status.RemoveSpaces()))
                       .ForMember(d => d.Bookings, m => m.Ignore())
                       .ForMember(d => d.Insurances, m => m.Ignore())
                       .ForMember(d => d.Maintenances, m => m.Ignore())

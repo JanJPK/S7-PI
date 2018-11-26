@@ -1,78 +1,180 @@
-<div class="row justify-content-center">
-  <div *ngIf="vehicle">
-    <div class="card border-light">
-      <div class="card-header">
-        <h4>
-          {{ vehicle.manufacturer }} {{ vehicle.model }} ({{
-            vehicle.yearOfManufacture
-          }})
-        </h4>
-      </div>
-
-      <div class="card-body">
-        <form [formGroup]="vehicleForm">
-          <fieldset>
-            <div class="form-group">
-              <label>Status:</label> <input type="text" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label>Location code:</label>
-              <input type="text" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label>Can be booked until:</label>
-              <input type="text" class="form-control" />
-            </div>
-          </fieldset>
-        </form>
-      </div>
-
-      <div class="card-body">
-        <form [formGroup]="vehicleForm">
-          <fieldset>
-            <div class="form-group">
-              <label>License plate:</label>
-              <input type="text" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label>Year of manufacture:</label>
-              <input type="text" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label>Chassis code:</label>
-              <input type="text" class="form-control" />
-            </div>
-          </fieldset>
-        </form>
-      </div>
-
-      <div class="card-body">
-        <form [formGroup]="vehicleForm">
-          <fieldset>
-            <div class="form-group">
-              <label>Cost (PLN):</label>
-              <input type="text" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label>Fuel consumed (litres):</label>
-              <input type="text" class="form-control" />
-            </div>
-            <div class="form-group">
-              <label>Mileage (km):</label>
-              <input type="text" class="form-control" />
-            </div>
-          </fieldset>
-        </form>
-      </div>
-
-      <div class="card-body">
-        <div class="btn-group" role="group">
-          <button class="btn btn-primary mb-3">Update</button>
-          <button class="btn btn-danger mb-3">Delete</button>
+<div *ngIf="vehicle">
+  <div class="row justify-content-center">
+    <div class="col col-lg-4">
+      <div class="card border-light">
+        <div class="card-header">
+          <h4>
+            {{ vehicle.manufacturer }} {{ vehicle.model }} ({{
+              vehicle.yearOfManufacture
+            }})
+          </h4>
         </div>
-      </div>
 
-      <div class="card-footer text-muted">2 days ago</div>
+        <div class="card-body">
+          <form [formGroup]="vehicleForm">
+            <fieldset>
+              <div class="form-group">
+                <label>Status:</label>
+                <select
+                  type="text"
+                  class="form-control"
+                  formControlName="status"
+                  id="status"
+                >
+                  <option *ngFor="let status of statuses" [ngValue]="status">
+                    {{ status }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Location code:</label>
+                <select
+                  type="text"
+                  class="form-control"
+                  formControlName="locationCode"
+                  id="locationCode"
+                >
+                  <option
+                    *ngFor="let location of locations"
+                    [ngValue]="location"
+                  >
+                    {{ location }}</option
+                  >
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Can be booked until:</label>
+                <input
+                  type="text"
+                  readonly=""
+                  class="form-control"
+                  formControlName="canBeBookedUntil"
+                  id="canBeBookedUntil"
+                />
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="vehicleForm">
+            <fieldset>
+              <div class="form-group">
+                <label>License plate:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="licensePlate"
+                  id="licensePlate"
+                />
+                <div
+                  *ngIf="isInvalid('licensePlate')"
+                  class="invalid-feedback d-block"
+                >
+                  License plate is required.
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Year of manufacture:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="yearOfManufacture"
+                  id="yearOfManufacture"
+                />
+                <div
+                  *ngIf="isInvalid('yearOfManufacture')"
+                  class="invalid-feedback d-block"
+                >
+                  Must be a valid year.
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Chassis code:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="chassisCode"
+                  id="chassisCode"
+                />
+                <div
+                  *ngIf="isInvalid('chassisCode')"
+                  class="invalid-feedback d-block"
+                >
+                  Chassis code is required.
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="vehicleForm">
+            <fieldset>
+              <div class="form-group">
+                <label>Cost (PLN):</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="cost"
+                  id="cost"
+                />
+                <div *ngIf="isInvalid('cost')" class="invalid-feedback d-block">
+                  Must be a valid number.
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Fuel consumed (litres):</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="fuelConsumed"
+                  id="fuelConsumed"
+                />
+                <div
+                  *ngIf="isInvalid('fuelConsumed')"
+                  class="invalid-feedback d-block"
+                >
+                  Must be a valid number.
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Mileage (km):</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="mileage"
+                  id="mileage"
+                />
+                <div
+                  *ngIf="isInvalid('mileage')"
+                  class="invalid-feedback d-block"
+                >
+                  Must be a valid number.
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <div class="card-body" *ngIf="vehicle.status != 'Decomissioned'">
+          <div class="btn-group" role="group">
+            <button class="btn btn-primary mb-3">Update</button>
+            <button class="btn btn-danger mb-3">Decomission</button>
+          </div>
+        </div>
+
+        <div class="card-footer text-muted">2 days ago</div>
+      </div>
+    </div>
+
+    <div class="col col-lg-4">
+      <app-insurance-list [selectedVehicleId]="vehicle.id">
+      </app-insurance-list>
+    </div>
+    <div class="col col-lg-4">
+      <app-maintenance-list [selectedVehicleId]="vehicle.id">
+      </app-maintenance-list>
     </div>
   </div>
 </div>

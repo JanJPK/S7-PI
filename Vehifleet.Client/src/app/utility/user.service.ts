@@ -92,9 +92,9 @@ export class UserService {
       return false;
     }
 
-    this.logger.info(`Verifying user roles; need ${roles}`);
+    //this.logger.info(`Verifying user roles; need ${roles}`);
     let tokenRoles = this.jwtHelper.decodeToken(this.getToken()).role;
-    this.logger.info(`Roles found: ${tokenRoles}`);
+    //this.logger.info(`Roles found: ${tokenRoles}`);
 
     for (let role of tokenRoles) {
       if (role.indexOf(role) > -1) {
@@ -102,5 +102,9 @@ export class UserService {
       }
     }
     return false;
+  }
+
+  isElevatedUser(): boolean {
+    return this.hasRole(['Administrator', 'Manager']);
   }
 }

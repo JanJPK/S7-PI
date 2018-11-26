@@ -22,9 +22,7 @@ namespace Vehifleet.Data.Dtos
         public int Horsepower { get; set; }
 
         public string Engine { get; set; }
-
-        //public VehicleModel VehicleModel { get; set; }
-
+        
         public string Status { get; set; }
 
         public string LicensePlate { get; set; }
@@ -39,7 +37,12 @@ namespace Vehifleet.Data.Dtos
 
         public DateTime CanBeBookedUntil { get; set; }
 
+        // CostGenerating:        
         public int Mileage { get; set; }
+
+        public int FuelConsumed { get; set; }
+
+        public decimal Cost { get; set; }
 
     }
 }

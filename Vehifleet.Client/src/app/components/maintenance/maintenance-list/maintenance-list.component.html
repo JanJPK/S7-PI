@@ -1,3 +1,25 @@
-<p>
-  maintenance-list works!
-</p>
+<div class="card border-light">
+  <div class="card-header"><h4>Maintenances</h4></div>
+
+  <div class="card-body">
+    <div class="tableFixed">
+      <table class="table table-hover">
+        <thead>
+          <th>Date</th>
+          <th>Completed</th>
+          <th>Cost (PLN)</th>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let maintenance of maintenances"
+            (click)="selectMaintenance(maintenance.id)"
+          >
+            <td>{{ maintenance.startDate | date: format:timezone }}</td>
+            <td>{{ maintenance.completed | boolYesNo }}</td>
+            <td>{{ maintenance.cost }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

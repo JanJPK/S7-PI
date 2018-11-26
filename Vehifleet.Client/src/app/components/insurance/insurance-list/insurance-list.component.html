@@ -1,3 +1,25 @@
-<p>
-  insurance-list works!
-</p>
+<div class="card border-light">
+  <div class="card-header"><h4>Insurances</h4></div>
+
+  <div class="card-body">
+    <div class="tableFixed">
+      <table class="table table-hover">
+        <thead>
+          <th>Insurance</th>
+          <th>Begins</th>
+          <th>Ends</th>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let insurance of insurances"
+            (click)="selectInsurance(insurance.id)"
+          >
+            <td>{{ insurance.insuranceId }}</td>
+            <td>{{ insurance.startDate | date: format:timezone }}</td>
+            <td>{{ insurance.endDate | date: format:timezone }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

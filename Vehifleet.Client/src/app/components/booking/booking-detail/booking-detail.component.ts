@@ -8,6 +8,7 @@ import { VehicleService } from 'src/app/services/vehicle.service';
 import { BookingService } from 'src/app/services/booking.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { DatepickerConverterService } from 'src/app/utility/datepicker/datepicker-converter.service';
+import { UserService } from 'src/app/utility/user.service';
 
 @Component({
   selector: 'app-booking-detail',
@@ -15,13 +16,6 @@ import { DatepickerConverterService } from 'src/app/utility/datepicker/datepicke
   styleUrls: ['./booking-detail.component.scss']
 })
 export class BookingDetailComponent implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    private bookingService: BookingService,
-    private vehicleService: VehicleService,
-    private datepickerConverter: DatepickerConverterService
-  ) {}
-
   vehicle: Vehicle;
   booking: Booking;
   bookingForm = new FormGroup(
@@ -39,6 +33,14 @@ export class BookingDetailComponent implements OnInit {
   startDateMax: NgbDateStruct;
   endDateMin: NgbDateStruct;
   endDateMax: NgbDateStruct;
+
+  constructor(
+    private route: ActivatedRoute,
+    private bookingService: BookingService,
+    private vehicleService: VehicleService,
+    private userService: UserService,
+    private datepickerConverter: DatepickerConverterService
+  ) {}
 
   ngOnInit() {
     this.getBooking();
@@ -104,9 +106,43 @@ export class BookingDetailComponent implements OnInit {
     this.endDateMax = this.datepickerConverter.dateToNgbDate(endDateMax);
   }
 
-  isCurrentStatus(status: string): boolean {
-    return this.booking.status == status;
+  canBeEdited(status: string): boolean {
+    if (status == 'Created' || status == 'Accepted') {
+      // Employees can edit their unsubmitted and accepted (ongoing) bookings.
+      return this.userService.getEmployee().id == this.booking.employeeId;
+    } else if (status == 'Submitted' || status == 'Completed') {
+      // Managers can edit submitted and completed bookings,
+      // unless they are the ones who created them.
+      return (
+        this.userService.isElevatedUser() &&
+        this.userService.getEmployee().id != this.booking.employeeId
+      );
+    } else {
+      return false;
+    }
   }
+
+  isCurrentStatus(status: string): boolean {
+    return status == this.booking.status;
+  }
+
+  // buttonsVisibleForStatus(status: string): boolean {
+  //   if (status == 'Created') {
+  //     return this.userService.getEmployee().id == this.booking.employeeId;
+  //   } else if (status == 'Submitted' || status == 'Completed') {
+  //     return (
+  //       this.userService.isElevatedUser() &&
+  //       this.userService.getEmployee().id != this.booking.employeeId
+  //     );
+  //   } else if (status == 'Accepted') {
+  //     return (
+  //       this.userService.getEmployee().id != this.booking.managerId &&
+  //       this.userService.getEmployee().id != this.booking.employeeId
+  //     );
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   submit() {
     this.booking.startDate = new Date(this.bookingForm.get('startDate').value);

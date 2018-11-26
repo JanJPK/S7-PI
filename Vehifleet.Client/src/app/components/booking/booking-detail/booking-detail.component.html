@@ -6,7 +6,7 @@
           <h4>New booking</h4>
         </div>
         <ng-template #existingBooking>
-          <h4>Booking ${{ booking.id }}</h4>
+          <h4>Booking #{{ booking.id }}</h4>
         </ng-template>
       </div>
 
@@ -17,6 +17,7 @@
               <label>Status:</label>
               <input
                 type="text"
+                readonly=""
                 class="form-control"
                 formControlName="status"
               />
@@ -61,7 +62,7 @@
       </div>
 
       <div class="card-body">
-        <form [formGroup]="vehicleForm">
+        <form [formGroup]="bookingForm">
           <fieldset>
             <div class="form-group">
               <label>Manager notes:</label>
@@ -76,11 +77,36 @@
         </form>
       </div>
 
-      <div class="card-body">
-        <div class="btn-group" role="group">
-          <div *ngIf="isCurrentState('Created')">
+      <div *ngIf="isCurrentStatus('Created')">
+        <div class="card-body">
+          <div class="btn-group" role="group">
             <button class="btn btn-primary mb-3">Submit</button>
             <button class="btn btn-danger mb-3">Delete</button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isCurrentStatus('Submitted')">
+        <div class="card-body">
+          <div class="btn-group" role="group">
+            <button class="btn btn-primary mb-3">Accept</button>
+            <button class="btn btn-danger mb-3">Reject</button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isCurrentStatus('Accepted')">
+        <div class="card-body">
+          <div class="btn-group" role="group">
+            <button class="btn btn-primary mb-3">Complete</button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isCurrentStatus('Completed')">
+        <div class="card-body">
+          <div class="btn-group" role="group">
+            <button class="btn btn-primary mb-3">Update</button>
           </div>
         </div>
       </div>

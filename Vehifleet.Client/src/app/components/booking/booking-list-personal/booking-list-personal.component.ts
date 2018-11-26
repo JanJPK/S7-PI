@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/utility/user.service';
 import { BookingService } from 'src/app/services/booking.service';
-import { Booking } from 'src/app/classes/booking/booking';
 import { BookingListFilter } from 'src/app/classes/booking/booking-list-filter';
 import { BookingListItem } from 'src/app/classes/booking/booking-list-item';
 import { Router } from '@angular/router';
@@ -33,7 +32,7 @@ export class BookingListPersonalComponent implements OnInit {
       .subscribe(bookings => (this.bookings = bookings));
   }
 
-  selectBooking(id: number) {
+  select(id: number) {
     this.router.navigate([`/bookings/${id}`]);
   }
 }

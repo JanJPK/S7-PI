@@ -9,16 +9,17 @@ import { BookingService } from 'src/app/services/booking.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { DatepickerConverterService } from 'src/app/utility/datepicker/datepicker-converter.service';
 import { UserService } from 'src/app/utility/user.service';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-booking-detail',
   templateUrl: './booking-detail.component.html',
   styleUrls: ['./booking-detail.component.scss']
 })
-export class BookingDetailComponent implements OnInit {
+export class BookingDetailComponent extends BaseComponent {
   vehicle: Vehicle;
   booking: Booking;
-  bookingForm = new FormGroup(
+  form = new FormGroup(
     {
       startDate: new FormControl('', Validators.required),
       endDate: new FormControl('', Validators.required),
@@ -28,11 +29,14 @@ export class BookingDetailComponent implements OnInit {
     },
     { validators: timeSpanValidator }
   );
-  isNewBooking: boolean;
   startDateMin: NgbDateStruct;
   startDateMax: NgbDateStruct;
   endDateMin: NgbDateStruct;
   endDateMax: NgbDateStruct;
+
+  get newEntity(): boolean {
+    return this.vehicle.id == 0;
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -40,17 +44,13 @@ export class BookingDetailComponent implements OnInit {
     private vehicleService: VehicleService,
     private userService: UserService,
     private datepickerConverter: DatepickerConverterService
-  ) {}
-
-  ngOnInit() {
-    this.getBooking();
+  ) {
+    super();
   }
 
-  getBooking() {
+  get() {
     const id = +this.route.snapshot.paramMap.get('id');
     if (id != 0) {
-      // Loading booking
-      this.isNewBooking = false;
       this.bookingService.getById(id).subscribe(booking => {
         this.booking = booking;
         this.vehicleService
@@ -61,8 +61,6 @@ export class BookingDetailComponent implements OnInit {
           });
       });
     } else {
-      // Creating new booking
-      this.isNewBooking = true;
       this.booking = new Booking();
       this.booking.status = 'Created';
       this.booking.startDate = new Date();
@@ -76,7 +74,7 @@ export class BookingDetailComponent implements OnInit {
   }
 
   setUpForm() {
-    this.bookingForm.patchValue({
+    this.form.patchValue({
       startDate: this.booking.startDate,
       endDate: this.booking.endDate,
       status: this.booking.status,
@@ -126,27 +124,9 @@ export class BookingDetailComponent implements OnInit {
     return status == this.booking.status;
   }
 
-  // buttonsVisibleForStatus(status: string): boolean {
-  //   if (status == 'Created') {
-  //     return this.userService.getEmployee().id == this.booking.employeeId;
-  //   } else if (status == 'Submitted' || status == 'Completed') {
-  //     return (
-  //       this.userService.isElevatedUser() &&
-  //       this.userService.getEmployee().id != this.booking.employeeId
-  //     );
-  //   } else if (status == 'Accepted') {
-  //     return (
-  //       this.userService.getEmployee().id != this.booking.managerId &&
-  //       this.userService.getEmployee().id != this.booking.employeeId
-  //     );
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   submit() {
-    this.booking.startDate = new Date(this.bookingForm.get('startDate').value);
-    this.booking.endDate = new Date(this.bookingForm.get('endDate').value);
+    this.booking.startDate = new Date(this.form.get('startDate').value);
+    this.booking.endDate = new Date(this.form.get('endDate').value);
     let bookingId: number;
     this.bookingService.create(this.booking).subscribe(id => (bookingId = id));
   }

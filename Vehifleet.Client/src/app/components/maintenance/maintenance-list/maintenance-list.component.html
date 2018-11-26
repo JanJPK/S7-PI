@@ -12,7 +12,7 @@
         <tbody>
           <tr
             *ngFor="let maintenance of maintenances"
-            (click)="selectMaintenance(maintenance.id)"
+            (click)="select(maintenance.id)"
           >
             <td>{{ maintenance.startDate | date: format:timezone }}</td>
             <td>{{ maintenance.completed | boolYesNo }}</td>

@@ -15,10 +15,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr
-                *ngFor="let booking of bookings"
-                (click)="selectBooking(booking.id)"
-              >
+              <tr *ngFor="let booking of bookings" (click)="select(booking.id)">
                 <td>{{ booking.vehicle }}</td>
                 <td>{{ booking.status }}</td>
                 <td>{{ booking.startDate | date: format:timezone }}</td>

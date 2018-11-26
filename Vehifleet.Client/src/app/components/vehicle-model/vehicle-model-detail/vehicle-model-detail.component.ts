@@ -3,34 +3,46 @@ import { VehicleModelService } from 'src/app/services/vehicle-model.service';
 import { ActivatedRoute } from '@angular/router';
 import { VehicleModel } from 'src/app/classes/vehicle-model/vehicle-model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { BaseComponent } from '../../base/base.component';
 
 @Component({
   selector: 'app-vehicle-model-detail',
   templateUrl: './vehicle-model-detail.component.html',
   styleUrls: ['./vehicle-model-detail.component.scss']
 })
-export class VehicleModelDetailComponent implements OnInit {
-  constructor(
-    private vehicleModelService: VehicleModelService,
-    private route: ActivatedRoute
-  ) {}
-
+export class VehicleModelDetailComponent extends BaseComponent {
   vehicleModel: VehicleModel;
-  vehicleModelForm = new FormGroup({
+  form = new FormGroup({
     manufacturer: new FormControl('', Validators.required),
     model: new FormControl('', Validators.required),
     configurationCode: new FormControl('', Validators.required),
     engine: new FormControl('', Validators.required),
-    horsepower: new FormControl('', Validators.required),
-    seats: new FormControl('', Validators.required),
-    weight: new FormControl('', Validators.required)
+    horsepower: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[1-9][0-9]*$')
+    ]),
+    seats: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[1-9][0-9]*$')
+    ]),
+    weight: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[1-9][0-9]*$')
+    ])
   });
 
-  ngOnInit() {
-    this.getVehicleModel();
+  get newEntity(): boolean {
+    return this.vehicleModel.id == 0;
   }
 
-  getVehicleModel() {
+  constructor(
+    private vehicleModelService: VehicleModelService,
+    private route: ActivatedRoute
+  ) {
+    super();
+  }
+
+  get() {
     const id = +this.route.snapshot.paramMap.get('id');
     if (id != 0) {
       this.vehicleModelService.getById(id).subscribe(vehicleModel => {
@@ -43,7 +55,7 @@ export class VehicleModelDetailComponent implements OnInit {
   }
 
   setUpForm() {
-    this.vehicleModelForm.patchValue({
+    this.form.patchValue({
       manufacturer: this.vehicleModel.manufacturer,
       model: this.vehicleModel.model,
       configurationCode: this.vehicleModel.configurationCode,
@@ -52,5 +64,9 @@ export class VehicleModelDetailComponent implements OnInit {
       seats: this.vehicleModel.seats,
       weight: this.vehicleModel.weight
     });
+  }
+
+  submit() {
+    throw new Error('Method not implemented.');
   }
 }

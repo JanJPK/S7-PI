@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, AbstractControl, FormGroup } from '@angular/forms';
 
 export abstract class BaseComponent implements OnInit {
-  constructor() {}
-
   abstract form: FormGroup;
+
+  constructor() {}
 
   ngOnInit() {
     this.get();

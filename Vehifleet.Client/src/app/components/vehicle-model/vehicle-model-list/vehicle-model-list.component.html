@@ -20,7 +20,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let vehicleModel of vehicleModels">
+              <tr
+                *ngFor="let vehicleModel of vehicleModels"
+                (click)="select(vehicleModel.id)"
+              >
                 <td>{{ vehicleModel.manufacturer }}</td>
                 <td>{{ vehicleModel.model }}</td>
                 <td>{{ vehicleModel.horsepower }}</td>

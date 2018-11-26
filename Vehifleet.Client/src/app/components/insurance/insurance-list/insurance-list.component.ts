@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { InsuranceService } from 'src/app/services/insurance.service';
 import { Insurance } from 'src/app/classes/insurance/insurance';
-import { InsuranceFilter } from 'src/app/classes/insurance/insurance-filter';
 
 @Component({
   selector: 'app-insurance-list',
@@ -31,7 +30,7 @@ export class InsuranceListComponent implements OnInit {
       });
   }
 
-  selectInsurance(id: number) {
+  select(id: number) {
     console.log(id);
   }
 }

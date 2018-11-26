@@ -2,16 +2,16 @@
   <div *ngIf="booking">
     <div class="card border-light">
       <div class="card-header">
-        <div *ngIf="isNewBooking; else: existingBooking">
-          <h4>New booking</h4>
-        </div>
-        <ng-template #existingBooking>
-          <h4>Booking #{{ booking.id }}</h4>
+        <div *ngIf="newEntity; else: existingEntity"><h4>New booking</h4></div>
+        <ng-template #existingEntity>
+          <h4>
+            <h4>Booking #{{ booking.id }}</h4>
+          </h4>
         </ng-template>
       </div>
 
       <div class="card-body">
-        <form [formGroup]="bookingForm">
+        <form [formGroup]="form">
           <fieldset>
             <div class="form-group">
               <label>Status:</label>
@@ -62,7 +62,7 @@
       </div>
 
       <div class="card-body">
-        <form [formGroup]="bookingForm">
+        <form [formGroup]="form">
           <fieldset>
             <div class="form-group">
               <label>Manager notes:</label>

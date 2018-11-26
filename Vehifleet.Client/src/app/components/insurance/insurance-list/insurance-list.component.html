@@ -12,7 +12,7 @@
         <tbody>
           <tr
             *ngFor="let insurance of insurances"
-            (click)="selectInsurance(insurance.id)"
+            (click)="select(insurance.id)"
           >
             <td>{{ insurance.insuranceId }}</td>
             <td>{{ insurance.startDate | date: format:timezone }}</td>

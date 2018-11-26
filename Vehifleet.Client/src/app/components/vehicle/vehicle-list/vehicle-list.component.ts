@@ -17,14 +17,16 @@ export class VehicleListComponent implements OnInit {
   constructor(private vehicleService: VehicleService, private router: Router) {}
 
   ngOnInit() {
-    this.getVehicles();
+    this.get();
   }
 
-  selectVehicle(id: number) {
+  get() {
+    this.vehicleService.get().subscribe(vehicles => {
+      this.vehicles = vehicles;
+    });
+  }
+
+  select(id: number) {
     this.router.navigate([`/vehicles/${id}`]);
-  }
-
-  getVehicles() {
-    this.vehicleService.get().subscribe(vehicles => (this.vehicles = vehicles));
   }
 }

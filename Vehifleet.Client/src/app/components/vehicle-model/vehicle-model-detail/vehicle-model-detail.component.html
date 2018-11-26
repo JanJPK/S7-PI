@@ -1,3 +1,137 @@
-<p>
-  vehicle-model-detail works!
-</p>
+<div *ngIf="vehicleModel">
+  <div class="row justify-content-center">
+    <div class="col col-lg-4">
+      <div class="card border-light">
+        <div class="card-header">
+          <div *ngIf="newEntity; else: existingEntity">
+            <h4>New vehicle model</h4>
+          </div>
+          <ng-template #existingEntity>
+            <h4>{{ vehicleModel.manufacturer }} {{ vehicleModel.model }}</h4>
+          </ng-template>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="form">
+            <fieldset>
+              <div class="form-group">
+                <label>Manufacturer:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="manufacturer"
+                  id="manufacturer"
+                />
+                <div
+                  *ngIf="isInvalid('manufacturer')"
+                  class="invalid-feedback d-block"
+                >
+                  Manufacturer is required.
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Model:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="model"
+                  id="model"
+                />
+                <div
+                  *ngIf="isInvalid('model')"
+                  class="invalid-feedback d-block"
+                >
+                  Model is required.
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Configuration code:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="configurationCode"
+                  id="configurationCode"
+                />
+                <div
+                  *ngIf="isInvalid('configurationCode')"
+                  class="invalid-feedback d-block"
+                >
+                  Configuration code is required.
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Engine:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="engine"
+                  id="engine"
+                />
+                <div
+                  *ngIf="isInvalid('engine')"
+                  class="invalid-feedback d-block"
+                >
+                  Engine description is required.
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Horsepower:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="horsepower"
+                  id="horsepower"
+                />
+                <div
+                  *ngIf="isInvalid('horsepower')"
+                  class="invalid-feedback d-block"
+                >
+                  Horsepower must be a valid number.
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Seats:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="seats"
+                  id="seats"
+                />
+                <div
+                  *ngIf="isInvalid('seats')"
+                  class="invalid-feedback d-block"
+                >
+                  Seats must be a valid number.
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Weight:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="weight"
+                  id="weight"
+                />
+                <div
+                  *ngIf="isInvalid('weight')"
+                  class="invalid-feedback d-block"
+                >
+                  Weight must be a valid number.
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <div class="card-body">
+          <div class="btn-group" role="group">
+            <button class="btn btn-primary mb-3">Update</button>
+            <button class="btn btn-danger mb-3">Delete</button>
+          </div>
+        </div>
+
+        <div class="card-footer text-muted">2 days ago</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,11 +3,16 @@
     <div class="col col-lg-4">
       <div class="card border-light">
         <div class="card-header">
-          <h4>
-            {{ vehicle.manufacturer }} {{ vehicle.model }} ({{
-              vehicle.yearOfManufacture
-            }})
-          </h4>
+          <div *ngIf="newEntity; else: existingEntity">
+            <h4>New vehicle</h4>
+          </div>
+          <ng-template #existingEntity>
+            <h4>
+              {{ vehicle.manufacturer }} {{ vehicle.model }} ({{
+                vehicle.yearOfManufacture
+              }})
+            </h4>
+          </ng-template>
         </div>
 
         <div class="card-body">
@@ -120,7 +125,7 @@
                   id="cost"
                 />
                 <div *ngIf="isInvalid('cost')" class="invalid-feedback d-block">
-                  Must be a valid number.
+                  Cost must be a valid number.
                 </div>
               </div>
               <div class="form-group">
@@ -135,7 +140,7 @@
                   *ngIf="isInvalid('fuelConsumed')"
                   class="invalid-feedback d-block"
                 >
-                  Must be a valid number.
+                  Fuel consumed must be a valid number.
                 </div>
               </div>
               <div class="form-group">
@@ -150,7 +155,7 @@
                   *ngIf="isInvalid('mileage')"
                   class="invalid-feedback d-block"
                 >
-                  Must be a valid number.
+                  Mileage must be a valid number.
                 </div>
               </div>
             </fieldset>

@@ -2,30 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { Vehicle } from 'src/app/classes/vehicle/vehicle';
 import { ActivatedRoute } from '@angular/router';
-import {
-  Validators,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  AbstractControl
-} from '@angular/forms';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { LocationService } from 'src/app/services/location.service';
-import { Location } from 'src/app/classes/location/location';
 import { BaseComponent } from '../../base/base.component';
+
 @Component({
   selector: 'app-vehicle-detail',
   templateUrl: './vehicle-detail.component.html',
   styleUrls: ['./vehicle-detail.component.scss']
 })
 export class VehicleDetailComponent extends BaseComponent {
-  constructor(
-    private vehicleService: VehicleService,
-    private locationService: LocationService,
-    private route: ActivatedRoute
-  ) {
-    super();
-  }
-
   vehicle: Vehicle;
   form = new FormGroup({
     status: new FormControl('', Validators.required),
@@ -60,6 +46,18 @@ export class VehicleDetailComponent extends BaseComponent {
     'Decommissioned'
   ];
   canBeEdited: boolean;
+
+  get newEntity(): boolean {
+    return this.vehicle.id == 0;
+  }
+
+  constructor(
+    private vehicleService: VehicleService,
+    private locationService: LocationService,
+    private route: ActivatedRoute
+  ) {
+    super();
+  }
 
   get() {
     const id = +this.route.snapshot.paramMap.get('id');

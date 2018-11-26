@@ -32,7 +32,7 @@ export class MaintenanceListComponent implements OnInit {
       });
   }
 
-  selectMaintenance(id: number) {
+  select(id: number) {
     console.log(id);
   }
 }

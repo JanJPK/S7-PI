@@ -19,7 +19,7 @@ export class VehicleListBookingComponent implements OnInit {
     this.getBookableVehicles();
   }
 
-  selectVehicle(id: number) {
+  select(id: number) {
     this.vehicleService
       .getById(id)
       .subscribe(vehicle => (this.selectedVehicle = vehicle));

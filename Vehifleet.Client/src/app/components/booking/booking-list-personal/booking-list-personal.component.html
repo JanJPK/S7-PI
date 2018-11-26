@@ -15,10 +15,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr
-                *ngFor="let booking of bookings"
-                (click)="selectBooking(booking.id)"
-              >
+              <tr *ngFor="let booking of bookings" (click)="select(booking.id)">
                 <td>{{ booking.vehicle }}</td>
                 <td>{{ booking.status }}</td>
                 <td>{{ booking.startDate | date: format:timezone }}</td>
@@ -30,9 +27,4 @@
       </div>
     </div>
   </div>
-  <!--
-    <div class="col-4" *ngIf="selectedBooking">
-      <app-booking-edit></app-booking-edit>
-    </div>
-  -->
 </div>

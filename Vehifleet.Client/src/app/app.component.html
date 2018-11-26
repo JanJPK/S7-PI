@@ -1,49 +1,5 @@
 <div>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" routerLink="dashboard">Vehifleet</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarColor01"
-      aria-controls="navbarColor01"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav mr-auto">
-        <!--
-          <li class="nav-item">
-            <a class="nav-link" routerLink="dashboard">Dashboard</a>
-          </li>
-        -->
-        <li class="nav-item">
-          <a class="nav-link" routerLink="vehicles/booking">New booking</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="bookings/personal">My bookings</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="vehicles">Manage vehicles</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="vehicle-models"
-            >Manage vehicle models</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="bookings">Manage bookings</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <div *ngIf="isLoggedIn()">
-          <li class="nav-item">{{ getUserDisplayName() }}</li>
-        </div>
-      </ul>
-    </div>
-  </nav>
+  <app-navbar></app-navbar>
   <br />
   <div class="container-fluid"><router-outlet></router-outlet></div>
 </div>

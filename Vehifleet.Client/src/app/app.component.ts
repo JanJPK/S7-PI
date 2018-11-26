@@ -9,19 +9,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
   title = 'Vehifleet';
-  loginForm: FormGroup;
 
-  constructor(private userService: UserService) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.userService.checkLocalStorage();
-  }
-  isLoggedIn(): boolean {
-    return this.userService.isLoggedIn();
-  }
-
-  getUserDisplayName(): string {
-    let user = this.userService.getEmployee();
-    return `${user.firstName} ${user.lastName} (${user.department})`;
-  }
+  ngOnInit() {}
 }

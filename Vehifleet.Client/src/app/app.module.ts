@@ -33,6 +33,7 @@ import { BoolYesNoPipe } from './utility/pipes/bool-yes-no.pipe';
 import { BaseComponent } from './components/base/base.component';
 import { VehicleModelListFilterComponent } from './components/vehicle-model/vehicle-model-list-filter/vehicle-model-list-filter.component';
 import { BookingListFilterComponent } from './components/booking/booking-list-filter/booking-list-filter.component';
+import { NavbarComponent } from './components/navbar/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { BookingListFilterComponent } from './components/booking/booking-list-fi
     VehicleListFilterComponent,
     BoolYesNoPipe,
     VehicleModelListFilterComponent,
-    BookingListFilterComponent
+    BookingListFilterComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

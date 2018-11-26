@@ -30,6 +30,7 @@ import { MaintenanceListComponent } from './components/maintenance/maintenance-l
 import { MaintenanceDetailComponent } from './components/maintenance/maintenance-detail/maintenance-detail.component';
 import { VehicleListFilterComponent } from './components/vehicle/vehicle-list-filter/vehicle-list-filter.component';
 import { BoolYesNoPipe } from './utility/pipes/bool-yes-no.pipe';
+import { BaseComponent } from './components/base/base.component';
 
 @NgModule({
   declarations: [

@@ -11,20 +11,23 @@ import {
 } from '@angular/forms';
 import { LocationService } from 'src/app/services/location.service';
 import { Location } from 'src/app/classes/location/location';
+import { BaseComponent } from '../../base/base.component';
 @Component({
   selector: 'app-vehicle-detail',
   templateUrl: './vehicle-detail.component.html',
   styleUrls: ['./vehicle-detail.component.scss']
 })
-export class VehicleDetailComponent implements OnInit {
+export class VehicleDetailComponent extends BaseComponent {
   constructor(
     private vehicleService: VehicleService,
     private locationService: LocationService,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    super();
+  }
 
   vehicle: Vehicle;
-  vehicleForm = new FormGroup({
+  form = new FormGroup({
     status: new FormControl('', Validators.required),
     locationCode: new FormControl('', Validators.required),
     canBeBookedUntil: new FormControl('', Validators.required),
@@ -58,11 +61,7 @@ export class VehicleDetailComponent implements OnInit {
   ];
   canBeEdited: boolean;
 
-  ngOnInit() {
-    this.getVehicle();
-  }
-
-  getVehicle() {
+  get() {
     const id = +this.route.snapshot.paramMap.get('id');
     if (id != 0) {
       this.vehicleService.getById(id).subscribe(vehicle => {
@@ -92,15 +91,8 @@ export class VehicleDetailComponent implements OnInit {
     }
   }
 
-  getLocations() {
-    this.locationService.get().subscribe(locations => {
-      this.locations = locations;
-    });
-  }
-
   setUpForm() {
-    console.log(this.vehicle);
-    this.vehicleForm.patchValue({
+    this.form.patchValue({
       status: this.vehicle.status,
       canBeBookedUntil: this.vehicle.canBeBookedUntil,
       licensePlate: this.vehicle.licensePlate,
@@ -110,21 +102,13 @@ export class VehicleDetailComponent implements OnInit {
       fuelConsumed: this.vehicle.fuelConsumed,
       mileage: this.vehicle.mileage
     });
-    this.vehicleForm.controls['locationCode'].setValue(
-      this.vehicle.locationCode
-    );
+    this.form.controls['locationCode'].setValue(this.vehicle.locationCode);
     if (this.vehicle.status != 'Available') {
-      this.vehicleForm.disable();
+      this.form.disable();
     }
   }
 
-  isInvalid(formControlName: string): boolean {
-    const formControl = this.vehicleForm.get(formControlName);
-
-    return !formControl.valid && (formControl.touched || formControl.dirty);
-  }
-
-  getControl(formControlName: string): AbstractControl {
-    return this.vehicleForm.get(formControlName);
+  submit() {
+    throw new Error('Method not implemented.');
   }
 }

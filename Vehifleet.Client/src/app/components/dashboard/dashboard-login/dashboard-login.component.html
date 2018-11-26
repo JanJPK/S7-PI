@@ -1,20 +1,25 @@
-<form
-  class="text-center border border-light p-5"
-  [formGroup]="loginForm"
-  (ngSubmit)="login()"
->
-  <p class="h4 mb-4">Sign in</p>
-  <input
-    formControlName="username"
-    class="form-control mb-4"
-    placeholder="E-mail"
-  />
+<div class="row justify-content-center">
+  <div class="col col-lg-6">
+    <div class="card border-light mb-3">
+      <div class="card-header text-center"><h4>Log in:</h4></div>
 
-  <input
-    type="password"
-    formControlName="password"
-    class="form-control mb-4"
-    placeholder="Password"
-  />
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+      <div class="card-body">
+        <form class="text-center" [formGroup]="loginForm" (ngSubmit)="login()">
+          <input
+            formControlName="username"
+            class="form-control mb-4"
+            placeholder="E-mail"
+          />
+
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control mb-4"
+            placeholder="Password"
+          />
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

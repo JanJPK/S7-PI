@@ -1,4 +1,68 @@
-<p>
-  dashboard-user-details works!
-  <button class="btn btn-primary" (click)="logout()">Logout</button>
-</p>
+<div *ngIf="employee">
+  <div class="row justify-content-center">
+    <div class="col col-lg-6">
+      <div class="card border-light mb-3">
+        <div class="card-header text-center"><h4>Logged in as:</h4></div>
+
+        <div class="card-body">
+          <form class="text-center">
+            <fieldset>
+              <div class="formg-group row justify-content-center">
+                <label class="col-3 col-form-label">First name:</label>
+                <div class="col-3">
+                  <input
+                    type="text"
+                    readonly=""
+                    class="form-control-plaintext"
+                    value="{{ employee.firstName }}"
+                  />
+                </div>
+              </div>
+              <div class="formg-group row justify-content-center">
+                <label class="col-3 col-form-label">Last name:</label>
+                <div class="col-3">
+                  <input
+                    type="text"
+                    readonly=""
+                    class="form-control-plaintext"
+                    value="{{ employee.lastName }}"
+                  />
+                </div>
+              </div>
+              <div class="formg-group row justify-content-center">
+                <label class="col-3 col-form-label">Username:</label>
+                <div class="col-3">
+                  <input
+                    type="text"
+                    readonly=""
+                    class="form-control-plaintext"
+                    value="{{ employee.firstName }}"
+                  />
+                </div>
+              </div>
+              <div class="formg-group row justify-content-center">
+                <label class="col-3 col-form-label">Department:</label>
+                <div class="col-3">
+                  <input
+                    type="text"
+                    readonly=""
+                    class="form-control-plaintext"
+                    value="{{ employee.firstName }}"
+                  />
+                </div>
+              </div>
+              <br />
+              <div class="row justify-content-center">
+                <div class="col-3">
+                  <button class="btn btn-danger" (click)="logout()">
+                    Logout
+                  </button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

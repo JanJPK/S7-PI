@@ -31,6 +31,8 @@ import { MaintenanceDetailComponent } from './components/maintenance/maintenance
 import { VehicleListFilterComponent } from './components/vehicle/vehicle-list-filter/vehicle-list-filter.component';
 import { BoolYesNoPipe } from './utility/pipes/bool-yes-no.pipe';
 import { BaseComponent } from './components/base/base.component';
+import { VehicleModelListFilterComponent } from './components/vehicle-model/vehicle-model-list-filter/vehicle-model-list-filter.component';
+import { BookingListFilterComponent } from './components/booking/booking-list-filter/booking-list-filter.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { BaseComponent } from './components/base/base.component';
     MaintenanceListComponent,
     MaintenanceDetailComponent,
     VehicleListFilterComponent,
-    BoolYesNoPipe
+    BoolYesNoPipe,
+    VehicleModelListFilterComponent,
+    BookingListFilterComponent
   ],
   imports: [
     BrowserModule,

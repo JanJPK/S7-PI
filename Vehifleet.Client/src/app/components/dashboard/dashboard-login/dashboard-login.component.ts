@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/utility/user.service';
+import { UserService } from 'src/app/shared/user/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({

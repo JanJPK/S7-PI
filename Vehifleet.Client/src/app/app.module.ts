@@ -8,8 +8,8 @@ import { DashboardLoginComponent } from './components/dashboard/dashboard-login/
 import { DashboardRegisterComponent } from './components/dashboard/dashboard-register/dashboard-register.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DashboardUserDetailsComponent } from './components/dashboard/dashboard-user-details/dashboard-user-details.component';
-import { ConsoleLoggerService } from './utility/logger/console-logger.service';
-import { LoggerService } from './utility/logger/logger.service';
+import { ConsoleLoggerService } from './shared/logger/console-logger.service';
+import { LoggerService } from './shared/logger/logger.service';
 import {
   NgbModule,
   NgbDateAdapter,
@@ -29,12 +29,12 @@ import { InsuranceDetailComponent } from './components/insurance/insurance-detai
 import { MaintenanceListComponent } from './components/maintenance/maintenance-list/maintenance-list.component';
 import { MaintenanceDetailComponent } from './components/maintenance/maintenance-detail/maintenance-detail.component';
 import { VehicleListFilterComponent } from './components/vehicle/vehicle-list-filter/vehicle-list-filter.component';
-import { BoolYesNoPipe } from './utility/pipes/bool-yes-no.pipe';
+import { BoolYesNoPipe } from './shared/pipes/bool-yes-no.pipe';
 import { VehicleModelListFilterComponent } from './components/vehicle-model/vehicle-model-list-filter/vehicle-model-list-filter.component';
 import { BookingListFilterComponent } from './components/booking/booking-list-filter/booking-list-filter.component';
 import { NavbarComponent } from './components/navbar/navbar/navbar.component';
-import { YesNoModalComponent } from './components/modal/yes-no-modal/yes-no-modal.component';
-import { ConfirmModalComponent } from './components/modal/confirm-modal/confirm-modal.component';
+import { YesNoModalComponent } from './shared/modal/yes-no-modal/yes-no-modal.component';
+import { ConfirmModalComponent } from './shared/modal/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [

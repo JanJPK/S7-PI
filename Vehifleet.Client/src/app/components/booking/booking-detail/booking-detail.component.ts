@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Booking } from 'src/app/classes/booking/booking';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { timeSpanValidator } from 'src/app/utility/validators';
+import { timeSpanValidator } from 'src/app/shared/validators/validators';
 import { ActivatedRoute } from '@angular/router';
 import { Vehicle } from 'src/app/classes/vehicle/vehicle';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { BookingService } from 'src/app/services/booking.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { DatepickerConverterService } from 'src/app/utility/datepicker/datepicker-converter.service';
-import { UserService } from 'src/app/utility/user.service';
-import { BaseComponent } from '../../base/base.component';
+import { DatepickerConverterService } from 'src/app/shared/datepicker/datepicker-converter.service';
+import { UserService } from 'src/app/shared/user/user.service';
+import { BaseComponent } from 'src/app/components/base/base.component';
 
 @Component({
   selector: 'app-booking-detail',

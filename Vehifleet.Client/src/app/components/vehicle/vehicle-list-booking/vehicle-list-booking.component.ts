@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { VehicleService } from '../../../services/vehicle.service';
-import { VehicleListItem } from '../../../classes/vehicle/vehicle-list-item';
+import { VehicleService } from 'src/app/services/vehicle.service';
+import { VehicleListItem } from 'src/app/classes/vehicle/vehicle-list-item';
 import { Vehicle } from 'src/app/classes/vehicle/vehicle';
 import { VehicleListFilter } from 'src/app/classes/vehicle/vehicle-list-filter';
 

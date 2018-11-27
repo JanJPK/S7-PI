@@ -3,12 +3,12 @@ import { Maintenance } from 'src/app/classes/maintenance/maintenance';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Vehicle } from 'src/app/classes/vehicle/vehicle';
 import { MaintenanceService } from 'src/app/services/maintenance.service';
-import { DatepickerConverterService } from 'src/app/utility/datepicker/datepicker-converter.service';
+import { DatepickerConverterService } from 'src/app/shared/datepicker/datepicker-converter.service';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../base/base.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalService } from 'src/app/utility/modal.service';
+import { ModalService } from 'src/app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-maintenance-detail',

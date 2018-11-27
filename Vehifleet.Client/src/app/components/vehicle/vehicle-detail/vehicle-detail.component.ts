@@ -4,7 +4,7 @@ import { Vehicle } from 'src/app/classes/vehicle/vehicle';
 import { ActivatedRoute } from '@angular/router';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { LocationService } from 'src/app/services/location.service';
-import { BaseComponent } from '../../base/base.component';
+import { BaseComponent } from 'src/app/components/base/base.component';
 
 @Component({
   selector: 'app-vehicle-detail',

@@ -3,7 +3,7 @@ import { BaseService } from './base.service';
 import { Booking } from '../classes/booking/booking';
 import { BookingListItem } from '../classes/booking/booking-list-item';
 import { HttpClient } from '@angular/common/http';
-import { LoggerService } from '../utility/logger/logger.service';
+import { LoggerService } from '../shared/logger/logger.service';
 
 @Injectable({
   providedIn: 'root'

@@ -3,7 +3,7 @@ import { VehicleModelService } from 'src/app/services/vehicle-model.service';
 import { ActivatedRoute } from '@angular/router';
 import { VehicleModel } from 'src/app/classes/vehicle-model/vehicle-model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { BaseComponent } from '../../base/base.component';
+import { BaseComponent } from 'src/app/components/base/base.component';
 
 @Component({
   selector: 'app-vehicle-model-detail',

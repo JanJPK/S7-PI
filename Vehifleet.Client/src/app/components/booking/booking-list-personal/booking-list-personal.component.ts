@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/utility/user.service';
+import { UserService } from 'src/app/shared/user/user.service';
 import { BookingService } from 'src/app/services/booking.service';
 import { BookingListFilter } from 'src/app/classes/booking/booking-list-filter';
 import { BookingListItem } from 'src/app/classes/booking/booking-list-item';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Maintenance } from '../classes/maintenance/maintenance';
-import { LoggerService } from '../utility/logger/logger.service';
+import { LoggerService } from '../shared/logger/logger.service';
 import { BaseService } from './base.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';

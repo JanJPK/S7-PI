@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
 import { Insurance } from '../classes/insurance/insurance';
 import { HttpClient } from '@angular/common/http';
-import { LoggerService } from '../utility/logger/logger.service';
+import { LoggerService } from '../shared/logger/logger.service';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 

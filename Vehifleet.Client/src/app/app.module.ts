@@ -30,10 +30,11 @@ import { MaintenanceListComponent } from './components/maintenance/maintenance-l
 import { MaintenanceDetailComponent } from './components/maintenance/maintenance-detail/maintenance-detail.component';
 import { VehicleListFilterComponent } from './components/vehicle/vehicle-list-filter/vehicle-list-filter.component';
 import { BoolYesNoPipe } from './utility/pipes/bool-yes-no.pipe';
-import { BaseComponent } from './components/base/base.component';
 import { VehicleModelListFilterComponent } from './components/vehicle-model/vehicle-model-list-filter/vehicle-model-list-filter.component';
 import { BookingListFilterComponent } from './components/booking/booking-list-filter/booking-list-filter.component';
 import { NavbarComponent } from './components/navbar/navbar/navbar.component';
+import { YesNoModalComponent } from './components/modal/yes-no-modal/yes-no-modal.component';
+import { ConfirmModalComponent } from './components/modal/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,9 @@ import { NavbarComponent } from './components/navbar/navbar/navbar.component';
     BoolYesNoPipe,
     VehicleModelListFilterComponent,
     BookingListFilterComponent,
-    NavbarComponent
+    NavbarComponent,
+    YesNoModalComponent,
+    ConfirmModalComponent
   ],
   imports: [
     BrowserModule,
@@ -67,12 +70,13 @@ import { NavbarComponent } from './components/navbar/navbar/navbar.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbModule
+    NgbModule.forRoot()
   ],
   providers: [
     { provide: LoggerService, useClass: ConsoleLoggerService },
     { provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }
   ],
+  entryComponents: [ConfirmModalComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

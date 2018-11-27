@@ -39,6 +39,18 @@ const routes: Routes = [
     data: { expectedRoles: ['Administrator', 'Manager'] }
   },
   {
+    path: 'vehicles/:vehicleId/insurances/:id',
+    component: InsuranceDetailComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRoles: ['Administrator', 'Manager'] }
+  },
+  {
+    path: 'vehicles/:vehicleId/maintenances/:id',
+    component: MaintenanceDetailComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRoles: ['Administrator', 'Manager'] }
+  },
+  {
     path: 'bookings/personal',
     component: BookingListPersonalComponent,
     canActivate: [AuthGuard],
@@ -65,18 +77,6 @@ const routes: Routes = [
   {
     path: 'vehicle-models/:id',
     component: VehicleModelDetailComponent,
-    canActivate: [AuthGuard],
-    data: { expectedRoles: ['Administrator', 'Manager'] }
-  },
-  {
-    path: 'insurances/:id',
-    component: InsuranceDetailComponent,
-    canActivate: [AuthGuard],
-    data: { expectedRoles: ['Administrator', 'Manager'] }
-  },
-  {
-    path: 'maintenances/:id',
-    component: MaintenanceDetailComponent,
     canActivate: [AuthGuard],
     data: { expectedRoles: ['Administrator', 'Manager'] }
   }

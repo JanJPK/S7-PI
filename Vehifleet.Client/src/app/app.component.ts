@@ -1,6 +1,4 @@
-import { Component, NgModule, OnInit } from '@angular/core';
-import { UserService } from './utility/user.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',

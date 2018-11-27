@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { InsuranceService } from 'src/app/services/insurance.service';
 import { Insurance } from 'src/app/classes/insurance/insurance';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-insurance-list',
@@ -16,7 +17,10 @@ export class InsuranceListComponent implements OnInit {
   vehicleId: number;
   insurances: Insurance[];
 
-  constructor(private insuranceService: InsuranceService) {}
+  constructor(
+    private insuranceService: InsuranceService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.getInsurances();
@@ -31,6 +35,6 @@ export class InsuranceListComponent implements OnInit {
   }
 
   select(id: number) {
-    console.log(id);
+    this.router.navigate([`/vehicles/${this.vehicleId}/insurances/${id}`]);
   }
 }

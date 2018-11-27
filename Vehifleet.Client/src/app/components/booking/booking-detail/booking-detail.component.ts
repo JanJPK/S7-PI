@@ -53,6 +53,8 @@ export class BookingDetailComponent extends BaseComponent {
     if (id != 0) {
       this.bookingService.getById(id).subscribe(booking => {
         this.booking = booking;
+        this.booking.startDate = new Date(booking.startDate);
+        this.booking.endDate = new Date(booking.endDate);
         this.vehicleService
           .getById(this.booking.vehicleId)
           .subscribe(vehicle => {

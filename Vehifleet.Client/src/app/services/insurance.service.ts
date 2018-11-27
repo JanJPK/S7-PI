@@ -19,7 +19,7 @@ export class InsuranceService extends BaseService<
   }
 
   getByVehicleId(id: number): Observable<Insurance[]> {
-    this.logger.info(`getByVehicleId (${id}) @ ${this.apiUrl}`);
+    this.logger.info(`getByVehicleId (${id}) @ ${this.apiUrl}vehicle/${id}`);
     return this.http
       .get<Insurance[]>(`${this.getUrl()}vehicle/${id}`)
       .pipe(catchError(this.handleError('getById', null)));

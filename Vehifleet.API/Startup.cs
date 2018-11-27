@@ -15,7 +15,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Vehifleet.Data.DbAccess;
 using Vehifleet.Data.Dtos;
+using Vehifleet.Data.Dtos.BaseDtos;
 using Vehifleet.Data.Models;
+using Vehifleet.Data.Models.BaseEntities;
 using Vehifleet.Helper.Extensions;
 using Vehifleet.Repositories;
 using Vehifleet.Repositories.Interfaces;
@@ -144,6 +146,10 @@ namespace Vehifleet.API
         {
             Mapper.Initialize(config =>
             {
+                config.CreateMap<AuditableEntity, AuditableDto>();
+                config.CreateMap<CostGeneratingEntity, CostGeneratingDto>()
+                      .IncludeBase<AuditableEntity, AuditableDto>();
+
                 config.CreateMap<Vehicle, VehicleDto>()
                       .ForMember(d => d.Status, 
                                  m => m.MapFrom(d => d.Status.ToString().AddSpaces()))
@@ -156,19 +162,15 @@ namespace Vehifleet.API
                       .ForMember(d => d.Manufacturer,
                                  m => m.MapFrom(s => s.VehicleModel.Manufacturer))
                       .ForMember(d => d.Model,
-                                 m => m.MapFrom(s => s.VehicleModel.Model));                
+                                 m => m.MapFrom(s => s.VehicleModel.Model));
                 config.CreateMap<VehicleDto, Vehicle>()
-                      .ForMember(d => d.Status, 
+                      .ForMember(d => d.Status,
                                  m => m.MapFrom(s => s.Status.RemoveSpaces()))
                       .ForMember(d => d.Bookings, m => m.Ignore())
                       .ForMember(d => d.Insurances, m => m.Ignore())
                       .ForMember(d => d.Maintenances, m => m.Ignore())
                       .ForMember(d => d.Location, m => m.Ignore())
-                      .ForMember(d => d.VehicleModel, m => m.Ignore())
-                      .ForMember(d => d.AddedOn, o => o.Ignore())
-                      .ForMember(d => d.AddedBy, o => o.Ignore())
-                      .ForMember(d => d.ModifiedOn, o => o.Ignore())
-                      .ForMember(d => d.ModifiedBy, o => o.Ignore());
+                      .ForMember(d => d.VehicleModel, m => m.Ignore());
                 config.CreateMap<Vehicle, VehicleListItemDto>()
                       .ForMember(d => d.Manufacturer,
                                  m => m.MapFrom(s => s.VehicleModel.Manufacturer))
@@ -183,11 +185,7 @@ namespace Vehifleet.API
                 config.CreateMap<BookingDto, Booking>()
                       .ForMember(d => d.Employee, o => o.Ignore())
                       .ForMember(d => d.Manager, o => o.Ignore())
-                      .ForMember(d => d.Vehicle, o => o.Ignore())
-                      .ForMember(d => d.AddedOn, o => o.Ignore())
-                      .ForMember(d => d.AddedBy, o => o.Ignore())
-                      .ForMember(d => d.ModifiedOn, o => o.Ignore())
-                      .ForMember(d => d.ModifiedBy, o => o.Ignore());
+                      .ForMember(d => d.Vehicle, o => o.Ignore());
                 config.CreateMap<Booking, BookingListItemDto>()
                       .ForMember(d => d.Vehicle,
                                  m => m.MapFrom(s => s.Vehicle.VehicleModel.Name))
@@ -198,19 +196,15 @@ namespace Vehifleet.API
 
                 config.CreateMap<VehicleModel, VehicleModelDto>();
                 config.CreateMap<VehicleModelDto, VehicleModel>()
-                      .ForMember(d => d.Vehicles, m => m.Ignore())
-                      .ForMember(d => d.AddedOn, o => o.Ignore())
-                      .ForMember(d => d.AddedBy, o => o.Ignore())
-                      .ForMember(d => d.ModifiedOn, o => o.Ignore())
-                      .ForMember(d => d.ModifiedBy, o => o.Ignore());
+                      .ForMember(d => d.Vehicles, m => m.Ignore());
 
                 config.CreateMap<Insurance, InsuranceDto>();
                 config.CreateMap<InsuranceDto, Insurance>()
-                      .ForMember(d => d.Vehicle, m => m.Ignore())
-                      .ForMember(d => d.AddedOn, o => o.Ignore())
-                      .ForMember(d => d.AddedBy, o => o.Ignore())
-                      .ForMember(d => d.ModifiedOn, o => o.Ignore())
-                      .ForMember(d => d.ModifiedBy, o => o.Ignore());
+                      .ForMember(d => d.Vehicle, m => m.Ignore());
+
+                config.CreateMap<Maintenance, MaintenanceDto>();
+                config.CreateMap<MaintenanceDto, Maintenance>()
+                      .ForMember(d => d.Vehicle, m => m.Ignore());
 
                 config.CreateMap<EmployeeRegisterDto, EmployeeIdentity>();
                 config.CreateMap<Employee, EmployeeLoginDto>()

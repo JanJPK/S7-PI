@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpErrorResponse,
-  HttpParams
+  HttpParams,
+  HttpHeaders
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -14,6 +15,13 @@ import { LoggerService } from '../shared/logger/logger.service';
 })
 export abstract class BaseService<TEntity, TEntityListItem, TKey> {
   protected apiUrl: string;
+  protected headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+    //Authorization: 'my-auth-token'
+  });
+  protected httpOptions = {
+    headers: this.headers
+  };
 
   constructor(
     protected http: HttpClient,
@@ -26,16 +34,15 @@ export abstract class BaseService<TEntity, TEntityListItem, TKey> {
   get(filter: any = null): Observable<TEntityListItem[]> {
     this.logger.info(`get() @ ${this.apiUrl}; filter: ${filter}`);
     if (filter) {
-      // let params = new HttpParams();
-      // for (let key in filter) {
-      //   params.set(key, filter[key]);
-      // }
       return this.http
-        .get<TEntityListItem[]>(this.apiUrl, { params: filter })
+        .get<TEntityListItem[]>(this.apiUrl, {
+          params: filter,
+          headers: this.headers
+        })
         .pipe(catchError(this.handleError('get', [])));
     } else {
       return this.http
-        .get<TEntityListItem[]>(this.apiUrl)
+        .get<TEntityListItem[]>(this.apiUrl, this.httpOptions)
         .pipe(catchError(this.handleError('get', [])));
     }
   }
@@ -43,7 +50,7 @@ export abstract class BaseService<TEntity, TEntityListItem, TKey> {
   getById(id: TKey): Observable<TEntity> {
     this.logger.info(`getById (${id}) @ ${this.apiUrl}`);
     return this.http
-      .get<TEntity>(`${this.getUrl()}${id}`)
+      .get<TEntity>(`${this.getUrl()}${id}`, this.httpOptions)
       .pipe(catchError(this.handleError('getById', null)));
   }
 
@@ -51,15 +58,29 @@ export abstract class BaseService<TEntity, TEntityListItem, TKey> {
     this.logger.info(`create @ ${this.apiUrl}`);
     console.log(entity);
     return this.http
-      .post<TEntity>(this.getUrl(), entity)
+      .post<TEntity>(this.getUrl(), entity, this.httpOptions)
       .pipe(catchError(this.handleError('create', null)));
   }
 
-  update(entity: TEntity, id: TKey) {
+  update(entity: TEntity, id: TKey): Observable<Response> {
     this.logger.info(`update @ ${this.apiUrl}`);
-    this.http
-      .put<TEntity>(`${this.getUrl()}${id}`, entity)
+    console.log(entity);
+    return this.http
+      .put<TEntity>(`${this.getUrl()}${id}`, entity, {
+        observe: 'response',
+        headers: this.headers
+      })
       .pipe(catchError(this.handleError('update', null)));
+  }
+
+  delete(id: TKey): Observable<{}> {
+    this.logger.info(`delete (${id}) @ ${this.apiUrl}`);
+    return this.http
+      .delete(`${this.getUrl()}${id}`, {
+        observe: 'response',
+        headers: this.headers
+      })
+      .pipe(catchError(this.handleError('delete', null)));
   }
 
   getUrl(address: string = null): string {
@@ -73,11 +94,6 @@ export abstract class BaseService<TEntity, TEntityListItem, TKey> {
   handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       this.logger.error(error);
-
-      // TODO: better job of transforming error for user consumption
-      //this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }

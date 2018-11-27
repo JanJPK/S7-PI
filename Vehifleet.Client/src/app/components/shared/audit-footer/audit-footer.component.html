@@ -1,0 +1,14 @@
+<div class="card-footer text-muted">
+  <div *ngIf="wasAdded()">
+    <div class="row justify-content-center">
+      Added by: {{ auditable.addedBy }} at
+      {{ auditable.addedOn | date: format:timezone }}
+    </div>
+  </div>
+  <div *ngIf="wasModified()">
+    <div class="row justify-content-center">
+      Modified by: {{ auditable.modifiedBy }} at
+      {{ auditable.modifiedOn | date: format:timezone }}
+    </div>
+  </div>
+</div>

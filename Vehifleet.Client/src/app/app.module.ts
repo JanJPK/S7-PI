@@ -35,7 +35,10 @@ import { BookingListFilterComponent } from './components/booking/booking-list-fi
 import { NavbarComponent } from './components/navbar/navbar/navbar.component';
 import { YesNoModalComponent } from './shared/modal/yes-no-modal/yes-no-modal.component';
 import { ConfirmModalComponent } from './shared/modal/confirm-modal/confirm-modal.component';
-
+import { InfoModalComponent } from './shared/modal/info-modal/info-modal.component';
+import { AuditFooterComponent } from './components/shared/audit-footer/audit-footer.component';
+import { ErrorModalComponent } from './shared/modal/error-modal/error-modal.component';
+import { SuccessModalComponent } from './shared/modal/success-modal/success-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +65,11 @@ import { ConfirmModalComponent } from './shared/modal/confirm-modal/confirm-moda
     BookingListFilterComponent,
     NavbarComponent,
     YesNoModalComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    InfoModalComponent,
+    AuditFooterComponent,
+    ErrorModalComponent,
+    SuccessModalComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +83,12 @@ import { ConfirmModalComponent } from './shared/modal/confirm-modal/confirm-moda
     { provide: LoggerService, useClass: ConsoleLoggerService },
     { provide: NgbDateAdapter, useClass: NgbDateNativeAdapter }
   ],
-  entryComponents: [ConfirmModalComponent],
+  entryComponents: [
+    ConfirmModalComponent,
+    InfoModalComponent,
+    ErrorModalComponent,
+    SuccessModalComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

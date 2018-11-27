@@ -66,7 +66,7 @@ export class VehicleModelDetailComponent extends BaseComponent {
     });
   }
 
-  submit() {
+  onSubmit() {
     throw new Error('Method not implemented.');
   }
 }

@@ -1,4 +1,6 @@
-export class VehicleModel {
+import { CostGenerating } from '../base/cost-generating';
+
+export class VehicleModel extends CostGenerating {
   id: number;
   manufacturer: string;
   model: string;
@@ -7,15 +9,4 @@ export class VehicleModel {
   horsepower: number;
   seats: number;
   weight: number;
-
-  // Auditable:
-  addedBy: string;
-  addedOn: Date;
-  modifiedBy: string;
-  modifiedOn: Date;
-
-  // CostGenerating:
-  cost: number;
-  fuelConsumed: number;
-  mileage: number;
 }

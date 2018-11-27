@@ -1,5 +1,5 @@
 ﻿using System;
-using Vehifleet.Data.Models;
+using Vehifleet.Data.Dtos.BaseDtos;
 
 namespace Vehifleet.Data.Dtos
 {
@@ -7,9 +7,9 @@ namespace Vehifleet.Data.Dtos
     ///     Describes entirety of vehicle.
     ///     Used in details, edit, add views.s
     /// </summary>
-    public class VehicleDto
+    public class VehicleDto : CostGeneratingDto
     {
-        public int Id { get; set; }        
+        public int Id { get; set; }
 
         public int VehicleModelId { get; set; }
 
@@ -22,7 +22,7 @@ namespace Vehifleet.Data.Dtos
         public int Horsepower { get; set; }
 
         public string Engine { get; set; }
-        
+
         public string Status { get; set; }
 
         public string LicensePlate { get; set; }
@@ -36,13 +36,6 @@ namespace Vehifleet.Data.Dtos
         public DateTime InspectionValidUntil { get; set; }
 
         public DateTime CanBeBookedUntil { get; set; }
-
-        // CostGenerating:        
-        public int Mileage { get; set; }
-
-        public int FuelConsumed { get; set; }
-
-        public decimal Cost { get; set; }
 
     }
 }

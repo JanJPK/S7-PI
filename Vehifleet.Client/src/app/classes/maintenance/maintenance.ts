@@ -1,4 +1,6 @@
-export class Maintenance {
+import { Auditable } from '../base/auditable';
+
+export class Maintenance extends Auditable {
   id: number;
   vehicleId: number;
   startDate: Date;

@@ -1,4 +1,6 @@
-export class Vehicle {
+import { CostGenerating } from '../base/cost-generating';
+
+export class Vehicle extends CostGenerating {
   id: number;
   status: string;
   licensePlate: string;
@@ -6,17 +8,6 @@ export class Vehicle {
   chassisCode: string;
   locationCode: string;
   canBeBookedUntil: Date;
-
-  // Auditable:
-  addedBy: string;
-  addedOn: Date;
-  modifiedBy: string;
-  modifiedOn: Date;
-
-  // CostGenerating:
-  cost: number;
-  fuelConsumed: number;
-  mileage: number;
 
   // VehicleModel:
   vehicleModelId: number;

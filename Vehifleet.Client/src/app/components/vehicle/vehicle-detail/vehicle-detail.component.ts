@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { Vehicle } from 'src/app/classes/vehicle/vehicle';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { LocationService } from 'src/app/services/location.service';
 import { BaseComponent } from 'src/app/components/base/base.component';
@@ -54,6 +54,7 @@ export class VehicleDetailComponent extends BaseComponent {
   constructor(
     private vehicleService: VehicleService,
     private locationService: LocationService,
+    private router: Router,
     private route: ActivatedRoute
   ) {
     super();
@@ -106,7 +107,11 @@ export class VehicleDetailComponent extends BaseComponent {
     }
   }
 
-  submit() {
+  onSubmit() {
     throw new Error('Method not implemented.');
+  }
+
+  openVehicleModel() {
+    this.router.navigate([`/vehicle-models/${this.vehicle.vehicleModelId}`]);
   }
 }

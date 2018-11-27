@@ -19,7 +19,7 @@ export class MaintenanceService extends BaseService<
   }
 
   getByVehicleId(id: number): Observable<Maintenance[]> {
-    this.logger.info(`getByVehicleId (${id}) @ ${this.apiUrl}`);
+    this.logger.info(`getByVehicleId (${id}) @ ${this.apiUrl}vehicle/${id}`);
     return this.http
       .get<Maintenance[]>(`${this.getUrl()}vehicle/${id}`)
       .pipe(catchError(this.handleError('getById', null)));

@@ -72,7 +72,7 @@ namespace Vehifleet.API.Controllers
             }
 
             var insurance = Mapper.Map<Insurance>(insuranceDto);
-            await insuranceRepository.Insert(insurance);
+            await insuranceRepository.Update(insurance);
             return Ok();
         }
 

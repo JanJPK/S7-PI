@@ -126,10 +126,10 @@ export class BookingDetailComponent extends BaseComponent {
     return status == this.booking.status;
   }
 
-  submit() {
+  onSubmit() {
     this.booking.startDate = new Date(this.form.get('startDate').value);
     this.booking.endDate = new Date(this.form.get('endDate').value);
     let bookingId: number;
-    this.bookingService.create(this.booking).subscribe(id => (bookingId = id));
+    //this.bookingService.create(this.booking).subscribe(id => (bookingId = id));
   }
 }

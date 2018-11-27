@@ -3,10 +3,11 @@ import { BaseComponent } from '../../base/base.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InsuranceService } from 'src/app/services/insurance.service';
 import { Insurance } from 'src/app/classes/insurance/insurance';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatepickerConverterService } from 'src/app/shared/datepicker/datepicker-converter.service';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { Vehicle } from 'src/app/classes/vehicle/vehicle';
+import { ModalService } from 'src/app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-insurance-detail',
@@ -35,6 +36,8 @@ export class InsuranceDetailComponent extends BaseComponent {
     private insuranceService: InsuranceService,
     private datePickerConverter: DatepickerConverterService,
     private vehicleService: VehicleService,
+    private modalService: ModalService,
+    private router: Router,
     private route: ActivatedRoute
   ) {
     super();
@@ -56,6 +59,7 @@ export class InsuranceDetailComponent extends BaseComponent {
       });
     } else {
       this.insurance = new Insurance();
+      this.insurance.id = 0;
       this.insurance.vehicleId = +this.route.snapshot.paramMap.get('vehicleId');
       this.insurance.startDate = new Date();
       this.insurance.endDate = this.datePickerConverter.addDays(new Date(), 1);
@@ -81,7 +85,62 @@ export class InsuranceDetailComponent extends BaseComponent {
     });
   }
 
-  submit() {
-    throw new Error('Method not implemented.');
+  readForm() {
+    this.insurance.cost = this.form.get('cost').value;
+    this.insurance.insurer = this.form.get('insurer').value;
+    this.insurance.insuranceId = this.form.get('insuranceId').value;
+    this.insurance.mileage = this.form.get('mileage').value;
+    this.insurance.startDate = this.form.get('startDate').value;
+    this.insurance.endDate = this.form.get('endDate').value;
+  }
+
+  onSubmit() {
+    this.readForm();
+    console.log('update clicked');
+    if (this.insurance.id != 0) {
+      this.insuranceService
+        .update(this.insurance, this.insurance.id)
+        .subscribe(response => {
+          if (response['status'] == 200) {
+            this.modalService.showSuccessModal('Insurance has been updated.');
+          } else {
+            this.modalService.showErrorModal('Insurance update has failed.');
+          }
+        });
+    } else {
+      this.insuranceService.create(this.insurance).subscribe(id => {
+        if (id != null) {
+          this.modalService.showSuccessModal('Insurance has been created.');
+          this.router.navigate([
+            `/vehicles/${this.insurance.vehicleId}/insurances/${id}`
+          ]);
+        } else {
+          this.modalService.showSuccessModal('Insurance creation has failed.');
+        }
+      });
+    }
+  }
+
+  onDelete() {
+    this.modalService
+      .showConfirmModal('Do you want to delete this insurance?')
+      .then(confirmed => {
+        if (confirmed == 'true') {
+          this.insuranceService
+            .delete(this.insurance.id)
+            .subscribe(response => {
+              if (response['status'] == 200) {
+                this.modalService.showSuccessModal(
+                  'Insurance has been deleted.'
+                );
+                this.router.navigate([`/vehicles/${this.insurance.vehicleId}`]);
+              } else {
+                this.modalService.showErrorModal(
+                  'Insurance deletion has failed.'
+                );
+              }
+            });
+        }
+      });
   }
 }

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Vehifleet.Data.Dtos.BaseDtos;
 
 namespace Vehifleet.Data.Dtos
 {
-    public class BookingDto
+    public class BookingDto : CostGeneratingDto
     {
         public int? Id { get; set; }
 
@@ -28,11 +29,5 @@ namespace Vehifleet.Data.Dtos
         public string Purpose { get; set; }
 
         public string Notes { get; set; }
-
-        public int? Mileage { get; set; }
-
-        public int? FuelConsumed { get; set; }
-
-        public decimal? Cost { get; set; }
     }
 }

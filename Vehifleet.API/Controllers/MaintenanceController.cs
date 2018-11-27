@@ -72,7 +72,7 @@ namespace Vehifleet.API.Controllers
             }
 
             var maintenance = Mapper.Map<Maintenance>(maintenanceDto);
-            await maintenanceRepository.Insert(maintenance);
+            await maintenanceRepository.Update(maintenance);
             return Ok();
         }
 

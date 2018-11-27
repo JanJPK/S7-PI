@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-title">{{ title }}</h4>
+  <h4 class="modal-title" id="modal-title">Confirmation</h4>
   <button
     type="button"
     class="close"
@@ -11,11 +11,9 @@
 </div>
 <div class="modal-body">
   <p>
-    <strong>{{ header }}</strong>
+    <strong>{{ text }}</strong>
   </p>
-  <p>
-    <span class="text-danger">{{ text }}</span>
-  </p>
+  <p><span class="text-danger">This action cannot be reversed.</span></p>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" (click)="modal.close('false')">

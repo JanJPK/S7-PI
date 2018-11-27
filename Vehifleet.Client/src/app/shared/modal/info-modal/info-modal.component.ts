@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-confirm-modal',
-  templateUrl: './confirm-modal.component.html',
-  styleUrls: ['./confirm-modal.component.scss']
+  selector: 'app-info-modal',
+  templateUrl: './info-modal.component.html',
+  styleUrls: ['./info-modal.component.scss']
 })
-export class ConfirmModalComponent {
-  title: string;
+export class InfoModalComponent {
   text: string;
   constructor(public modal: NgbActiveModal) {}
 }

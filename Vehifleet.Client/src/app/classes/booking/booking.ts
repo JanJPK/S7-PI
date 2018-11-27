@@ -1,4 +1,6 @@
-export class Booking {
+import { CostGenerating } from '../base/cost-generating';
+
+export class Booking extends CostGenerating {
   id: number;
   vehicleId: number;
   employeeId: number;
@@ -8,15 +10,4 @@ export class Booking {
   endDate: Date;
   purpose: string;
   notes: string;
-
-  // Auditable:
-  addedBy: string;
-  addedOn: Date;
-  modifiedBy: string;
-  modifiedOn: Date;
-
-  // CostGenerating:
-  cost: number;
-  fuelConsumed: number;
-  mileage: number;
 }

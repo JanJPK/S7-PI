@@ -8,8 +8,8 @@ namespace Vehifleet.Repositories.Interfaces
     {
         IQueryable<TEntity> Get();
         Task<TEntity> GetById(TKey id);
-        Task Insert(TEntity entity);
-        Task Insert(IEnumerable<TEntity> entities);
+        Task<int> Insert(TEntity entity);
+        Task<int> Insert(IEnumerable<TEntity> entities);
         Task Update(TEntity entity);
         Task Update(IEnumerable<TEntity> entities);
         Task Delete(TEntity entity);

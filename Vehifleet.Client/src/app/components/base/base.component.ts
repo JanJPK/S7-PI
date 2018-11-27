@@ -14,7 +14,7 @@ export abstract class BaseComponent implements OnInit {
 
   abstract setUpForm();
 
-  abstract submit();
+  abstract onSubmit();
 
   isInvalid(formControlName: string): boolean {
     const formControl = this.form.get(formControlName);

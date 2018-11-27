@@ -31,16 +31,16 @@ namespace Vehifleet.Repositories
 
         public abstract Task<TEntity> GetById(TKey id);
 
-        public virtual async Task Insert(TEntity entity)
+        public virtual async Task<int> Insert(TEntity entity)
         {
             Set.Add(entity);
-            await Context.SaveChangesAsync();
+            return await Context.SaveChangesAsync();
         }
 
-        public virtual async Task Insert(IEnumerable<TEntity> entities)
+        public virtual async Task<int> Insert(IEnumerable<TEntity> entities)
         {
             Set.AddRange(entities);
-            await Context.SaveChangesAsync();
+            return await Context.SaveChangesAsync();
         }
 
         public virtual async Task Update(TEntity entity)

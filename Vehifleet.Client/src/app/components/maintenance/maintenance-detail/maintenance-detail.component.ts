@@ -81,5 +81,5 @@ export class MaintenanceDetailComponent extends BaseComponent {
     });
   }
 
-  submit() {}
+  onSubmit() {}
 }

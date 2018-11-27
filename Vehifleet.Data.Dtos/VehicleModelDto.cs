@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vehifleet.Data.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using Vehifleet.Data.Dtos.BaseDtos;
 
 namespace Vehifleet.Data.Dtos
 {
-    public class VehicleModelDto
+    public class VehicleModelDto : CostGeneratingDto
     {
         [Required]
         public int Id { get; set; }
@@ -37,6 +32,5 @@ namespace Vehifleet.Data.Dtos
 
         [Required]
         public int Weight { get; set; }
-        
     }
 }

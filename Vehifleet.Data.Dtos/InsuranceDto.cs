@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Vehifleet.Data.Dtos.BaseDtos;
 
 namespace Vehifleet.Data.Dtos
 {
-    public class InsuranceDto
+    public class InsuranceDto : AuditableDto
     {
         [Required]
         public int Id { get; set; }

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { InfoModalComponent } from './info-modal/info-modal.component';
+import { ErrorModalComponent } from './error-modal/error-modal.component';
+import { SuccessModalComponent } from './success-modal/success-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -8,18 +11,24 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 export class ModalService {
   constructor(private modal: NgbModal) {}
 
-  showConfirmationModal(
-    title: string,
-    header: string,
-    showWarning: boolean
-  ): Promise<any> {
-    console.log('submit clicked');
+  showSuccessModal(text: string) {
+    const modal = this.modal.open(SuccessModalComponent);
+    modal.componentInstance.text = text;
+  }
+
+  showInfoModal(text: string) {
+    const modal = this.modal.open(InfoModalComponent);
+    modal.componentInstance.text = text;
+  }
+
+  showErrorModal(text: string) {
+    const modal = this.modal.open(ErrorModalComponent);
+    modal.componentInstance.text = text;
+  }
+
+  showConfirmModal(text: string): Promise<any> {
     const modal = this.modal.open(ConfirmModalComponent);
-    modal.componentInstance.title = title; // maintenance deletion
-    modal.componentInstance.header = header; //'Are you sure you want to delete this maintenance?'
-    if (showWarning) {
-      modal.componentInstance.text = 'This operation cannot be undone.';
-    }
+    modal.componentInstance.text = text;
     return modal.result;
   }
 }

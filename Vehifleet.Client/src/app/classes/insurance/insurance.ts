@@ -1,4 +1,6 @@
-export class Insurance {
+import { Auditable } from '../base/auditable';
+
+export class Insurance extends Auditable {
   id: number;
   vehicleId: number;
   startDate: Date;

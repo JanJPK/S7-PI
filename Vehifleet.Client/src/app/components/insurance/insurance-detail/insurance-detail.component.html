@@ -4,12 +4,7 @@
       <div class="card border-light">
         <form [formGroup]="form">
           <div class="card-header">
-            <div *ngIf="newEntity; else: existingEntity">
-              <h4>New insurance</h4>
-            </div>
-            <ng-template #existingEntity>
-              <h4>Insurance {{ insurance.insuranceId }}</h4>
-            </ng-template>
+            <h4>Insurance {{ insurance.insuranceId }}</h4>
           </div>
 
           <div class="card-body">
@@ -108,7 +103,7 @@
                 [disabled]="!form.valid || !vehicle.status == 'Available'"
                 (click)="onSubmit()"
               >
-                Update
+                Save
               </button>
               <button
                 class="btn btn-danger mb-3"

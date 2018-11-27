@@ -22,13 +22,13 @@ export class InsuranceDetailComponent extends BaseComponent {
     endDate: new FormControl('', Validators.required),
     cost: new FormControl('', [
       Validators.required,
-      Validators.pattern('^[1-9][0-9]*$')
+      Validators.pattern('^[0-9]*$')
     ]),
     insurer: new FormControl('', Validators.required),
     insuranceId: new FormControl('', Validators.required),
     mileage: new FormControl('', [
       Validators.required,
-      Validators.pattern('^[1-9][0-9]*$')
+      Validators.pattern('^[0-9]*$')
     ])
   });
 
@@ -96,7 +96,6 @@ export class InsuranceDetailComponent extends BaseComponent {
 
   onSubmit() {
     this.readForm();
-    console.log('update clicked');
     if (this.insurance.id != 0) {
       this.insuranceService
         .update(this.insurance, this.insurance.id)

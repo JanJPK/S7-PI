@@ -1,7 +1,7 @@
 import { Auditable } from '../base/auditable';
 
 export class Maintenance extends Auditable {
-  id: number;
+  id: number = 0;
   vehicleId: number;
   startDate: Date;
   endDate: Date;

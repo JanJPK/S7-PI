@@ -2,15 +2,10 @@
   <div class="row justify-content-center">
     <div class="col col-lg-4">
       <div class="card border-light">
-        <div class="card-header">
-          <div *ngIf="newEntity; else: existingEntity">
-            <h4>New maintenance</h4>
-          </div>
-          <ng-template #existingEntity> <h4>Maintenance</h4> </ng-template>
-        </div>
+        <form [formGroup]="form">
+          <div class="card-header"><h4>Maintenance</h4></div>
 
-        <div class="card-body">
-          <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="card-body">
             <fieldset>
               <div class="form-group">
                 <label>Description:</label>
@@ -82,30 +77,31 @@
                 </div>
               </div>
             </fieldset>
-          </form>
-        </div>
+          </div>
 
-        <div class="card-body">
-          <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="card-body">
             <div class="btn-group" role="group">
               <button
                 class="btn btn-primary mb-3"
                 [disabled]="!form.valid || !vehicle.status == 'Available'"
-                type="submit"
+                (click)="onSubmit()"
               >
-                Update
+                Save
               </button>
               <button
                 class="btn btn-danger mb-3"
-                [disabled]="!vehicle.status == 'Available'"
+                [disabled]="
+                  !vehicle.status == 'Available' || maintenance.id == 0
+                "
+                (click)="onDelete()"
               >
                 Delete
               </button>
             </div>
-          </form>
-        </div>
+          </div>
 
-        <div class="card-footer text-muted">2 days ago</div>
+          <app-audit-footer [auditable]="maintenance"></app-audit-footer>
+        </form>
       </div>
     </div>
   </div>

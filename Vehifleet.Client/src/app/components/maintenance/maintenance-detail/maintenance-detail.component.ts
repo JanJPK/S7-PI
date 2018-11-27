@@ -5,9 +5,8 @@ import { Vehicle } from 'src/app/classes/vehicle/vehicle';
 import { MaintenanceService } from 'src/app/services/maintenance.service';
 import { DatepickerConverterService } from 'src/app/shared/datepicker/datepicker-converter.service';
 import { VehicleService } from 'src/app/services/vehicle.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '../../base/base.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalService } from 'src/app/shared/modal/modal.service';
 
 @Component({
@@ -23,7 +22,10 @@ export class MaintenanceDetailComponent extends BaseComponent {
     endDate: new FormControl(''),
     description: new FormControl('', Validators.required),
     mileage: new FormControl('', Validators.required),
-    cost: new FormControl('', Validators.required)
+    cost: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]*$')
+    ])
   });
 
   constructor(
@@ -31,6 +33,7 @@ export class MaintenanceDetailComponent extends BaseComponent {
     private datePickerConverter: DatepickerConverterService,
     private vehicleService: VehicleService,
     private modalService: ModalService,
+    private router: Router,
     private route: ActivatedRoute
   ) {
     super();
@@ -52,6 +55,7 @@ export class MaintenanceDetailComponent extends BaseComponent {
       });
     } else {
       this.maintenance = new Maintenance();
+      this.maintenance.id = 0;
       this.maintenance.vehicleId = +this.route.snapshot.paramMap.get(
         'vehicleId'
       );
@@ -81,5 +85,39 @@ export class MaintenanceDetailComponent extends BaseComponent {
     });
   }
 
-  onSubmit() {}
+  readForm() {
+    this.maintenance.startDate = this.form.get('startDate').value;
+    this.maintenance.endDate = this.form.get('endDate').value;
+    this.maintenance.description = this.form.get('description').value;
+    this.maintenance.mileage = this.form.get('mileage').value;
+    this.maintenance.cost = this.form.get('cost').value;
+  }
+
+  onSubmit() {
+    this.readForm();
+    if (this.maintenance.id != 0) {
+      this.maintenanceService
+        .update(this.maintenance, this.maintenance.id)
+        .subscribe(response => {
+          if (response['status'] == 200) {
+            this.modalService.showSuccessModal('Maintenance has been updated.');
+          } else {
+            this.modalService.showErrorModal('Maintenance update has failed.');
+          }
+        });
+    } else {
+      this.maintenanceService.create(this.maintenance).subscribe(id => {
+        if (id != null) {
+          this.modalService.showSuccessModal('Maintenance has been created.');
+          this.router.navigate([
+            `/vehicles/${this.maintenance.vehicleId}/maintenances/${id}`
+          ]);
+        } else {
+          this.modalService.showSuccessModal(
+            'Maintenance creation has failed.'
+          );
+        }
+      });
+    }
+  }
 }

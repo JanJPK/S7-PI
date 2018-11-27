@@ -16,4 +16,9 @@ export class Vehicle extends CostGenerating {
   horsepower: number;
   seats: number;
   engine: string;
+
+  constructor() {
+    super();
+    this.id = 0;
+  }
 }

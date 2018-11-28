@@ -21,10 +21,10 @@ namespace Vehifleet.Data.Dtos.Validators
                .GreaterThan(0)
                .WithMessage("Invalid employee Id.");                                    
 
-            //RuleFor(b => b.StartDate)
-            //   .LessThan(b => b.EndDate)
-            //   .When(b => b.EndDate != null)
-            //   .WithMessage("End date cannot be smaller than start date.");
+            RuleFor(b => b.StartDate)
+               .LessThan(b => b.EndDate)
+               .When(b => b.EndDate != null)
+               .WithMessage("End date cannot be smaller than start date.");
 
             //RuleFor(b => b.EndDate)
             //   .NotNull()

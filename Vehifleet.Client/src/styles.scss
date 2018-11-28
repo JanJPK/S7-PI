@@ -2,7 +2,12 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~bootswatch/dist/darkly/bootswatch';
 
+// @import '~bootswatch/dist/flatly/variables';
+// @import '~bootstrap/scss/bootstrap';
+// @import '~bootswatch/dist/flatly/bootswatch';
+
 $accentColor: #3a5066;
+// $accentColor: #15bb92;
 
 .thead {
   background-color: $accentColor;

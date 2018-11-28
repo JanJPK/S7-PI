@@ -36,7 +36,7 @@ namespace Vehifleet.API.QueryFilters
                 query = query.Where(v => LocationCode.Any(l => l == v.LocationCode));
             }
 
-            if (MinBookingDays == null && MinBookingDays > 0)
+            if (MinBookingDays != null && MinBookingDays > 0)
             {
                 query = query.Where(v => (v.InspectionValidUntil - DateTime.UtcNow).Days > MinBookingDays);
             }

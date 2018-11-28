@@ -169,13 +169,14 @@
         </div>
 
         <div class="card-body" *ngIf="vehicle.status != 'Decomissioned'">
+          TODO: verify
           <div class="btn-group" role="group">
             <button class="btn btn-primary mb-3">Update</button>
             <button class="btn btn-danger mb-3">Decomission</button>
           </div>
         </div>
 
-        <div class="card-footer text-muted">2 days ago</div>
+        <app-audit-footer [auditable]="vehicle"></app-audit-footer>
       </div>
     </div>
 

@@ -21,19 +21,16 @@ namespace Vehifleet.API.Controllers
         private readonly IGenericRepository<Vehicle, int> vehicleRepository;
         private readonly IEmployeeRepository employeeRepository;
         private readonly IGenericRepository<VehicleModel, int> vehicleSpecificationRepository;
-        private readonly IStatusService statusService;
 
         public BookingController(IGenericRepository<Booking, int> bookingRepository,
                                  IGenericRepository<Vehicle, int> vehicleRepository,
                                  IEmployeeRepository employeeRepository,
-                                 IGenericRepository<VehicleModel, int> vehicleSpecificationRepository,
-                                 IStatusService statusService)
+                                 IGenericRepository<VehicleModel, int> vehicleSpecificationRepository)
         {
             this.bookingRepository = bookingRepository;
             this.vehicleRepository = vehicleRepository;
             this.employeeRepository = employeeRepository;
             this.vehicleSpecificationRepository = vehicleSpecificationRepository;
-            this.statusService = statusService;
         }
 
         [HttpGet]
@@ -94,11 +91,6 @@ namespace Vehifleet.API.Controllers
             if (oldBooking == null)
             {
                 return NotFound();
-            }
-
-            if (oldBooking.Status == BookingStatus.Completed)
-            {
-                return BadRequest("Cannot update completed bookings.");
             }
 
             var booking = Mapper.Map<Booking>(bookingDto);

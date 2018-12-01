@@ -12,12 +12,12 @@ namespace Vehifleet.API
     {
         public static void Main(string[] args)
         {
-            var host = BuildWebHost(args);
+            var host = BuildWebHost(args);            
 
             using (var scope = host.Services.CreateScope())
             {
                 try
-                {
+                {                    
                     var context = scope.ServiceProvider.GetService<VehifleetContext>();
                     var configuration = scope.ServiceProvider.GetService<IConfiguration>();                    
                     if (Convert.ToBoolean(configuration["Database:SeedOnStartup"]))
@@ -39,6 +39,13 @@ namespace Vehifleet.API
         {
             return WebHost.CreateDefaultBuilder(args)
                           .UseStartup<Startup>()
+                          .ConfigureLogging((context, logging) =>
+                                            {
+                                                logging.AddConfiguration(context.Configuration.GetSection("Logging"));
+                                                logging.AddConsole();
+                                                logging.AddDebug();
+                                                logging.AddEventSourceLogger();
+                                            })
                           .Build();
         }
     }

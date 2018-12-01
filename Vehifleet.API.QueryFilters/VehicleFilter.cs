@@ -9,11 +9,11 @@ namespace Vehifleet.API.QueryFilters
 {
     public class VehicleFilter : IQueryFilter<Vehicle>
     {
-        public IEnumerable<string> Manufacturer { get; set; }
+        //public IEnumerable<string> Manufacturer { get; set; }
+        public string Manufacturer { get; set; }
 
-        public IEnumerable<string> Model { get; set; }
-
-        public IEnumerable<string> LocationCode { get; set; }
+        //public IEnumerable<string> LocationCode { get; set; }
+        public string LocationCode { get; set; }
 
         public int? MinBookingDays { get; set; }
 
@@ -21,19 +21,24 @@ namespace Vehifleet.API.QueryFilters
 
         public IQueryable<Vehicle> Filter(IQueryable<Vehicle> query)
         {
+            //if (Manufacturer.NotNullOrEmpty())
+            //{
+            //    query = query.Where(v => Manufacturer.Any(m => m == v.VehicleModel.Manufacturer));
+            //}
+
+            //if (LocationCode.NotNullOrEmpty())
+            //{
+            //    query = query.Where(v => LocationCode.Any(l => l == v.LocationCode));
+            //}
+
             if (Manufacturer.NotNullOrEmpty())
             {
-                query = query.Where(v => Manufacturer.Any(m => m == v.VehicleModel.Manufacturer));
-            }
-
-            if (Model.NotNullOrEmpty())
-            {
-                query = query.Where(v => Model.Any(m => m == v.VehicleModel.Model));
+                query = query.Where(v => v.VehicleModel.Manufacturer == Manufacturer);
             }
 
             if (LocationCode.NotNullOrEmpty())
             {
-                query = query.Where(v => LocationCode.Any(l => l == v.LocationCode));
+                query = query.Where(v => v.LocationCode == LocationCode);
             }
 
             if (MinBookingDays != null && MinBookingDays > 0)

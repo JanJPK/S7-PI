@@ -137,7 +137,7 @@ namespace Vehifleet.API
             }
 
             ConfigureAutoMapper();
-            app.UseCors("AllowAllOriginsHeadersAndMethods");
+            app.UseCors("AllowAllOriginsHeadersAndMethods");            
             app.UseAuthentication();
             app.UseMvc();
         }

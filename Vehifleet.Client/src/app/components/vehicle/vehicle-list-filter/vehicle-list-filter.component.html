@@ -1,3 +1,58 @@
-<p>
-  vehicle-list-filter works!
-</p>
+<form [formGroup]="form">
+  <div class="form-row">
+    <div class="col">
+      <div class="form-group">
+        <!-- <label>Manufacturer:</label> -->
+        <input
+          placeholder="Manufacturer"
+          type="text"
+          class="form-control"
+          formControlName="manufacturer"
+          id="manufacturer"
+        />
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="form-group">
+        <!-- <label>Location:</label> -->
+        <input
+          placeholder="Location code"
+          type="text"
+          class="form-control"
+          formControlName="locationCode"
+          id="locationCode"
+        />
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="form-group">
+        <!-- <label>Min. booking days:</label> -->
+        <input
+          placeholder="Min. booking days"
+          type="text"
+          class="form-control"
+          formControlName="minBookingDays"
+          id="minBookingDays"
+        />
+      </div>
+      <div *ngIf="isInvalid('minBookingDays')" class="invalid-feedback d-block">
+        Min. booking days must be a valid number.
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="btn-group" role="group">
+        <button
+          class="btn btn-info"
+          (click)="onFilter()"
+          [disabled]="!form.valid"
+        >
+          Filter
+        </button>
+        <button class="btn btn-warning" (click)="onReset()">Reset</button>
+      </div>
+    </div>
+  </div>
+</form>

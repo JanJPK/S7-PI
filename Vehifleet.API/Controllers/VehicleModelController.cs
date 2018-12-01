@@ -36,6 +36,19 @@ namespace Vehifleet.API.Controllers
             return Ok(Mapper.Map<IEnumerable<VehicleModelDto>>(vehicleModels));
         }
 
+        [HttpGet("manufacturers")]
+        public async Task<IActionResult> GetManufacturers()
+        {
+            var query = vehicleModelRepository.Get();
+
+            var manufacturers = await query
+                                     .Select(vm => vm.Manufacturer)
+                                     .Distinct()
+                                     .ToListAsync();
+
+            return Ok(manufacturers);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {

@@ -25,10 +25,13 @@ export class VehicleListBookingComponent implements OnInit {
       .subscribe(vehicle => (this.selectedVehicle = vehicle));
   }
 
-  getBookableVehicles() {
-    const filter = new VehicleListFilter();
-    filter.Status = ['Available'];
-    filter.MinBookingDays = 1;
+  getBookableVehicles(filter?: VehicleListFilter) {
+    if (filter == null) {
+      filter = new VehicleListFilter();
+      filter.minBookingDays = 1;
+    }
+    filter.status = ['Available'];
+    console.log(filter);
     this.vehicleService
       .get(filter)
       .subscribe(vehicles => (this.vehicles = vehicles));

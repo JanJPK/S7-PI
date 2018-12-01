@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Vehifleet.Services
+{
+    public class CsvService
+    {
+
+
+        private void ConvertVehicleModels()
+        {
+
+        }
+
+        private void ConvertVehicles()
+        {
+
+        }
+
+        private void ConvertBookings()
+        {
+
+        }
+
+        private void ConvertEmployees()
+        {
+
+        }
+    }
+}

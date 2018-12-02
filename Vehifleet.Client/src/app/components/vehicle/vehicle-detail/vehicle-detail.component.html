@@ -118,6 +118,7 @@
         </div>
 
         <div class="card-body">
+          Operating cost:
           <form [formGroup]="form">
             <fieldset>
               <div class="form-group">
@@ -168,11 +169,49 @@
           </form>
         </div>
 
-        <div class="card-body" *ngIf="vehicle.status != 'Decomissioned'">
-          TODO: verify
+        <div class="card-body">
           <div class="btn-group" role="group">
-            <button class="btn btn-primary mb-3">Update</button>
-            <button class="btn btn-danger mb-3">Decomission</button>
+            <button
+              class="btn btn-primary mb-3"
+              (click)="onSubmit()"
+              [disabled]="!form.valid || vehicle.status != 'Available'"
+            >
+              Save
+            </button>
+
+            <div *ngIf="vehicle.hasBookings; else: noBookings">
+              <button
+                class="btn btn-danger mb-3"
+                (click)="onDelete()"
+                [disabled]="vehicle.status != 'Available'"
+              >
+                Decomission
+              </button>
+            </div>
+
+            <ng-template #noBookings>
+              <button
+                class="btn btn-danger mb-3"
+                (click)="onDelete()"
+                [disabled]="vehicle.status != 'Available'"
+              >
+                Delete
+              </button>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="card-body">
+          TODO
+          <div class="col">
+            <a href="/vehicles" class="card-link">
+              Show all bookings of this vehicle</a
+            >
+          </div>
+          <div class="col">
+            <a href="/vehicle-models/" class="card-link">
+              Go to vehicle model</a
+            >
           </div>
         </div>
 

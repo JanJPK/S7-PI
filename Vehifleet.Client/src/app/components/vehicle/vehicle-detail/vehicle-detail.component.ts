@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { LocationService } from 'src/app/services/location.service';
 import { BaseFormDetailComponent } from '../../base/base-form-detail.component';
+import { ModalService } from 'src/app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-vehicle-detail',
@@ -41,7 +42,7 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
     'Available',
     'Unavailable',
     'In Maintenance',
-    'Awaiting Insurance Renewal',
+    'Awaiting insurance Renewal',
     'Awaiting Inspection',
     'Decommissioned'
   ];
@@ -54,6 +55,7 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
   constructor(
     private vehicleService: VehicleService,
     private locationService: LocationService,
+    private modalService: ModalService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -107,11 +109,57 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
     }
   }
 
-  onSubmit() {
-    throw new Error('Method not implemented.');
+  readForm() {
+    this.vehicle.status = this.form.get('status').value;
+    this.vehicle.canBeBookedUntil = this.form.get('canBeBookedUntil').value;
+    this.vehicle.licensePlate = this.form.get('licensePlate').value;
+    this.vehicle.yearOfManufacture = this.form.get('yearOfManufacture').value;
+    this.vehicle.chassisCode = this.form.get('chassisCode').value;
+    this.vehicle.cost = this.form.get('cost').value;
+    this.vehicle.fuelConsumed = this.form.get('fuelConsumed').value;
+    this.vehicle.mileage = this.form.get('mileage').value;
   }
 
-  openVehicleModel() {
-    this.router.navigate([`/vehicle-models/${this.vehicle.vehicleModelId}`]);
+  onSubmit() {
+    this.readForm();
+    if (this.vehicle.id != 0) {
+      this.vehicleService
+        .update(this.vehicle, this.vehicle.id)
+        .subscribe(response => {
+          if (response['status'] == 200) {
+            this.modalService.showSuccessModal('Vehicle has been updated.');
+          } else {
+            this.modalService.showErrorModal('Vehicle update has failed.');
+          }
+        });
+    } else {
+      this.vehicleService.create(this.vehicle).subscribe(id => {
+        if (id != null) {
+          this.modalService.showSuccessModal('Vehicle has been created.');
+          this.router.navigate([`/vehicles/${id}`]);
+        } else {
+          this.modalService.showSuccessModal('Vehicle creation has failed.');
+        }
+      });
+    }
+  }
+
+  onDecomission() {}
+
+  onDelete() {
+    this.modalService
+      .showConfirmModal('Do you want to delete this vehicle?')
+      .then(confirmed => {
+        if (confirmed == 'true') {
+          this.vehicleService.delete(this.vehicle.id).subscribe(response => {
+            if (response['status'] == 200) {
+              this.modalService.showSuccessModal('Vehicle has been deleted.');
+              this.router.navigate([`/vehicles`]);
+            } else {
+              this.modalService.showErrorModal('Vehicle deletion has failed.');
+            }
+          });
+        }
+      });
   }
 }

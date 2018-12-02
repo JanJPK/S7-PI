@@ -37,5 +37,7 @@ namespace Vehifleet.Data.Dtos
 
         public DateTime CanBeBookedUntil { get; set; }
 
+        public bool HasBookings { get; set; }
+
     }
 }

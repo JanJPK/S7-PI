@@ -53,7 +53,12 @@ namespace Vehifleet.API.Controllers
             }
             else
             {
-                return Ok(Mapper.Map<VehicleDto>(vehicle));
+                var dto = Mapper.Map<VehicleDto>(vehicle);
+                dto.HasBookings = await bookingRepository.Get()
+                                                   .Where(b => b.VehicleId == id)
+                                                   .AnyAsync();
+
+                return Ok(dto);
             }
         }
 

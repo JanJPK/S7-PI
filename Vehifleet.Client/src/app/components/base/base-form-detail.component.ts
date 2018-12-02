@@ -18,6 +18,8 @@ export abstract class BaseFormDetailComponent extends BaseFormComponent
 
   abstract onSubmit();
 
+  abstract onDelete();
+
   isInvalid(formControlName: string): boolean {
     const formControl = this.form.get(formControlName);
     return !formControl.valid && (formControl.touched || formControl.dirty);

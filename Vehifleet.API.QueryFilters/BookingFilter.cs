@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Vehifleet.Data.Models;
 using Vehifleet.Data.Models.Enums;
@@ -10,15 +11,15 @@ namespace Vehifleet.API.QueryFilters
     {
         public int? EmployeeId { get; set; }
 
-        public int? ManagerId { get; set; }
-
         public int? VehicleId { get; set; }
 
-        public BookingStatus? Status { get; set; }
+        public IEnumerable<BookingStatus> Statuses { get; set; }
 
         public DateTime? FromDate { get; set; }
 
         public DateTime? ToDate { get; set; }
+
+        public string EmployeeUserName { get; set; }
 
         public IQueryable<Booking> Filter(IQueryable<Booking> query)
         {
@@ -27,29 +28,29 @@ namespace Vehifleet.API.QueryFilters
                 query = query.Where(b => b.EmployeeId == EmployeeId);
             }
 
-            if (ManagerId.NotNullOrLessThanOne())
-            {
-                query = query.Where(b => b.ManagerId == ManagerId);
-            }
-
             if (VehicleId.NotNullOrLessThanOne())
             {
                 query = query.Where(b => b.VehicleId == VehicleId);
-            }
+            }            
 
-            if (Status != null)
+            if (Statuses != null)
             {
-                query = query.Where(b => b.Status == Status);
+                query = query.Where(b => Statuses.Any(s => s == b.Status));
             }
 
             if (FromDate != null)
             {
-                query = query.Where(b => b.StartDate < FromDate);
+                query = query.Where(b => b.StartDate > FromDate);
             }
 
             if (ToDate != null)
             {
                 query = query.Where(b => b.EndDate < ToDate);
+            }
+
+            if (EmployeeUserName.NotNullOrEmpty())
+            {
+                query = query.Where(b => b.Employee.Identity.UserName == EmployeeUserName);
             }
 
             return query;

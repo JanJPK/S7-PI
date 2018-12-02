@@ -20,8 +20,8 @@ export class VehicleListComponent implements OnInit {
     this.get();
   }
 
-  get() {
-    this.vehicleService.get().subscribe(vehicles => {
+  get(filter?: VehicleListFilter) {
+    this.vehicleService.get(filter).subscribe(vehicles => {
       this.vehicles = vehicles;
     });
   }

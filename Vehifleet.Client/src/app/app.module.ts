@@ -39,6 +39,7 @@ import { InfoModalComponent } from './shared/modal/info-modal/info-modal.compone
 import { AuditFooterComponent } from './components/shared/audit-footer/audit-footer.component';
 import { ErrorModalComponent } from './shared/modal/error-modal/error-modal.component';
 import { SuccessModalComponent } from './shared/modal/success-modal/success-modal.component';
+import { VehicleListBookingFilterComponent } from './components/vehicle/vehicle-list-booking-filter/vehicle-list-booking-filter.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +70,8 @@ import { SuccessModalComponent } from './shared/modal/success-modal/success-moda
     InfoModalComponent,
     AuditFooterComponent,
     ErrorModalComponent,
-    SuccessModalComponent
+    SuccessModalComponent,
+    VehicleListBookingFilterComponent
   ],
   imports: [
     BrowserModule,

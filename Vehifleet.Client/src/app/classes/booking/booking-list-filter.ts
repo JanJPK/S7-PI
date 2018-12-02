@@ -1,8 +1,8 @@
 export class BookingListFilter {
   employeeId: number;
-  managerId: number;
+  employeeUserName: string;
   vehicleId: number;
-  status: string;
-  fromDate: Date;
-  toDate: Date;
+  statuses: string[];
+  fromDate: string;
+  toDate: string;
 }

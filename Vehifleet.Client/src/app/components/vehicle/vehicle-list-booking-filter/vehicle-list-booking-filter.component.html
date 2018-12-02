@@ -3,11 +3,11 @@
     <div class="col">
       <div class="form-group">
         <input
-          placeholder="Chassis code"
+          placeholder="Manufacturer"
           type="text"
           class="form-control"
-          formControlName="chassisCode"
-          id="chassisCode"
+          formControlName="manufacturer"
+          id="manufacturer"
         />
       </div>
     </div>
@@ -27,12 +27,15 @@
     <div class="col">
       <div class="form-group">
         <input
-          placeholder="Status"
+          placeholder="Min. booking days"
           type="text"
           class="form-control"
-          formControlName="status"
-          id="status"
+          formControlName="minBookingDays"
+          id="minBookingDays"
         />
+      </div>
+      <div *ngIf="isInvalid('minBookingDays')" class="invalid-feedback d-block">
+        Min. booking days must be a valid number.
       </div>
     </div>
 

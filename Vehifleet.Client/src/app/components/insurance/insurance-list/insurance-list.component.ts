@@ -23,10 +23,10 @@ export class InsuranceListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getInsurances();
+    this.get();
   }
 
-  getInsurances() {
+  get() {
     this.insuranceService
       .getByVehicleId(this.vehicleId)
       .subscribe(insurances => {

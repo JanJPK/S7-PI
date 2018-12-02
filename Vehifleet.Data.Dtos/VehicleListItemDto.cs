@@ -19,5 +19,9 @@ namespace Vehifleet.Data.Dtos
         public string LocationCode { get; set; }
 
         public DateTime? CanBeBookedUntil { get; set; }
+
+        public string Status { get; set; }
+
+        public string ChassisCode { get; set; }
     }
 }

@@ -15,7 +15,6 @@ namespace Vehifleet.Repositories
         {
             return Set
                   .Include(b => b.Employee)
-                  .Include(b => b.Manager)
                   .Include(b => b.Vehicle)
                   .AsNoTracking()
                   .SingleOrDefaultAsync(b => b.Id == id);

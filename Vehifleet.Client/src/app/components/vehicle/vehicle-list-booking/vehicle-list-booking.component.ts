@@ -16,24 +16,24 @@ export class VehicleListBookingComponent implements OnInit {
   constructor(private vehicleService: VehicleService) {}
 
   ngOnInit() {
-    this.getBookableVehicles();
+    this.get();
+  }
+
+  get(filter?: VehicleListFilter) {
+    if (filter == null) {
+      filter = new VehicleListFilter();
+      filter.minBookingDays = 1;
+    }
+    filter.status = 'Available';
+    console.log(filter);
+    this.vehicleService
+      .get(filter)
+      .subscribe(vehicles => (this.vehicles = vehicles));
   }
 
   select(id: number) {
     this.vehicleService
       .getById(id)
       .subscribe(vehicle => (this.selectedVehicle = vehicle));
-  }
-
-  getBookableVehicles(filter?: VehicleListFilter) {
-    if (filter == null) {
-      filter = new VehicleListFilter();
-      filter.minBookingDays = 1;
-    }
-    filter.status = ['Available'];
-    console.log(filter);
-    this.vehicleService
-      .get(filter)
-      .subscribe(vehicles => (this.vehicles = vehicles));
   }
 }

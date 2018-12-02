@@ -18,15 +18,10 @@ namespace Vehifleet.Data.Models
 
         public virtual Vehicle Vehicle { get; set; }
 
-        // Booking <-> Employee relationship is configured in Context class.
+        [Required]
         public int EmployeeId { get; set; }
 
-        public virtual Employee Employee { get; set; }
-
-        // Accepting manager.
-        public int? ManagerId { get; set; }
-
-        public virtual Employee Manager { get; set; }
+        public virtual Employee Employee { get; set; }        
 
         [Required]
         public BookingStatus Status { get; set; }

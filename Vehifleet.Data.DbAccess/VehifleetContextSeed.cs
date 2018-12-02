@@ -423,27 +423,20 @@ namespace Vehifleet.Data.DbAccess
         public static List<Booking> GenerateBookings(this VehifleetContext context, Vehicle vehicle)
         {
             var employees = context.Employees.ToList();
-            var managers = context.Employees.Where(e => e.Identity.Department == "Management").ToList();
             int bookingsCount = Rng.Next(1, 2019 - vehicle.YearOfManufacture + 15);
             List<Booking> bookings = new List<Booking>();
             for (int i = 0; i < bookingsCount; i++)
             {
                 DateTime start = new DateTime(Rng.Next(vehicle.YearOfManufacture, 2019), Rng.Next(1, 10), Rng.Next(1, 25));
                 var employee = employees[Rng.Next(0, employees.Count)];
-                var manager = managers[Rng.Next(0, managers.Count)];
                 var mileage = Rng.Next(0, 200);
                 var fuelConsumed = (int) (mileage * vehicle.AverageFuelConsumption);
-                while (employee.Id == manager.Id)
-                {
-                    manager = managers[Rng.Next(0, managers.Count)];
-                }
 
                 var booking = new Booking
                 {
                     AddedBy = "admin",
                     AddedOn = DateTime.UtcNow,
                     EmployeeId = employee.Id,
-                    ManagerId = manager.Id,
                     Status = BookingStatus.Completed,
                     Mileage = mileage,
                     FuelConsumed = fuelConsumed,

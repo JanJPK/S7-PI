@@ -9,7 +9,7 @@ import { BookingService } from 'src/app/services/booking.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { DatepickerConverterService } from 'src/app/shared/datepicker/datepicker-converter.service';
 import { UserService } from 'src/app/shared/user/user.service';
-import { BaseComponent } from 'src/app/components/base/base.component';
+import { BaseFormComponent } from 'src/app/components/base/base-form.component';
 import { ModalService } from 'src/app/shared/modal/modal.service';
 
 @Component({
@@ -17,7 +17,7 @@ import { ModalService } from 'src/app/shared/modal/modal.service';
   templateUrl: './booking-detail.component.html',
   styleUrls: ['./booking-detail.component.scss']
 })
-export class BookingDetailComponent extends BaseComponent {
+export class BookingDetailComponent extends BaseFormComponent {
   vehicle: Vehicle;
   booking: Booking;
   form = new FormGroup(

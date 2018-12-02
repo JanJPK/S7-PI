@@ -21,10 +21,10 @@ export class BookingListPersonalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getPersonalBookings();
+    this.get();
   }
 
-  getPersonalBookings() {
+  get() {
     const filter = new BookingListFilter();
     filter.employeeId = this.userService.getEmployee().id;
     this.bookingService

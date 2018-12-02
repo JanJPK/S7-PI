@@ -7,13 +7,13 @@ namespace Vehifleet.API.QueryFilters
 {
     public class VehicleModelFilter : IQueryFilter<VehicleModel>
     {
-        public IEnumerable<string> Manufacturer { get; set; }
+        public string Manufacturer { get; set; }
 
         public IQueryable<VehicleModel> Filter(IQueryable<VehicleModel> query)
         {
             if (Manufacturer.NotNullOrEmpty())
             {
-                query = query.Where(vm => Manufacturer.Any(m => m == vm.Manufacturer));
+                query = query.Where(vm => vm.Manufacturer == Manufacturer);
             }
 
             return query;

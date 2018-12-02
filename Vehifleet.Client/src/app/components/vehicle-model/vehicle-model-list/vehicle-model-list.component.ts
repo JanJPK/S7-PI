@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VehicleModelService } from 'src/app/services/vehicle-model.service';
 import { VehicleModel } from 'src/app/classes/vehicle-model/vehicle-model';
 import { Router } from '@angular/router';
+import { VehicleModelListFilter } from 'src/app/classes/vehicle-model/vehicle-model-list-filter';
 
 @Component({
   selector: 'app-vehicle-model-list',
@@ -20,8 +21,8 @@ export class VehicleModelListComponent implements OnInit {
     this.get();
   }
 
-  get() {
-    this.vehicleModelService.get().subscribe(vehicleModels => {
+  get(filter?: VehicleModelListFilter) {
+    this.vehicleModelService.get(filter).subscribe(vehicleModels => {
       this.vehicleModels = vehicleModels;
     });
   }

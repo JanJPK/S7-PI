@@ -1,3 +1,73 @@
-<p>
-  booking-list-filter works!
-</p>
+<form [formGroup]="form">
+  <div class="form-row">
+    <div class="col">
+      <div class="form-group">
+        <input
+          placeholder="Employee"
+          type="text"
+          class="form-control"
+          formControlName="employeeUserName"
+          id="employeeUserName"
+        />
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="form-group">
+        <input
+          type="text"
+          placeholder="From date"
+          formControlName="fromDate"
+          ngbDatepicker
+          #sd="ngbDatepicker"
+          (click)="sd.toggle()"
+          class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="form-group">
+        <input
+          type="text"
+          placeholder="To date"
+          formControlName="toDate"
+          ngbDatepicker
+          #ed="ngbDatepicker"
+          (click)="ed.toggle()"
+          class="form-control"
+        />
+      </div>
+    </div>
+
+    <div class="col">
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>
+          Statuses
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <div *ngFor="let status of statuses">
+            <div (click)="check(status)">
+              <div
+                class="dropdown-item text-success"
+                *ngIf="status.selected; else: notSelected"
+              >
+                {{ status.name }}
+              </div>
+              <ng-template #notSelected>
+                <div class="dropdown-item text-muted">{{ status.name }}</div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="btn-group" role="group">
+        <button class="btn btn-info" (click)="onFilter()">Filter</button>
+        <button class="btn btn-warning" (click)="onReset()">Reset</button>
+      </div>
+    </div>
+  </div>
+</form>

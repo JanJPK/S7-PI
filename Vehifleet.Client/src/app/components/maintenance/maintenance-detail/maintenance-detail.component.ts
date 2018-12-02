@@ -6,7 +6,7 @@ import { MaintenanceService } from 'src/app/services/maintenance.service';
 import { DatepickerConverterService } from 'src/app/shared/datepicker/datepicker-converter.service';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaseComponent } from '../../base/base.component';
+import { BaseFormDetailComponent } from '../../base/base-form-detail.component';
 import { ModalService } from 'src/app/shared/modal/modal.service';
 
 @Component({
@@ -14,7 +14,7 @@ import { ModalService } from 'src/app/shared/modal/modal.service';
   templateUrl: './maintenance-detail.component.html',
   styleUrls: ['./maintenance-detail.component.scss']
 })
-export class MaintenanceDetailComponent extends BaseComponent {
+export class MaintenanceDetailComponent extends BaseFormDetailComponent {
   maintenance: Maintenance;
   vehicle: Vehicle;
   form = new FormGroup({

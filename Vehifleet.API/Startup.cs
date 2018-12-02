@@ -184,7 +184,6 @@ namespace Vehifleet.API
                 config.CreateMap<Booking, BookingDto>();
                 config.CreateMap<BookingDto, Booking>()
                       .ForMember(d => d.Employee, o => o.Ignore())
-                      .ForMember(d => d.Manager, o => o.Ignore())
                       .ForMember(d => d.Vehicle, o => o.Ignore());
                 config.CreateMap<Booking, BookingListItemDto>()
                       .ForMember(d => d.Vehicle,

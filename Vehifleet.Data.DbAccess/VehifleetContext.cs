@@ -67,18 +67,18 @@ namespace Vehifleet.Data.DbAccess
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Employee>()
-                   .HasMany(e => e.Bookings)
-                   .WithOne(b => b.Employee)
-                   .HasForeignKey(b => b.EmployeeId)
-                   .OnDelete(DeleteBehavior.Restrict)
-                   .IsRequired();
+            //builder.Entity<Employee>()
+            //       .HasMany(e => e.Bookings)
+            //       .WithOne(b => b.Employee)
+            //       .HasForeignKey(b => b.EmployeeId)
+            //       .OnDelete(DeleteBehavior.Restrict)
+            //       .IsRequired();
 
-            builder.Entity<Employee>()
-                   .HasMany(e => e.ManagedBookings)
-                   .WithOne(b => b.Manager)
-                   .HasForeignKey(b => b.ManagerId)
-                   .OnDelete(DeleteBehavior.Restrict);
+            //builder.Entity<Employee>()
+            //       .HasMany(e => e.ManagedBookings)
+            //       .WithOne(b => b.Manager)
+            //       .HasForeignKey(b => b.ManagerId)
+            //       .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../../base/base.component';
+import { BaseFormDetailComponent } from '../../base/base-form-detail.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InsuranceService } from 'src/app/services/insurance.service';
 import { Insurance } from 'src/app/classes/insurance/insurance';
@@ -14,7 +14,7 @@ import { ModalService } from 'src/app/shared/modal/modal.service';
   templateUrl: './insurance-detail.component.html',
   styleUrls: ['./insurance-detail.component.scss']
 })
-export class InsuranceDetailComponent extends BaseComponent {
+export class InsuranceDetailComponent extends BaseFormDetailComponent {
   insurance: Insurance;
   vehicle: Vehicle;
   form = new FormGroup({

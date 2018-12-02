@@ -2,7 +2,9 @@
   <div class="col col-lg-8">
     <div class="card border-light mb-3">
       <div class="card-header">
-        <app-vehicle-list-filter></app-vehicle-list-filter>
+        <app-vehicle-list-filter
+          (filterEvent)="get($event)"
+        ></app-vehicle-list-filter>
       </div>
 
       <div class="card-body">
@@ -10,24 +12,22 @@
           <table class="table table-hover">
             <thead>
               <tr>
+                <th>Chassis Code</th>
                 <th>Manufacturer</th>
                 <th>Model</th>
                 <th>YOM</th>
-                <th>Seats</th>
-                <th>Horsepower</th>
+                <th>Status</th>
                 <th>Location</th>
-                <th>Available until</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let vehicle of vehicles" (click)="select(vehicle.id)">
+                <td>{{ vehicle.chassisCode }}</td>
                 <td>{{ vehicle.manufacturer }}</td>
                 <td>{{ vehicle.model }}</td>
                 <td>{{ vehicle.yearOfManufacture }}</td>
-                <td>{{ vehicle.seats }}</td>
-                <td>{{ vehicle.horsepower }}</td>
+                <td>{{ vehicle.status }}</td>
                 <td>{{ vehicle.locationCode }}</td>
-                <td>{{ vehicle.canBeBookedUntil | date: format:timezone }}</td>
               </tr>
             </tbody>
           </table>

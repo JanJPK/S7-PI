@@ -14,8 +14,6 @@ namespace Vehifleet.Data.Dtos
         [Required]
         public int EmployeeId { get; set; }
 
-        public int? ManagerId { get; set; }
-
         [Required]
         public string Status { get; set; }
 

@@ -24,10 +24,10 @@ export class MaintenanceListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getMaintenances();
+    this.get();
   }
 
-  getMaintenances() {
+  get() {
     this.maintenanceService
       .getByVehicleId(this.vehicleId)
       .subscribe(maintenances => {

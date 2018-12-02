@@ -4,14 +4,14 @@ import { Vehicle } from 'src/app/classes/vehicle/vehicle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { LocationService } from 'src/app/services/location.service';
-import { BaseComponent } from 'src/app/components/base/base.component';
+import { BaseFormDetailComponent } from '../../base/base-form-detail.component';
 
 @Component({
   selector: 'app-vehicle-detail',
   templateUrl: './vehicle-detail.component.html',
   styleUrls: ['./vehicle-detail.component.scss']
 })
-export class VehicleDetailComponent extends BaseComponent {
+export class VehicleDetailComponent extends BaseFormDetailComponent {
   vehicle: Vehicle;
   form = new FormGroup({
     status: new FormControl('', Validators.required),

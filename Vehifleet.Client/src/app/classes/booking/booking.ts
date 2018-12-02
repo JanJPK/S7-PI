@@ -9,4 +9,9 @@ export class Booking extends CostGenerating {
   endDate: Date;
   purpose: string;
   notes: string;
+
+  constructor(id?: number) {
+    super();
+    this.id = id;
+  }
 }

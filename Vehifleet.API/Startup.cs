@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using AutoMapper;
 using FluentValidation.AspNetCore;
@@ -137,7 +138,7 @@ namespace Vehifleet.API
             }
 
             ConfigureAutoMapper();
-            app.UseCors("AllowAllOriginsHeadersAndMethods");            
+            app.UseCors("AllowAllOriginsHeadersAndMethods");
             app.UseAuthentication();
             app.UseMvc();
         }
@@ -151,14 +152,14 @@ namespace Vehifleet.API
                       .IncludeBase<AuditableEntity, AuditableDto>();
 
                 config.CreateMap<Vehicle, VehicleDto>()
-                      .ForMember(d => d.Status, 
+                      .ForMember(d => d.Status,
                                  m => m.MapFrom(d => d.Status.ToString().AddSpaces()))
-                      .ForMember(d => d.Engine, 
+                      .ForMember(d => d.Engine,
                                  m => m.MapFrom(s => s.VehicleModel.Engine))
                       .ForMember(d => d.Horsepower,
                                  m => m.MapFrom(s => s.VehicleModel.Horsepower))
-                    .ForMember(d => d.Seats,
-                               m => m.MapFrom(s => s.VehicleModel.Seats))
+                      .ForMember(d => d.Seats,
+                                 m => m.MapFrom(s => s.VehicleModel.Seats))
                       .ForMember(d => d.Manufacturer,
                                  m => m.MapFrom(s => s.VehicleModel.Manufacturer))
                       .ForMember(d => d.Model,
@@ -194,6 +195,8 @@ namespace Vehifleet.API
                                  m => m.MapFrom(s => s.Status.ToString()));
 
                 config.CreateMap<VehicleModel, VehicleModelDto>();
+                      //.ForMember(d => d.HasVehicles, 
+                      //           m => m.MapFrom(s => s.Vehicles.Any()));
                 config.CreateMap<VehicleModelDto, VehicleModel>()
                       .ForMember(d => d.Vehicles, m => m.Ignore());
 

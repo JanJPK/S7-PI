@@ -10,4 +10,9 @@ export class Maintenance extends Auditable {
   regular: boolean;
   completed: boolean;
   cost: number;
+
+  constructor(id?: number) {
+    super();
+    this.id = id;
+  }
 }

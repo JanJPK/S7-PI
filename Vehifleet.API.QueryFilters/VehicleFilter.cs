@@ -11,6 +11,8 @@ namespace Vehifleet.API.QueryFilters
     {
         public string Manufacturer { get; set; }
 
+        public int? VehicleModelId { get; set; }
+
         public string LocationCode { get; set; }
 
         public string ChassisCode { get; set; }
@@ -29,6 +31,11 @@ namespace Vehifleet.API.QueryFilters
             if (Manufacturer.NotNullOrEmpty())
             {                
                 query = query.Where(v => v.VehicleModel.Manufacturer == Manufacturer);
+            }
+
+            if (VehicleModelId.NotNullOrLessThanOne())
+            {
+                query = query.Where(v => v.VehicleModel.Id == VehicleModelId);
             }
 
             if (LocationCode.NotNullOrEmpty())

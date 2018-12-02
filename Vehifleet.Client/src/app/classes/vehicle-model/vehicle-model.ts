@@ -9,4 +9,11 @@ export class VehicleModel extends CostGenerating {
   horsepower: number;
   seats: number;
   weight: number;
+  purchaseCost: number;
+  hasVehicles: boolean;
+
+  constructor(id?: number) {
+    super();
+    this.id = id;
+  }
 }

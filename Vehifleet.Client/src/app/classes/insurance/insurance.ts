@@ -9,4 +9,9 @@ export class Insurance extends Auditable {
   insurer: string;
   insuranceId: string;
   mileage: number;
+
+  constructor(id?: number) {
+    super();
+    this.id = id;
+  }
 }

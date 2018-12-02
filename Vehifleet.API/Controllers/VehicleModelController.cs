@@ -60,7 +60,11 @@ namespace Vehifleet.API.Controllers
             }
             else
             {
-                return Ok(Mapper.Map<VehicleModelDto>(vehicleModel));
+                var dto = Mapper.Map<VehicleModelDto>(vehicleModel);
+                dto.HasVehicles = await vehicleRepository.Get()
+                                                         .Where(v => v.VehicleModel.Id == id)
+                                                         .AnyAsync();
+                return Ok(dto);
             }
         }
 

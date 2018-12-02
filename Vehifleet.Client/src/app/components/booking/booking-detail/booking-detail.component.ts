@@ -78,7 +78,7 @@ export class BookingDetailComponent extends BaseFormComponent {
           });
       });
     } else {
-      this.booking = new Booking();
+      this.booking = new Booking(0);
       this.booking.id = 0;
       this.booking.status = 'Created';
       this.booking.startDate = new Date();

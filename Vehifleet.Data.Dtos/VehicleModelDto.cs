@@ -32,5 +32,10 @@ namespace Vehifleet.Data.Dtos
 
         [Required]
         public int Weight { get; set; }
+
+        [Required]
+        public decimal PurchaseCost { get; set; }
+
+        public bool HasVehicles { get; set; }
     }
 }

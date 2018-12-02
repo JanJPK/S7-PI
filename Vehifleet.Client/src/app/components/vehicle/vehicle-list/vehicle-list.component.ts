@@ -3,7 +3,7 @@ import { VehicleListItem } from 'src/app/classes/vehicle/vehicle-list-item';
 import { Vehicle } from 'src/app/classes/vehicle/vehicle';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { VehicleListFilter } from 'src/app/classes/vehicle/vehicle-list-filter';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-list',
@@ -14,10 +14,21 @@ export class VehicleListComponent implements OnInit {
   vehicles: VehicleListItem[];
   selectedVehicle: Vehicle;
 
-  constructor(private vehicleService: VehicleService, private router: Router) {}
+  constructor(
+    private vehicleService: VehicleService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.get();
+    const vehicleModelId = +this.route.snapshot.paramMap.get('vehicleModelId');
+    if (vehicleModelId != 0) {
+      let filter = new VehicleListFilter();
+      filter.vehicleModelId = vehicleModelId;
+      this.get(filter);
+    } else {
+      this.get();
+    }
   }
 
   get(filter?: VehicleListFilter) {

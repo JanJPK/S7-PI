@@ -3,7 +3,7 @@
     <div class="col col-lg-4">
       <div class="card border-light">
         <div class="card-header">
-          <div *ngIf="newEntity; else: existingEntity">
+          <div *ngIf="vehicleModel.id == 0; else: existingEntity">
             <h4>New vehicle model</h4>
           </div>
           <ng-template #existingEntity>
@@ -29,6 +29,7 @@
                   Manufacturer is required.
                 </div>
               </div>
+
               <div class="form-group">
                 <label>Model:</label>
                 <input
@@ -44,6 +45,7 @@
                   Model is required.
                 </div>
               </div>
+
               <div class="form-group">
                 <label>Configuration code:</label>
                 <input
@@ -59,6 +61,23 @@
                   Configuration code is required.
                 </div>
               </div>
+
+              <div class="form-group">
+                <label>Purchase cost (PLN):</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="purchaseCost"
+                  id="purchaseCost"
+                />
+                <div
+                  *ngIf="isInvalid('purchaseCost')"
+                  class="invalid-feedback d-block"
+                >
+                  Purchase cost must be a valid number.
+                </div>
+              </div>
+
               <div class="form-group">
                 <label>Engine:</label>
                 <input
@@ -74,6 +93,7 @@
                   Engine description is required.
                 </div>
               </div>
+
               <div class="form-group">
                 <label>Horsepower:</label>
                 <input
@@ -89,6 +109,7 @@
                   Horsepower must be a valid number.
                 </div>
               </div>
+
               <div class="form-group">
                 <label>Seats:</label>
                 <input
@@ -104,6 +125,7 @@
                   Seats must be a valid number.
                 </div>
               </div>
+
               <div class="form-group">
                 <label>Weight:</label>
                 <input
@@ -125,12 +147,38 @@
 
         <div class="card-body">
           <div class="btn-group" role="group">
-            <button class="btn btn-primary mb-3">Update</button>
-            <button class="btn btn-danger mb-3">Delete</button>
+            <button
+              class="btn btn-primary mb-3"
+              [disabled]="!form.valid"
+              (click)="onSubmit()"
+            >
+              Save
+            </button>
+
+            <button
+              class="btn btn-danger mb-3"
+              [disabled]="vehicleModel.hasVehicles"
+              (click)="onDelete()"
+            >
+              Delete
+            </button>
           </div>
         </div>
 
-        <div class="card-footer text-muted">2 days ago</div>
+        <div *ngIf="vehicleModel.hasVehicles" class="card-body">
+          <div class="text-muted">
+            Vehicle models that have vehicles cannot be deleted.
+          </div>
+          <a
+            href="/vehicles;vehicleModelId={{vehicleModel.id}}"
+            class="card-link"
+            click="showVehicles()"
+          >
+            Show all vehicles of this type</a
+          >
+        </div>
+
+        <app-audit-footer [auditable]="vehicleModel"></app-audit-footer>
       </div>
     </div>
   </div>

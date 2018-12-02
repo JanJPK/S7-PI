@@ -16,8 +16,8 @@ export class Vehicle extends CostGenerating {
   seats: number;
   engine: string;
 
-  constructor() {
+  constructor(id?: number) {
     super();
-    this.id = 0;
+    this.id = id;
   }
 }

@@ -253,6 +253,7 @@ export class BookingDetailComponent extends BaseFormComponent {
         if (id != null) {
           this.modalService.showSuccessModal('Boking has been created.');
           this.router.navigate([`/vehicles/bookings/${id}`]);
+          this.get();
         } else {
           this.modalService.showSuccessModal('Boking creation has failed.');
         }

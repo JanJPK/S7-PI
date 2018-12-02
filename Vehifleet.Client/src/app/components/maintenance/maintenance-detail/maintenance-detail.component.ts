@@ -8,6 +8,7 @@ import { VehicleService } from 'src/app/services/vehicle.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseFormDetailComponent } from '../../base/base-form-detail.component';
 import { ModalService } from 'src/app/shared/modal/modal.service';
+import { timeSpanValidator } from 'src/app/shared/validators/validators';
 
 @Component({
   selector: 'app-maintenance-detail',
@@ -17,16 +18,19 @@ import { ModalService } from 'src/app/shared/modal/modal.service';
 export class MaintenanceDetailComponent extends BaseFormDetailComponent {
   maintenance: Maintenance;
   vehicle: Vehicle;
-  form = new FormGroup({
-    startDate: new FormControl('', Validators.required),
-    endDate: new FormControl(''),
-    description: new FormControl('', Validators.required),
-    mileage: new FormControl('', Validators.required),
-    cost: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$')
-    ])
-  });
+  form = new FormGroup(
+    {
+      startDate: new FormControl('', Validators.required),
+      endDate: new FormControl(''),
+      description: new FormControl('', Validators.required),
+      mileage: new FormControl('', Validators.required),
+      cost: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$')
+      ])
+    },
+    { validators: timeSpanValidator }
+  );
 
   constructor(
     private maintenanceService: MaintenanceService,
@@ -54,8 +58,7 @@ export class MaintenanceDetailComponent extends BaseFormDetailComponent {
           });
       });
     } else {
-      this.maintenance = new Maintenance();
-      this.maintenance.id = 0;
+      this.maintenance = new Maintenance(0);
       this.maintenance.vehicleId = +this.route.snapshot.paramMap.get(
         'vehicleId'
       );
@@ -112,6 +115,7 @@ export class MaintenanceDetailComponent extends BaseFormDetailComponent {
           this.router.navigate([
             `/vehicles/${this.maintenance.vehicleId}/maintenances/${id}`
           ]);
+          this.get();
         } else {
           this.modalService.showSuccessModal(
             'Maintenance creation has failed.'
@@ -119,5 +123,30 @@ export class MaintenanceDetailComponent extends BaseFormDetailComponent {
         }
       });
     }
+  }
+
+  onDelete() {
+    this.modalService
+      .showConfirmModal('Do you want to delete this maintenance?')
+      .then(confirmed => {
+        if (confirmed == 'true') {
+          this.maintenanceService
+            .delete(this.maintenance.id)
+            .subscribe(response => {
+              if (response['status'] == 200) {
+                this.modalService.showSuccessModal(
+                  'Maintenance has been deleted.'
+                );
+                this.router.navigate([
+                  `/vehicles/${this.maintenance.vehicleId}`
+                ]);
+              } else {
+                this.modalService.showErrorModal(
+                  'Maintenance deletion has failed.'
+                );
+              }
+            });
+        }
+      });
   }
 }

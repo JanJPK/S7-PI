@@ -25,7 +25,6 @@
               </div>
 
               <div class="form-group">
-                TODO: end bigger than start validation
                 <label>Start date:</label>
                 <input
                   type="text"
@@ -84,21 +83,25 @@
             <div class="btn-group" role="group">
               <button
                 class="btn btn-primary mb-3"
-                [disabled]="!form.valid || !vehicle.status == 'Available'"
+                [disabled]="!form.valid || vehicle.status == 'Decomissioned'"
                 (click)="onSubmit()"
               >
                 Save
               </button>
               <button
                 class="btn btn-danger mb-3"
-                [disabled]="
-                  !vehicle.status == 'Available' || maintenance.id == 0
-                "
                 (click)="onDelete()"
+                [disabled]="vehicle.status == 'Decomissioned'"
               >
                 Delete
               </button>
             </div>
+          </div>
+
+          <div class="card-body">
+            <a href="/vehicles/{{maintenance.vehicleId}}" class="card-link">
+              Back to vehicle</a
+            >
           </div>
 
           <app-audit-footer [auditable]="maintenance"></app-audit-footer>

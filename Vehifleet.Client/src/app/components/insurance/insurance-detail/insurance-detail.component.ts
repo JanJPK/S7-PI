@@ -8,6 +8,7 @@ import { DatepickerConverterService } from 'src/app/shared/datepicker/datepicker
 import { VehicleService } from 'src/app/services/vehicle.service';
 import { Vehicle } from 'src/app/classes/vehicle/vehicle';
 import { ModalService } from 'src/app/shared/modal/modal.service';
+import { timeSpanValidator } from 'src/app/shared/validators/validators';
 
 @Component({
   selector: 'app-insurance-detail',
@@ -17,20 +18,23 @@ import { ModalService } from 'src/app/shared/modal/modal.service';
 export class InsuranceDetailComponent extends BaseFormDetailComponent {
   insurance: Insurance;
   vehicle: Vehicle;
-  form = new FormGroup({
-    startDate: new FormControl('', Validators.required),
-    endDate: new FormControl('', Validators.required),
-    cost: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$')
-    ]),
-    insurer: new FormControl('', Validators.required),
-    insuranceId: new FormControl('', Validators.required),
-    mileage: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]*$')
-    ])
-  });
+  form = new FormGroup(
+    {
+      startDate: new FormControl('', Validators.required),
+      endDate: new FormControl('', Validators.required),
+      cost: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$')
+      ]),
+      insurer: new FormControl('', Validators.required),
+      insuranceId: new FormControl('', Validators.required),
+      mileage: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$')
+      ])
+    },
+    { validators: timeSpanValidator }
+  );
 
   constructor(
     private insuranceService: InsuranceService,
@@ -58,8 +62,7 @@ export class InsuranceDetailComponent extends BaseFormDetailComponent {
           });
       });
     } else {
-      this.insurance = new Insurance();
-      this.insurance.id = 0;
+      this.insurance = new Insurance(0);
       this.insurance.vehicleId = +this.route.snapshot.paramMap.get('vehicleId');
       this.insurance.startDate = new Date();
       this.insurance.endDate = this.datePickerConverter.addDays(new Date(), 1);

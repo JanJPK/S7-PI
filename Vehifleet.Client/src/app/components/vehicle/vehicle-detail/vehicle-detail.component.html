@@ -113,6 +113,18 @@
                   Chassis code is required.
                 </div>
               </div>
+
+              <div class="form-group">
+                <label>Inspection valid until:</label>
+                <input
+                  type="text"
+                  formControlName="inspectionValidUntil"
+                  ngbDatepicker
+                  #sd="ngbDatepicker"
+                  (click)="sd.toggle()"
+                  class="form-control"
+                />
+              </div>
             </fieldset>
           </form>
         </div>
@@ -202,14 +214,16 @@
         </div>
 
         <div class="card-body">
-          TODO
           <div class="col">
-            <a href="/vehicles" class="card-link">
+            <a href="/bookings;vehicleId={{vehicle.id}}" class="card-link">
               Show all bookings of this vehicle</a
             >
           </div>
           <div class="col">
-            <a href="/vehicle-models/" class="card-link">
+            <a
+              href="/vehicle-models/{{vehicle.vehicleModelId}}"
+              class="card-link"
+            >
               Go to vehicle model</a
             >
           </div>

@@ -9,6 +9,7 @@ export class Vehicle extends CostGenerating {
   locationCode: string;
   canBeBookedUntil: Date;
   hasBookings: boolean;
+  inspectionValidUntil: Date;
   // VehicleModel:
   vehicleModelId: number;
   manufacturer: string;

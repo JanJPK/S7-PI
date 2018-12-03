@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
+using Vehifleet.Repositories.Interfaces;
 using Vehifleet.Services.Helper;
 using Vehifleet.Services.Interfaces;
 
@@ -12,11 +13,29 @@ namespace Vehifleet.API.Controllers
     [Route("api")]
     public class UserController : ControllerBase
     {
+        private readonly IEmployeeRepository employeeRepository;
         private readonly IUserService userService;
 
-        public UserController(IUserService userService)
+        public UserController(IEmployeeRepository employeeRepository, 
+                              IUserService userService)
         {
+            this.employeeRepository = employeeRepository;
             this.userService = userService;
+        }
+
+        [HttpGet("employees/{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var employee = await employeeRepository.GetById(id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(Mapper.Map<EmployeeDto>(employee));
+            }
         }
 
         [HttpPost("register")]
@@ -41,7 +60,7 @@ namespace Vehifleet.API.Controllers
             if (employee != null)
             {
                 
-                return Ok(Mapper.Map<EmployeeLoginDto>(employee));
+                return Ok(Mapper.Map<EmployeeDto>(employee));
             }
             else
             {

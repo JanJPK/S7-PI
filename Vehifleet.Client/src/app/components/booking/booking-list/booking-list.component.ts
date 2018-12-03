@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BookingService } from 'src/app/services/booking.service';
 import { BookingListItem } from 'src/app/classes/booking/booking-list-item';
 import { BookingListFilter } from 'src/app/classes/booking/booking-list-filter';
@@ -17,13 +17,19 @@ export class BookingListComponent implements OnInit {
   constructor(
     private bookingService: BookingService,
     private dateConverter: DatepickerConverterService,
+    private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit() {
     let filter = new BookingListFilter();
-    filter.statuses = ['Accepted', 'Submitted', 'Completed'];
-    filter.fromDate = this.dateConverter.addDays(new Date(), -90).toJSON();
+    const vehicleId = +this.route.snapshot.paramMap.get('vehicleId');
+    if (vehicleId != 0) {
+      filter.vehicleId = vehicleId;
+    } else {
+      filter.statuses = ['Accepted', 'Submitted', 'Completed'];
+      filter.fromDate = this.dateConverter.addDays(new Date(), -90).toJSON();
+    }
     this.get(filter);
   }
 

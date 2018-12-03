@@ -6,6 +6,8 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { LocationService } from 'src/app/services/location.service';
 import { BaseFormDetailComponent } from '../../base/base-form-detail.component';
 import { ModalService } from 'src/app/shared/modal/modal.service';
+import { VehicleModel } from 'src/app/classes/vehicle-model/vehicle-model';
+import { VehicleModelService } from 'src/app/services/vehicle-model.service';
 
 @Component({
   selector: 'app-vehicle-detail',
@@ -24,6 +26,7 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
       Validators.pattern('^[1-9][0-9]{3}$')
     ]),
     chassisCode: new FormControl('', Validators.required),
+    inspectionValidUntil: new FormControl('', Validators.required),
     cost: new FormControl('', [
       Validators.required,
       Validators.pattern('^[0-9]*$')
@@ -42,7 +45,7 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
     'Available',
     'Unavailable',
     'In Maintenance',
-    'Awaiting insurance Renewal',
+    'Awaiting Insurance Renewal',
     'Awaiting Inspection',
     'Decommissioned'
   ];
@@ -54,6 +57,7 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
 
   constructor(
     private vehicleService: VehicleService,
+    private vehicleModelService: VehicleModelService,
     private locationService: LocationService,
     private modalService: ModalService,
     private router: Router,
@@ -67,6 +71,10 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
     if (id != 0) {
       this.vehicleService.getById(id).subscribe(vehicle => {
         this.vehicle = vehicle;
+        this.vehicle.canBeBookedUntil = vehicle.canBeBookedUntil;
+        this.vehicle.inspectionValidUntil = new Date(
+          vehicle.inspectionValidUntil
+        );
         this.locationService.get().subscribe(locations => {
           this.locations = locations;
           this.setUpForm();
@@ -76,19 +84,26 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
       const vehicleModelId = +this.route.snapshot.paramMap.get(
         'vehicleModelId'
       );
-      this.vehicle = new Vehicle();
-      this.vehicle.status = 'Available';
+      this.vehicle = new Vehicle(0);
+      this.vehicleModelService
+        .getById(vehicleModelId)
+        .subscribe(vehicleModel => {
+          this.vehicle.manufacturer = vehicleModel.manufacturer;
+          this.vehicle.model = vehicleModel.model;
+        });
       this.vehicle.vehicleModelId = vehicleModelId;
-      this.vehicle.canBeBookedUntil = new Date();
-      this.vehicle.yearOfManufacture = new Date().getFullYear().toString();
-      this.vehicle.cost = 0;
-      this.vehicle.fuelConsumed = 0;
-      this.vehicle.mileage = 0;
+      this.vehicle.status = 'Available';
       this.locationService.get().subscribe(locations => {
         this.locations = locations;
         this.vehicle.locationCode = this.locations[0];
         this.setUpForm();
       });
+      this.vehicle.canBeBookedUntil = new Date();
+      this.vehicle.yearOfManufacture = new Date().getFullYear().toString();
+      this.vehicle.inspectionValidUntil = new Date();
+      this.vehicle.cost = 0;
+      this.vehicle.fuelConsumed = 0;
+      this.vehicle.mileage = 0;
     }
   }
 
@@ -99,6 +114,7 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
       licensePlate: this.vehicle.licensePlate,
       yearOfManufacture: this.vehicle.yearOfManufacture,
       chassisCode: this.vehicle.chassisCode,
+      inspectionValidUntil: this.vehicle.inspectionValidUntil,
       cost: this.vehicle.cost,
       fuelConsumed: this.vehicle.fuelConsumed,
       mileage: this.vehicle.mileage
@@ -111,10 +127,14 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
 
   readForm() {
     this.vehicle.status = this.form.get('status').value;
+    this.vehicle.locationCode = this.form.get('locationCode').value;
     this.vehicle.canBeBookedUntil = this.form.get('canBeBookedUntil').value;
     this.vehicle.licensePlate = this.form.get('licensePlate').value;
     this.vehicle.yearOfManufacture = this.form.get('yearOfManufacture').value;
     this.vehicle.chassisCode = this.form.get('chassisCode').value;
+    this.vehicle.inspectionValidUntil = this.form.get(
+      'inspectionValidUntil'
+    ).value;
     this.vehicle.cost = this.form.get('cost').value;
     this.vehicle.fuelConsumed = this.form.get('fuelConsumed').value;
     this.vehicle.mileage = this.form.get('mileage').value;
@@ -123,6 +143,15 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
   onSubmit() {
     this.readForm();
     if (this.vehicle.id != 0) {
+      if (this.vehicle.status == 'Decomissioned') {
+        this.modalService
+          .showConfirmModal('Do you want to decomission this vehicle?')
+          .then(confirmed => {
+            if (confirmed != 'true') {
+              return;
+            }
+          });
+      }
       this.vehicleService
         .update(this.vehicle, this.vehicle.id)
         .subscribe(response => {
@@ -133,6 +162,12 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
           }
         });
     } else {
+      if (this.vehicle.status == 'Decomissioned') {
+        this.modalService.showInfoModal(
+          'New vehicle cannot be set as decomissioned.'
+        );
+        return;
+      }
       this.vehicleService.create(this.vehicle).subscribe(id => {
         if (id != null) {
           this.modalService.showSuccessModal('Vehicle has been created.');
@@ -143,8 +178,6 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
       });
     }
   }
-
-  onDecomission() {}
 
   onDelete() {
     this.modalService

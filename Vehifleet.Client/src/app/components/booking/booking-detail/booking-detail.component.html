@@ -1,202 +1,291 @@
 <div *ngIf="booking">
   <div class="row justify-content-center">
-    <div class="card border-light">
-      <div class="card-header">
-        <!-- <h4>Booking {{ booking.id }}</h4> -->
-        <h4>Booking</h4>
-      </div>
+    <div class="col col-lg-4">
+      <div class="card border-light">
+        <div class="card-header"><h4>Booking</h4></div>
 
-      <div class="card-body">
-        <form [formGroup]="form">
-          <fieldset>
-            <div class="form-group">
-              <label>Status:</label>
-              <input
-                type="text"
-                readonly=""
-                class="form-control"
-                formControlName="status"
-              />
-            </div>
-
-            <div class="form-group">
-              <label>Start date:</label>
-              <input
-                type="text"
-                formControlName="startDate"
-                ngbDatepicker
-                #sd="ngbDatepicker"
-                (click)="sd.toggle()"
-                [minDate]="startDateMin"
-                [maxDate]="startDateMax"
-                class="form-control"
-              />
-            </div>
-
-            <div class="form-group">
-              <label>End date:</label>
-              <input
-                type="text"
-                formControlName="endDate"
-                ngbDatepicker
-                #ed="ngbDatepicker"
-                (click)="ed.toggle()"
-                [minDate]="endDateMin"
-                [maxDate]="endDateMax"
-                class="form-control"
-              />
-            </div>
-
-            <div class="form-group">
-              <label>Purpose:</label>
-              <textarea
-                type="text"
-                rows="5"
-                class="form-control"
-                formControlName="purpose"
-              ></textarea>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-
-      <div *ngIf="isCurrentStatus('Accepted') || isCurrentStatus('Completed')">
         <div class="card-body">
           <form [formGroup]="form">
             <fieldset>
               <div class="form-group">
-                <label>Cost (PLN):</label>
+                <label>Status:</label>
                 <input
                   type="text"
+                  readonly=""
                   class="form-control"
-                  formControlName="cost"
-                  id="cost"
+                  formControlName="status"
                 />
-                <div *ngIf="isInvalid('cost')" class="invalid-feedback d-block">
-                  Cost must be a valid number.
-                </div>
               </div>
 
               <div class="form-group">
-                <label>Fuel consumed (litres):</label>
+                <label>Start date:</label>
                 <input
                   type="text"
+                  formControlName="startDate"
+                  ngbDatepicker
+                  #sd="ngbDatepicker"
+                  (click)="sd.toggle()"
+                  [minDate]="startDateMin"
+                  [maxDate]="startDateMax"
                   class="form-control"
-                  formControlName="fuelConsumed"
-                  id="fuelConsumed"
                 />
-                <div
-                  *ngIf="isInvalid('fuelConsumed')"
-                  class="invalid-feedback d-block"
-                >
-                  Fuel consumed must be a valid number.
-                </div>
               </div>
 
               <div class="form-group">
-                <label>Mileage (km):</label>
+                <label>End date:</label>
                 <input
                   type="text"
+                  formControlName="endDate"
+                  ngbDatepicker
+                  #ed="ngbDatepicker"
+                  (click)="ed.toggle()"
+                  [minDate]="endDateMin"
+                  [maxDate]="endDateMax"
                   class="form-control"
-                  formControlName="mileage"
-                  id="mileage"
                 />
-                <div
-                  *ngIf="isInvalid('mileage')"
-                  class="invalid-feedback d-block"
-                >
-                  Mileage must be a valid number.
-                </div>
               </div>
-            </fieldset>
-          </form>
-        </div>
-      </div>
 
-      <div *ngIf="!isCurrentStatus('Created')">
-        <div class="card-body">
-          <form [formGroup]="form">
-            <fieldset>
               <div class="form-group">
-                <label>Manager notes:</label>
+                <label>Purpose:</label>
                 <textarea
                   type="text"
                   rows="5"
                   class="form-control"
-                  formControlName="notes"
+                  formControlName="purpose"
                 ></textarea>
               </div>
             </fieldset>
           </form>
         </div>
-      </div>
 
-      <div *ngIf="isCurrentStatus('Created')">
-        <div class="card-body">
-          <div class="btn-group" role="group">
-            <button class="btn btn-primary mb-3" (click)="submit()">
-              Save
-            </button>
-            <button
-              class="btn btn-primary mb-3"
-              (click)="onChangeStatus('Submit')"
-            >
-              Submit
-            </button>
-            <button
-              class="btn btn-danger mb-3"
-              (click)="onDelete()"
-              [disabled]="booking.id == 0"
-            >
-              Delete
-            </button>
+        <div
+          *ngIf="isCurrentStatus('Accepted') || isCurrentStatus('Completed')"
+        >
+          <div class="card-body">
+            <form [formGroup]="form">
+              <fieldset>
+                <div class="form-group">
+                  <label>Cost (PLN):</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="cost"
+                    id="cost"
+                  />
+                  <div
+                    *ngIf="isInvalid('cost')"
+                    class="invalid-feedback d-block"
+                  >
+                    Cost must be a valid number.
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Fuel consumed (litres):</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="fuelConsumed"
+                    id="fuelConsumed"
+                  />
+                  <div
+                    *ngIf="isInvalid('fuelConsumed')"
+                    class="invalid-feedback d-block"
+                  >
+                    Fuel consumed must be a valid number.
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Mileage (km):</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="mileage"
+                    id="mileage"
+                  />
+                  <div
+                    *ngIf="isInvalid('mileage')"
+                    class="invalid-feedback d-block"
+                  >
+                    Mileage must be a valid number.
+                  </div>
+                </div>
+              </fieldset>
+            </form>
           </div>
         </div>
-      </div>
 
-      <div *ngIf="isCurrentStatus('Submitted')">
-        <div class="card-body">
-          <div class="btn-group" role="group">
-            <button
-              class="btn btn-primary mb-3"
-              (click)="onChangeStatus('Accepted')"
-            >
-              Accept
-            </button>
-            <button
-              class="btn btn-danger mb-3"
-              (click)="onChangeStatus('Rejected')"
-            >
-              Reject
-            </button>
+        <div *ngIf="!isCurrentStatus('Created')">
+          <div class="card-body">
+            <form [formGroup]="form">
+              <fieldset>
+                <div class="form-group">
+                  <label>Manager notes:</label>
+                  <textarea
+                    type="text"
+                    rows="5"
+                    class="form-control"
+                    formControlName="notes"
+                  ></textarea>
+                </div>
+              </fieldset>
+            </form>
           </div>
         </div>
-      </div>
 
-      <div *ngIf="isCurrentStatus('Accepted')">
-        <div class="card-body">
-          <div class="btn-group" role="group">
-            <button
-              class="btn btn-primary mb-3"
-              (click)="onChangeStatus('Completed')"
-            >
-              Complete
-            </button>
+        <div *ngIf="isCurrentStatus('Created')">
+          <div class="card-body">
+            <div class="btn-group" role="group">
+              <button class="btn btn-primary mb-3" (click)="submit()">
+                Save
+              </button>
+              <button
+                class="btn btn-primary mb-3"
+                (click)="onChangeStatus('Submit')"
+              >
+                Submit
+              </button>
+              <button
+                class="btn btn-danger mb-3"
+                (click)="onDelete()"
+                [disabled]="booking.id == 0"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div *ngIf="isCurrentStatus('Completed')">
-        <div class="card-body">
-          <div class="btn-group" role="group">
-            <button class="btn btn-primary mb-3" (clikc)="onSubmit()">
-              Save
-            </button>
+        <div *ngIf="isCurrentStatus('Submitted')">
+          <div class="card-body">
+            <div class="btn-group" role="group">
+              <button
+                class="btn btn-primary mb-3"
+                (click)="onChangeStatus('Accepted')"
+              >
+                Accept
+              </button>
+              <button
+                class="btn btn-danger mb-3"
+                (click)="onChangeStatus('Rejected')"
+              >
+                Reject
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <app-audit-footer [auditable]="booking"></app-audit-footer>
+        <div *ngIf="isCurrentStatus('Accepted')">
+          <div class="card-body">
+            <div class="btn-group" role="group">
+              <button
+                class="btn btn-primary mb-3"
+                (click)="onChangeStatus('Completed')"
+              >
+                Complete
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="isCurrentStatus('Completed')">
+          <div class="card-body">
+            <div class="btn-group" role="group">
+              <button class="btn btn-primary mb-3" (clikc)="onSubmit()">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <app-audit-footer [auditable]="booking"></app-audit-footer>
+      </div>
+    </div>
+    <div *ngIf="employee">
+      <div class="col col-lg-4">
+        <div class="card border-light mb-3">
+          <form>
+            <div class="card-header"><h4>Employee information:</h4></div>
+
+            <div class="card-body">
+              <fieldset>
+                <div class="form-group">
+                  <label>First name:</label>
+                  <div>
+                    <input
+                      type="text"
+                      readonly=""
+                      class="form-control"
+                      value="{{ employee.firstName }}"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Last name:</label>
+                  <div>
+                    <input
+                      type="text"
+                      readonly=""
+                      class="form-control"
+                      value="{{ employee.lastName }}"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Username:</label>
+                  <div>
+                    <input
+                      type="text"
+                      readonly=""
+                      class="form-control"
+                      value="{{ employee.userName }}"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Department:</label>
+                  <div>
+                    <input
+                      type="text"
+                      readonly=""
+                      class="form-control"
+                      value="{{ employee.department }}"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>E-mail:</label>
+                  <div>
+                    <input
+                      type="text"
+                      readonly=""
+                      class="form-control"
+                      value="{{ employee.email }}"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Phone number:</label>
+                  <div>
+                    <input
+                      type="text"
+                      readonly=""
+                      class="form-control"
+                      value="{{ employee.phoneNumber }}"
+                    />
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>

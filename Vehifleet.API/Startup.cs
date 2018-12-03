@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 using AutoMapper;
 using FluentValidation.AspNetCore;
@@ -195,8 +194,6 @@ namespace Vehifleet.API
                                  m => m.MapFrom(s => s.Status.ToString()));
 
                 config.CreateMap<VehicleModel, VehicleModelDto>();
-                      //.ForMember(d => d.HasVehicles, 
-                      //           m => m.MapFrom(s => s.Vehicles.Any()));
                 config.CreateMap<VehicleModelDto, VehicleModel>()
                       .ForMember(d => d.Vehicles, m => m.Ignore());
 
@@ -209,7 +206,7 @@ namespace Vehifleet.API
                       .ForMember(d => d.Vehicle, m => m.Ignore());
 
                 config.CreateMap<EmployeeRegisterDto, EmployeeIdentity>();
-                config.CreateMap<Employee, EmployeeLoginDto>()
+                config.CreateMap<Employee, EmployeeDto>()
                       .ForMember(d => d.UserName,
                                  m => m.MapFrom(s => s.Identity.UserName))
                       .ForMember(d => d.FirstName,
@@ -217,7 +214,11 @@ namespace Vehifleet.API
                       .ForMember(d => d.LastName,
                                  m => m.MapFrom(s => s.Identity.LastName))
                       .ForMember(d => d.Department,
-                                 m => m.MapFrom(s => s.Identity.Department));
+                                 m => m.MapFrom(s => s.Identity.Department))
+                      .ForMember(d => d.Email, 
+                                 m => m.MapFrom(s => s.Identity.Email))
+                      .ForMember(d => d.PhoneNumber,
+                                 m => m.MapFrom(s => s.Identity.PhoneNumber));
             });
         }
     }

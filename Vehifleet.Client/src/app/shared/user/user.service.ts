@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { EmployeeLogin } from '../../classes/employee/employeeLogin';
+import { Employee } from '../../classes/employee/employee';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoggerService } from '../logger/logger.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   apiUrl = environment.apiUrl;
-  employeeLogin: EmployeeLogin;
+  employeeLogin: Employee;
   jwtHelper: JwtHelperService;
 
-  constructor(private httpClient: HttpClient, private logger: LoggerService) {
+  constructor(private http: HttpClient, private logger: LoggerService) {
     this.jwtHelper = new JwtHelperService();
   }
 
@@ -23,7 +24,7 @@ export class UserService {
       Password: password
     };
     this.logger.info(`Login; username: ${username}`);
-    this.httpClient
+    this.http
       .post(`${this.apiUrl}login`, JSON.stringify(credentials), {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
@@ -34,7 +35,7 @@ export class UserService {
         this.logger.info(
           `login token: ${this.jwtHelper.decodeToken(this.getToken())}`
         );
-        this.employeeLogin = <EmployeeLogin>response;
+        this.employeeLogin = <Employee>response;
         let token = this.employeeLogin.jwt;
         localStorage.setItem('jwt', token);
         localStorage.setItem('user', JSON.stringify(this.employeeLogin));
@@ -45,6 +46,11 @@ export class UserService {
         this.logger.warn(`Failed login: ${err}`);
         //this.invalidLogin = true;
       };
+  }
+
+  getEmployeeById(id: number): Observable<Employee> {
+    this.logger.info(`getById (${id}) @ ${this.apiUrl}`);
+    return this.http.get<Employee>(`${this.apiUrl}employees/${id}`);
   }
 
   logout() {
@@ -68,7 +74,7 @@ export class UserService {
     return localStorage.getItem('jwt');
   }
 
-  getEmployee(): EmployeeLogin {
+  getEmployee(): Employee {
     return this.employeeLogin;
   }
 

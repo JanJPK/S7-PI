@@ -2,7 +2,7 @@
 
 namespace Vehifleet.Data.Dtos
 {
-    public class EmployeeLoginDto
+    public class EmployeeDto
     {
         public int Id { get; set; }
 

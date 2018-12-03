@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DashboardLoginComponent } from './components/dashboard/dashboard-login/dashboard-login.component';
-import { DashboardRegisterComponent } from './components/dashboard/dashboard-register/dashboard-register.component';
 import { AuthGuardService as AuthGuard } from './auth-guard.service';
 import { VehicleListBookingComponent } from './components/vehicle/vehicle-list-booking/vehicle-list-booking.component';
 import { VehicleListComponent } from './components/vehicle/vehicle-list/vehicle-list.component';
@@ -18,8 +17,6 @@ import { InsuranceDetailComponent } from './components/insurance/insurance-detai
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'dashboard/login', component: DashboardLoginComponent },
-  { path: 'dashboard/register', component: DashboardRegisterComponent },
   {
     path: 'vehicles/booking',
     component: VehicleListBookingComponent,

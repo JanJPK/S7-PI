@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardLoginComponent } from './components/dashboard/dashboard-login/dashboard-login.component';
-import { DashboardRegisterComponent } from './components/dashboard/dashboard-register/dashboard-register.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DashboardUserDetailsComponent } from './components/dashboard/dashboard-user-details/dashboard-user-details.component';
 import { ConsoleLoggerService } from './shared/logger/console-logger.service';
@@ -45,7 +44,6 @@ import { VehicleListBookingFilterComponent } from './components/vehicle/vehicle-
     AppComponent,
     DashboardComponent,
     DashboardLoginComponent,
-    DashboardRegisterComponent,
     DashboardUserDetailsComponent,
     BookingListComponent,
     BookingListPersonalComponent,

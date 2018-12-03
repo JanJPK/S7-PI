@@ -11,15 +11,18 @@ import { DatepickerConverterService } from 'src/app/shared/datepicker/datepicker
 import { UserService } from 'src/app/shared/user/user.service';
 import { BaseFormComponent } from 'src/app/components/base/base-form.component';
 import { ModalService } from 'src/app/shared/modal/modal.service';
+import { BaseFormDetailComponent } from '../../base/base-form-detail.component';
+import { Employee } from 'src/app/classes/employee/employee';
 
 @Component({
   selector: 'app-booking-detail',
   templateUrl: './booking-detail.component.html',
   styleUrls: ['./booking-detail.component.scss']
 })
-export class BookingDetailComponent extends BaseFormComponent {
+export class BookingDetailComponent extends BaseFormDetailComponent {
   vehicle: Vehicle;
   booking: Booking;
+  employee: Employee;
   form = new FormGroup(
     {
       startDate: new FormControl('', Validators.required),
@@ -46,10 +49,6 @@ export class BookingDetailComponent extends BaseFormComponent {
   startDateMax: NgbDateStruct;
   endDateMin: NgbDateStruct;
   endDateMax: NgbDateStruct;
-
-  get newEntity(): boolean {
-    return this.vehicle.id == 0;
-  }
 
   constructor(
     private route: ActivatedRoute,
@@ -79,7 +78,6 @@ export class BookingDetailComponent extends BaseFormComponent {
       });
     } else {
       this.booking = new Booking(0);
-      this.booking.id = 0;
       this.booking.status = 'Created';
       this.booking.startDate = new Date();
       this.booking.endDate = this.datepickerConverter.addDays(new Date(), 2);
@@ -102,40 +100,15 @@ export class BookingDetailComponent extends BaseFormComponent {
       fuelConsumed: this.booking.fuelConsumed,
       mileage: this.booking.mileage
     });
+
+    if (this.booking.employeeId != this.userService.getEmployee().id) {
+      this.userService
+        .getEmployeeById(this.booking.employeeId)
+        .subscribe(employee => {
+          this.employee = employee;
+        });
+    }
     this.setUpDatepicker();
-    switch (this.booking.status) {
-      case 'Submitted': {
-        this.form.get('startDate').disable();
-        this.form.get('endDate').disable();
-        this.form.get('purpose').disable();
-      }
-      case 'Accepted': {
-        this.form.get('startDate').disable();
-        this.form.get('endDate').disable();
-        this.form.get('purpose').disable();
-      }
-      case 'Rejected': {
-        this.form.disable();
-      }
-      case 'Completed': {
-        if (
-          !(
-            this.userService.isElevatedUser() ||
-            this.userService.getEmployee().id != this.booking.employeeId
-          )
-        ) {
-          this.form.disable();
-        }
-      }
-    }
-    if (this.booking.status == 'Rejected') {
-    } else if (
-      this.booking.status != 'Created' &&
-      this.booking.status != 'Submitted'
-    ) {
-      this.form.get('startDate').disable();
-      this.form.get('endDate').disable();
-    }
   }
 
   setUpDatepicker() {
@@ -158,21 +131,67 @@ export class BookingDetailComponent extends BaseFormComponent {
     this.endDateMax = this.datepickerConverter.dateToNgbDate(endDateMax);
   }
 
-  canBeEdited(status: string): boolean {
-    if (status == 'Created' || status == 'Accepted') {
-      // Employees can edit their unsubmitted and accepted (ongoing) bookings.
-      return this.userService.getEmployee().id == this.booking.employeeId;
-    } else if (status == 'Submitted' || status == 'Completed') {
-      // Managers can edit submitted and completed bookings,
-      // unless they are the ones who created them.
-      return (
-        this.userService.isElevatedUser() &&
-        this.userService.getEmployee().id != this.booking.employeeId
-      );
-    } else {
-      return false;
+  canBeEdited(): boolean {
+    const currentUserId = this.userService.getEmployee().id;
+    const isCurrentUserElevated = this.userService.isElevatedUser();
+    switch (this.booking.status) {
+      case 'Created': {
+        if (this.booking.employeeId == currentUserId) {
+          return true;
+        }
+      }
+      case 'Submitted': {
+        if (this.booking.employeeId != currentUserId && isCurrentUserElevated) {
+          return true;
+        }
+      }
+      case 'Accepted': {
+        if (this.booking.employeeId == currentUserId) {
+          return true;
+        } else if (isCurrentUserElevated) {
+          return true;
+        }
+      }
+      case 'Rejected': {
+        return false;
+      }
+      case 'Completed': {
+        if (this.booking.employeeId != currentUserId && isCurrentUserElevated) {
+          return true;
+        }
+      }
+      default: {
+        return false;
+      }
     }
+    if (this.booking.status == 'Created' || this.booking.status == 'Accepted') {
+    }
+    // if(this.userService.isElevatedUser()) {
+    //   if(currentUserId) {
+    //     return false;
+    //   } else {
+    //     return this.booking.status != 'Created';
+    //   }
+    // } else {
+
+    // }
   }
+
+  // canBeEdited(status: string): boolean {
+  //   if (status == 'Created' || status == 'Accepted') {
+  //     // Employees can edit their unsubmitted and accepted (ongoing) bookings.
+  //     return this.userService.getEmployee().id == this.booking.employeeId;
+  //   } else if (status == 'Submitted' || status == 'Completed') {
+  //     // Managers can edit submitted and completed bookings,
+  //     // unless they are the ones who created them.
+  //     return (
+  //       this.userService.isElevatedUser() &&
+  //       this.userService.getEmployee().id != this.booking.employeeId
+  //     );
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   isCurrentStatus(status: string): boolean {
     return status == this.booking.status;

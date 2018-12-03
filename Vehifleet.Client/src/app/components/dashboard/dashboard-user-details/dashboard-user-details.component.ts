@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/shared/user/user.service';
-import { EmployeeLogin } from 'src/app/classes/employee/employeeLogin';
+import { Employee } from 'src/app/classes/employee/employee';
 
 @Component({
   selector: 'app-dashboard-user-details',
@@ -8,7 +8,7 @@ import { EmployeeLogin } from 'src/app/classes/employee/employeeLogin';
   styleUrls: ['./dashboard-user-details.component.scss']
 })
 export class DashboardUserDetailsComponent implements OnInit {
-  employee: EmployeeLogin;
+  employee: Employee;
 
   constructor(private userService: UserService) {}
 

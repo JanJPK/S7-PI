@@ -1,0 +1,12 @@
+{
+  "vehicleId": 48,
+  "employeeId": 3,
+  "status": "Completed",
+  "startDate": "2017-02-07T00:00:00",
+  "endDate": "2017-02-20T00:00:00",
+  "purpose": "Example purpose generated during seeding.",
+  "notes": null,
+  "mileage": 158,
+  "fuelConsumed": 0,
+  "cost": 0
+}

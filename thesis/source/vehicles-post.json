@@ -1,0 +1,19 @@
+{
+  "vehicleModelId": 9,
+  "manufacturer": "Ford",
+  "model": "S-Max",
+  "seats": 6,
+  "horsepower": 105,
+  "engine": "1.6 TDDi",
+  "status": "Available",
+  "licensePlate": "WRO CFKK",
+  "yearOfManufacture": 2016,
+  "chassisCode": "1X6HF531O8QH",
+  "locationCode": "WRO-3",
+  "inspectionValidUntil": "2019-03-03T00:00:00",
+  "canBeBookedUntil": "2019-02-23T00:00:00",
+  "hasBookings": true,
+  "mileage": 9934,
+  "fuelConsumed": 668,
+  "cost": 7050
+}

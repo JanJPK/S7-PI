@@ -1,0 +1,40 @@
+[
+  {
+    "id": 3,
+    "manufacturer": "Ford",
+    "model": "Focus",
+    "configurationCode": "FF2018184",
+    "engine": "1.8 TDCi",
+    "horsepower": 115,
+    "seats": 4,
+    "weight": 1200,
+    "purchaseCost": 70000,
+    "hasVehicles": false,
+    "mileage": 7806,
+    "fuelConsumed": 0,
+    "cost": 778,
+    "addedOn": "2018-11-19T23:01:58.9837098",
+    "addedBy": "admin",
+    "modifiedOn": null,
+    "modifiedBy": null
+  },
+  {
+    "id": 4,
+    "manufacturer": "Ford",
+    "model": "Focus",
+    "configurationCode": "FF2018154",
+    "engine": "1.6 TDi",
+    "horsepower": 85,
+    "seats": 4,
+    "weight": 1150,
+    "purchaseCost": 60000,
+    "hasVehicles": false,
+    "mileage": 23845,
+    "fuelConsumed": 631,
+    "cost": 6521,
+    "addedOn": "2018-11-19T23:01:58.9845431",
+    "addedBy": "admin",
+    "modifiedOn": null,
+    "modifiedBy": null
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "id": 149,
+  "vehicleId": 55,
+  "startDate": "2017-04-09T00:00:00",
+  "endDate": "2017-04-23T00:00:00",
+  "description": "Maintenance example generated during seeding.",
+  "mileage": 6006626,
+  "regular": true,
+  "completed": true,
+  "cost": 1154
+}

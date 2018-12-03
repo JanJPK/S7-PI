@@ -16,10 +16,29 @@
 \usepackage{showlabels}
 \usepackage{float}
 \usepackage[square,sort,comma,numbers]{natbib}
-
+\usepackage{multirow}
 
 \newcommand{\R}{I\!\!R}
 \newtheorem{theorem}{Twierdzenie}[section]
+
+\usepackage{listings}
+\usepackage{xcolor}
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstset{
+	basicstyle=\small,
+	breaklines=true
+}
+
+\lstdefinelanguage{json}{
+    string=[s]{"}{"},
+	stringstyle=\color{blue},
+	comment=[l]{:},
+	commentstyle=\color{black},
+}
 
 % frontpage
 \title{Aplikacja webowa wspomagająca zarządzanie flotą samochodów}
@@ -265,7 +284,7 @@ Interfejs programistyczny testowany był przy pomocy \textit{Postman 6.5.2}, apl
 %	SECTION 5
 %----------------------------------------------------------------------------------------
 \newpage
-\chapter{Projekt}
+\chapter{Projekt i implementacja}
 \section{Architektura}
 System został stworzony przy użyciu klasycznej architektury w której można wyodrębić trzy moduły - interfejs użytkownika (\textit{UI}), interfejs programistyczny (\textit{API}) oraz bazę danych (\textit{DB}). 
 
@@ -299,20 +318,6 @@ W celu zapewnienia przejrzystości kodu, nazewnictwo wszystkich elementów oraz 
 	\caption{Najważniejsze konwencje nazewnicze}
 \end{table}
 
-\section{Układ interfejsu użytkownika}
-Komponenty (widoki) wchodzące w skład interfejsu użytkownika można podzielić na dwa główne rodzaje:
-\begin{itemize}
-	\item \textbf{Widok szczegółowy} (\textit{detail}) który zawiera komplet informacji o danym obiekcie i umożliwia jego edycję.
-	\item \textbf{Widok listy} (\textit{list}) zawierający małą ilość informacji wymaganych do identyfikacji danego obiektu oraz możliwość przejścia do \textbf{widoku szczegółowego}. Widoki tego typu są punktem wejściowym do bardziej zaawansowanej logiki interfejsu, dostępnym bezpośrednio za pomocą paska nawigacji (\textit{navbar}).
-\end{itemize}
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.62]{images/angular_views.png}
-	\caption{Widoki interfejsu użytkownika}
-	\small 
-	Widoki zielone dostępne są dla każdego użytkownika; widoki pomarańczowe wyłącznie dla użytkownika o odpowiednich uprawnieniach. Widok \textit{booking-detail} jest specjalnym przypadkiem oferującym różne możliwości w zależności od uprawnień użytkownika.
-\end{figure}
-
 \section{Bezpieczeństwo}
 Dostęp do systemu został zabezpieczony przy użyciu standardu \textit{JSON Web Token (JWT)} \cite{jwt}. Autoryzacja \textit{JWT} bazuje na generowaniu podpisanych (przez co odpornych na sfałszowanie) tokenów po stronie interfejsu programistycznego, a następnie wysyłaniu ich do aplikacji klienta. \textit{API} wcześniej wygenerowanego wymaga tokena w nagłówku \textit{HTTP} dla każdego żądania wysłanego przez interfejs użytkownika; żądania z niepoprawnym tokenem zostają odrzucone.
 
@@ -337,19 +342,139 @@ Przechowywanie ról w tokenie \textit{JWT} pozwala na autoryzację z uwzględnie
 	\small 
 	Token został wygenerowany przy użyciu narzędzia ze strony \textit{https://jwt.io/}.
 \end{figure}
+
+\section{Interfejs programistyczny}
+\subsection{Diagram klas}
+
+\subsection{Opis punktów końcowych}
+\subsubsection{Modele pojazdów}
+\begin{table}[]
+	\caption{Punkt końcowy \textit{api/vehicle-models GET}}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{Opis}                         						\\ \hline
+		URL                       & \multicolumn{2}{l|}{api/vehicle-models} 	\\ \hline
+		Wymagane role             & \multicolumn{2}{l|}{Employee} \\ \hline
+		Metoda                    & \multicolumn{2}{l|}{GET} 					\\ \hline
+		\multicolumn{3}{|c|}{ Przykładowe odpowiedzi}                   		\\ \hline
+		\multirow{2}{*}{200 (OK)} 			& Odpowiedź     &  \lstinputlisting[language=json]{source/vehicle-models-get.json}      \\ \cline{2-3} 
+											& Opis         	& Lista modeli pojazdów       											\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[]
+	\caption{Punkt końcowy \textit{api/vehicle-models/manufacturers GET}}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{Opis}                         						\\ \hline
+		URL                       & \multicolumn{2}{l|}{api/vehicle-models} 	\\ \hline
+		Wymagane role             & \multicolumn{2}{l|}{Employee} \\ \hline
+		Metoda                    & \multicolumn{2}{l|}{GET} 					\\ \hline
+		\multicolumn{3}{|c|}{ Przykładowe odpowiedzi}                   		\\ \hline
+		\multirow{2}{*}{200 (OK)} 			& Odpowiedź     &  \lstinputlisting[language=json]{source/vehicle-models-get-manufacturers.json}      \\ \cline{2-3} 
+											& Opis         	& Lista marek pojazdów       											\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[]
+	\caption{Punkt końcowy \textit{api/vehicle-models/id GET}}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{Opis}                         						\\ \hline
+		URL                       & \multicolumn{2}{l|}{api/vehicle-models/id} 	\\ \hline
+		Wymagane role             & \multicolumn{2}{l|}{Employee} \\ \hline
+		Metoda                    & \multicolumn{2}{l|}{GET} 					\\ \hline
+		\multicolumn{3}{|c|}{ Przykładowe odpowiedzi}                   		\\ \hline
+		\multirow{2}{*}{200 (OK)} 			& Odpowiedź    	&  \lstinputlisting[language=json]{source/vehicle-models-get-by-id.json}       	\\ \cline{2-3} 
+								  			& Opis         	& Model pojazdu o żądanym \textit{id}      									\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	& Odpowiedź     &  \lstinputlisting[language=json]{source/vehicle-models-get-by-id-404.json}    \\ \cline{2-3} 
+											& Opis          & Model pojazdu o żądanym \textit{id} nie istnieje      													\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[]
+	\caption{Punkt końcowy \textit{api/vehicle-models POST}}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{Opis}                         						\\ \hline
+		URL                       & \multicolumn{2}{l|}{api/vehicle-models} 	\\ \hline
+		Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator} \\ \hline
+		Metoda                    & \multicolumn{2}{l|}{POST} 					\\ \hline
+		\multicolumn{3}{|c|}{Przykładowe ciało}         						\\ \hline
+		\multicolumn{3}{|c|}{\lstinputlisting[language=json]{source/vehicle-models-post.json}} 		\\ \hline
+		\multicolumn{3}{|c|}{ Przykładowe odpowiedzi}                   		\\ \hline
+		\multirow{2}{*}{200 (OK)} 			& Odpowiedź     &  \textit{Id} utworzonego modelu pojazdu.    	\\ \cline{2-3} 
+		& Opis         	& Utworzenie nowego modelu pojazdu   										\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[]
+	\caption{Punkt końcowy \textit{api/vehicle-models/id PUT}}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{Opis}                         						\\ \hline
+		URL                       & \multicolumn{2}{l|}{api/vehicle-models/id} 	\\ \hline
+		Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator} \\ \hline
+
+		Metoda                    & \multicolumn{2}{l|}{GET} 					\\ \hline
+		\multicolumn{3}{|c|}{Przykładowe ciało}         						\\ \hline
+		\multicolumn{3}{|c|}{\lstinputlisting[language=json]{source/vehicle-models-put.json}} 						\\ \hline
+		\multicolumn{3}{|c|}{Przykładowe odpowiedzi}                   		\\ \hline
+		200 (OK)			& Opis         	& Model pojazdu został zaktualizowany 									\\ \hline
+				\multirow{2}{*}{404 (Not Found)} 	& Odpowiedź     &  \lstinputlisting[language=json]{source/vehicle-models-put-404.json}    \\ \cline{2-3} 
+		& Opis          & Model pojazdu o żądanym \textit{id} nie istnieje  									\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[]
+	\caption{Punkt końcowy \textit{api/vehicle-models/id DELETE}}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{Opis}                         						\\ \hline
+		URL                       & \multicolumn{2}{l|}{api/vehicle-models/id} 	\\ \hline
+		Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator} \\ \hline
+		Metoda                    & \multicolumn{2}{l|}{DELETE} 				\\ \hline
+		\multicolumn{3}{|c|}{ Przykładowe odpowiedzi}                   		\\ \hline
+		200 (OK)			& Opis         	& Model pojazdu został usunięty		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	& Odpowiedź     &  \lstinputlisting[language=json]{source/vehicle-models-delete-404.json}    \\ \cline{2-3} 
+		& Opis          & Model pojazdu o żądanym \textit{id} nie istnieje  													\\ \hline
+		\multirow{2}{*}{400 (Bad Request)} 	& Odpowiedź     &  \lstinputlisting[language=json]{source/vehicle-models-delete-400.json}    \\ \cline{2-3} 
+		& Opis          & System posiada egzemplarze model pojazdu o żądanym \textit{id}, nie może on zostać usunięty   													\\ \hline
+	\end{tabularx}
+\end{table}
+
+
+\newpage
+\section{Interfejs użytkownika}
+\subsection{Układ interfejsu użytkownika}
+Komponenty (widoki) wchodzące w skład interfejsu użytkownika można podzielić na dwa główne rodzaje:
+\begin{itemize}
+	\item \textbf{Widok szczegółowy} (\textit{detail}) który zawiera komplet informacji o danym obiekcie i umożliwia jego edycję.
+	\item \textbf{Widok listy} (\textit{list}) zawierający małą ilość informacji wymaganych do identyfikacji danego obiektu oraz możliwość przejścia do \textbf{widoku szczegółowego}. Widoki tego typu są punktem wejściowym do bardziej zaawansowanej logiki interfejsu, dostępnym bezpośrednio za pomocą paska nawigacji (\textit{navbar}).
+\end{itemize}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.62]{images/angular_views.png}
+	\caption{Widoki interfejsu użytkownika}
+	\small 
+	Widoki zielone dostępne są dla każdego użytkownika; widoki pomarańczowe wyłącznie dla użytkownika o odpowiednich uprawnieniach. Widok \textit{booking-detail} jest specjalnym przypadkiem oferującym różne możliwości w zależności od uprawnień użytkownika.
+\end{figure}
+
 \section{Konteneryzacja}
 %----------------------------------------------------------------------------------------
 %	SECTION 6
 %----------------------------------------------------------------------------------------
-\newpage
-\chapter{Implementacja}
+%\newpage
+%\chapter{Implementacja}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 7
 %----------------------------------------------------------------------------------------
 \newpage
 \chapter{Testy}
-
+\section{Testy jednostkowe}
+\section{Testy systemowe}
+\section{Testy dymne}
 %----------------------------------------------------------------------------------------
 %	SECTION 8
 %----------------------------------------------------------------------------------------

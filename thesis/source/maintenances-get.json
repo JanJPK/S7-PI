@@ -1,0 +1,32 @@
+[
+  {
+    "id": 149,
+    "vehicleId": 55,
+    "startDate": "2017-04-09T00:00:00",
+    "endDate": "2017-04-23T00:00:00",
+    "description": "Maintenance example generated during seeding.",
+    "mileage": 6006626,
+    "regular": true,
+    "completed": true,
+    "cost": 1154,
+    "addedOn": "2018-11-21T20:49:14.513674",
+    "addedBy": "admin",
+    "modifiedOn": null,
+    "modifiedBy": null
+  },
+  {
+    "id": 150,
+    "vehicleId": 55,
+    "startDate": "2017-09-06T00:00:00",
+    "endDate": "2017-09-16T00:00:00",
+    "description": "Maintenance example generated during seeding.",
+    "mileage": 6006626,
+    "regular": false,
+    "completed": true,
+    "cost": 457,
+    "addedOn": "2018-11-21T20:49:14.5136756",
+    "addedBy": "admin",
+    "modifiedOn": null,
+    "modifiedBy": null
+  }
+]

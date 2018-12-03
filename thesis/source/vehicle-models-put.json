@@ -1,0 +1,19 @@
+{
+  "id": 5,
+  "manufacturer": "Ford",
+  "model": "Mondeo",
+  "configurationCode": "FM2018184",
+  "engine": "1.8 EcoBoost",
+  "horsepower": 155,
+  "seats": 4,
+  "weight": 1300,
+  "purchaseCost": 120000,
+  "hasVehicles": true,
+  "mileage": 49089,
+  "fuelConsumed": 2041,
+  "cost": 21809,
+  "addedOn": "2018-11-19T23:01:58.9845434",
+  "addedBy": "admin",
+  "modifiedOn": null,
+  "modifiedBy": null
+}

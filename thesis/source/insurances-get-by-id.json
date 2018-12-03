@@ -1,0 +1,14 @@
+{
+  "id": 105,
+  "vehicleId": 31,
+  "startDate": "2017-09-03T00:00:00",
+  "endDate": "2018-09-03T00:00:00",
+  "cost": 683,
+  "insurer": "Protecto",
+  "insuranceId": "INS-2017-9-3-1004",
+  "mileage": 4739950,
+  "addedOn": "2018-11-21T20:49:13.6555747",
+  "addedBy": "admin",
+  "modifiedOn": null,
+  "modifiedBy": null
+}

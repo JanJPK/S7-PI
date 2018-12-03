@@ -109,6 +109,10 @@ export class BookingDetailComponent extends BaseFormDetailComponent {
         });
     }
     this.setUpDatepicker();
+
+    if (!this.canBeEdited()) {
+      this.form.disable();
+    }
   }
 
   setUpDatepicker() {

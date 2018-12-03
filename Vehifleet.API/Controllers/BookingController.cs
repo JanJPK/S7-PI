@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Vehifleet.API.QueryFilters;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
+using Vehifleet.Data.Models.BaseEntities;
 using Vehifleet.Data.Models.Enums;
 using Vehifleet.Helper.Extensions;
 using Vehifleet.Repositories.Interfaces;
@@ -20,17 +21,17 @@ namespace Vehifleet.API.Controllers
         private readonly IGenericRepository<Booking, int> bookingRepository;
         private readonly IGenericRepository<Vehicle, int> vehicleRepository;
         private readonly IEmployeeRepository employeeRepository;
-        private readonly IGenericRepository<VehicleModel, int> vehicleSpecificationRepository;
+        private readonly IGenericRepository<VehicleModel, int> vehicleModelRepository;
 
         public BookingController(IGenericRepository<Booking, int> bookingRepository,
                                  IGenericRepository<Vehicle, int> vehicleRepository,
                                  IEmployeeRepository employeeRepository,
-                                 IGenericRepository<VehicleModel, int> vehicleSpecificationRepository)
+                                 IGenericRepository<VehicleModel, int> vehicleModelRepository)
         {
             this.bookingRepository = bookingRepository;
             this.vehicleRepository = vehicleRepository;
             this.employeeRepository = employeeRepository;
-            this.vehicleSpecificationRepository = vehicleSpecificationRepository;
+            this.vehicleModelRepository = vehicleModelRepository;
         }
 
         [HttpGet]
@@ -78,7 +79,7 @@ namespace Vehifleet.API.Controllers
 
             var booking = Mapper.Map<Booking>(bookingDto);
             var vehicle = await vehicleRepository.GetById(booking.VehicleId);
-            vehicle.Status = VehicleStatus.Available;
+            vehicle.Status = VehicleStatus.Unavailable;
             await bookingRepository.Insert(booking);
             await vehicleRepository.Update(vehicle);
             return Ok(booking.Id);
@@ -96,15 +97,36 @@ namespace Vehifleet.API.Controllers
             var booking = Mapper.Map<Booking>(bookingDto);
             if (booking.Status == BookingStatus.Completed)
             {
+                
                 var vehicle = await vehicleRepository.GetById(booking.VehicleId);
-                var vehicleSpecification = await vehicleSpecificationRepository.GetById(vehicle.VehicleModelId);
+                var vehicleModel = await vehicleModelRepository.GetById(vehicle.VehicleModelId);
                 var employee = await employeeRepository.GetById(booking.EmployeeId);
-                vehicleSpecification.AddGeneratedCosts(booking);
-                vehicle.AddGeneratedCosts(booking);
-                employee.AddGeneratedCosts(booking);
-                vehicle.Status = VehicleStatus.Available;
+                if (oldBooking.Status != booking.Status)
+                {
+                    // Status change => Completed.
+                    vehicle.Status = VehicleStatus.Available;
+                    vehicleModel.AddGeneratedCosts(booking);
+                    vehicle.AddGeneratedCosts(booking);
+                    employee.AddGeneratedCosts(booking);
+                }
+                else
+                {
+                    // Update.
+                    // Cost is replaced for booking, delta is propagated to other entities.
+                    var deltaCosts = new CostGeneratingEntity
+                    {
+                        Cost = booking.Cost - oldBooking.Cost,
+                        FuelConsumed = booking.FuelConsumed - oldBooking.FuelConsumed,
+                        Mileage = booking.Mileage - oldBooking.Mileage
+                    };
+
+                    vehicle.AddGeneratedCosts(deltaCosts);
+                    vehicleModel.AddGeneratedCosts(deltaCosts);
+                    vehicleModel.AddGeneratedCosts(deltaCosts);
+                }                
+ 
                 await vehicleRepository.Update(vehicle);
-                await vehicleSpecificationRepository.Update(vehicleSpecification);
+                await vehicleModelRepository.Update(vehicleModel);
                 await employeeRepository.Update(employee);
                 await bookingRepository.Update(booking);
             }

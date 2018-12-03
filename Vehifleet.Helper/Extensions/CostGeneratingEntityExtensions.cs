@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vehifleet.Data.Models.BaseEntities;
+﻿using Vehifleet.Data.Models.BaseEntities;
 
 namespace Vehifleet.Helper.Extensions
 {
@@ -11,6 +6,11 @@ namespace Vehifleet.Helper.Extensions
     {
         public static void AddGeneratedCosts(this CostGeneratingEntity destination, CostGeneratingEntity source)
         {
+            if (destination == null || source == null)
+            {
+                return;
+            }
+
             destination.Cost += source.Cost;
             destination.FuelConsumed += source.FuelConsumed;
             destination.Mileage += source.Mileage;

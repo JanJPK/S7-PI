@@ -222,6 +222,7 @@ Dodatkowe pojęcia związane z modelami świata biznesowego:
 		Ograniczenia         & \\ \hline
 	\end{tabularx}
 \end{table}
+
 \section{Wymagania niefunkcjonalne}
 \subsection{Interfejs użytkownika}
 \begin{itemize}
@@ -275,7 +276,7 @@ System został stworzony przy użyciu klasycznej architektury w której można w
 \end{figure}
 
 
-System został zaprojektowany tak, by mógł zostać zintegrowany z istniejącymi zasobami firmy — jedyne dane jakie przechowuje dotyczą logiki biznesowej związanej z wymaganiami funkcjonalnymi; wynika to z faktu, że większość firm ma już własne bazy danych przechowujące informacje o pracownikach więc duplikacja danych jest niepożądana ze względu na zużycie zasobów oraz możliwe problemy z synchronizacją. Dane związane z użytkownikami (np. imię, nazwisko, e-mail i numer telefonu) czy lokacjami firmy (np. adres) mogą zostać pobrane z innej bazy danych; ponadto interfejs użytkownika nie umożliwia wprowadzania lub edycji takich danych. Implementacja opisana w dalszej części niniejszej pracy przechowuje przykładowe dane użytkowników do celów testowych w tej samej bazie danych, jednakże konfiguracja systemu tak by korzystał z innej, nie stanowi większego problemu.
+System został zaprojektowany tak, by mógł zostać zintegrowany z istniejącymi zasobami firmy — jedyne dane, jakie przechowuje, dotyczą logiki biznesowej, związanej z wymaganiami funkcjonalnymi; wynika to z faktu, że większość firm ma już własne bazy danych przechowujące informacje o pracownikach więc duplikacja danych jest niepożądana ze względu na zużycie zasobów oraz możliwe problemy z synchronizacją. Dane związane z użytkownikami (np. imię, nazwisko, e-mail i numer telefonu) czy lokacjami firmy (np. adres) mogą zostać pobrane z innej bazy danych; ponadto interfejs użytkownika nie umożliwia wprowadzania lub edycji takich danych. Implementacja opisana w dalszej części niniejszej pracy przechowuje przykładowe dane użytkowników do celów testowych w tej samej bazie danych, jednakże konfiguracja systemu tak by korzystał z innej, nie stanowi większego problemu.
 
 W architekturze można rozróżnić trzy najważniejsze składowe, dwie pierwsze w interfejsie programistycznym i trzecią w interfejsie użytkownika:
 \begin{itemize}
@@ -284,24 +285,64 @@ W architekturze można rozróżnić trzy najważniejsze składowe, dwie pierwsze
 	\item Komponent (\textit{Component}) to podstawowy element definiujący działanie widoku w \textit{Angular} \cite{angular-components}.
 \end{itemize}
 
+\section{Standardy}
+Projekt był tworzony zgodnie z dobrymi praktykami programowania, z naciskiem na poprawną implementację obiektowego paradygmatu programowania. Interfejs programistyczny był tworzony z użyciem sztandarowych możliwości języka C\# takimi jak typy ogólne \cite{msdn-generics} (\textit{Generics}) pozwalające na tworzenie pojedynczych metod i klas zdolnych do operacji na wielu typach, zachowując wszystkie zalety silnego, statycznego typowania i wysoką wydajność.
+
 W celu zapewnienia przejrzystości kodu, nazewnictwo wszystkich elementów oraz dokumentacja kodu są zgodne ze standardową konwencją danego języka. Kod jest napisany w całości w języku angielskim.
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|l|l|l|l|l|}
 		\hline
-		Język      & Typy       & Pliki                 & Zmienne prywatne & Inne zmienne \\ \hline
-		C\#        & PascalCase & SomeExampleClass.cs   & camelCase        & PascalCase   \\ \hline
-		TypeScript & PascalCase & some-example.class.ts & camelCase        & camelCase    \\ \hline
+		Język      & Typy       			& Pliki                 & Zmienne prywatne & Inne zmienne \\ \hline
+		C\# \cite{msdn-gnc}     & PascalCase & PascalCase.cs   		& camelCase        & PascalCase   \\ \hline
+		TypeScript \cite{angular-sg} & PascalCase & snake-case.typ.ts 	& camelCase        & camelCase    \\ \hline
 	\end{tabularx}
 	\caption{Najważniejsze konwencje nazewnicze}
 \end{table}
 
+\section{Układ interfejsu użytkownika}
+Komponenty (widoki) wchodzące w skład interfejsu użytkownika można podzielić na dwa główne rodzaje:
+\begin{itemize}
+	\item \textbf{Widok szczegółowy} (\textit{detail}) który zawiera komplet informacji o danym obiekcie i umożliwia jego edycję.
+	\item \textbf{Widok listy} (\textit{list}) zawierający małą ilość informacji wymaganych do identyfikacji danego obiektu oraz możliwość przejścia do \textbf{widoku szczegółowego}. Widoki tego typu są punktem wejściowym do bardziej zaawansowanej logiki interfejsu, dostępnym bezpośrednio za pomocą paska nawigacji (\textit{navbar}).
+\end{itemize}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.62]{images/angular_views.png}
+	\caption{Widoki interfejsu użytkownika}
+	\small 
+	Widoki zielone dostępne są dla każdego użytkownika; widoki pomarańczowe wyłącznie dla użytkownika o odpowiednich uprawnieniach. Widok \textit{booking-detail} jest specjalnym przypadkiem oferującym różne możliwości w zależności od uprawnień użytkownika.
+\end{figure}
+
 \section{Bezpieczeństwo}
+Dostęp do systemu został zabezpieczony przy użyciu standardu \textit{JSON Web Token (JWT)} \cite{jwt}. Autoryzacja \textit{JWT} bazuje na generowaniu podpisanych (przez co odpornych na sfałszowanie) tokenów po stronie interfejsu programistycznego, a następnie wysyłaniu ich do aplikacji klienta. \textit{API} wcześniej wygenerowanego wymaga tokena w nagłówku \textit{HTTP} dla każdego żądania wysłanego przez interfejs użytkownika; żądania z niepoprawnym tokenem zostają odrzucone.
+
+Schemat działania autoryzacji \textit{JWT} w opisywanym projekcie wygląda następująco:
+\begin{enumerate}
+	\item Użytkownik loguje się przez interfejs użytkownika, podając nazwę użytkownika oraz hasło
+	\item Interfejs programistyczny weryfikuje dane logowania
+	\item W przypadku prawidłowego hasła utworzony zostaje token \textit{JWT} zawierający:
+		\subitem Informacje o wydającym token
+		\subitem Informacje o użytkowniku: jego identyfikator (nazwa użytkownika) oraz role
+	\item Utworzony token zostaje zaszyfrowany (uniemożliwiając jego sfałszowanie) i zwrócony	
+	\item Odebrany token zostaje umieszczony w pamięci przeglądarki internetowej użytkownika
+\end{enumerate}
+Interfejs programistyczny weryfikuje poprawność tokena dla każdego żądania \textit{HTTP} z wyjątkiem tych związanych z procesem autoryzacji użytkownika; jeżeli token jest niepoprawny lub zbyt stary (wydany więcej niż 2 godziny przed weryfikacją), żądanie jest odrzucone.
+
+Przechowywanie ról w tokenie \textit{JWT} pozwala na autoryzację z uwzględnieniem uprawnień użytkownika, przykładowo, ograniczając dostęp do poufnych informacji lub modyfikacji przechowywanych danych przez osoby nieuprawnione.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.54]{images/jwt.png}
+	\caption{Przykładowy token \textit{JWT}}
+	\small 
+	Token został wygenerowany przy użyciu narzędzia ze strony \textit{https://jwt.io/}.
+\end{figure}
 \section{Konteneryzacja}
 %----------------------------------------------------------------------------------------
 %	SECTION 6
 %----------------------------------------------------------------------------------------
-%\newpage
-%\chapter{Implementacja}
+\newpage
+\chapter{Implementacja}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 7

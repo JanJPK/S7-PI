@@ -1,0 +1,1 @@
+wskazanie elemnetów interfejsu (walidacja, stylistyka)

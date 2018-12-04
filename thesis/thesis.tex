@@ -18,6 +18,11 @@
 \usepackage[square,sort,comma,numbers]{natbib}
 \usepackage{multirow}
 
+\usepackage{url}
+\def\UrlBreaks{\do\/\do-}
+\usepackage{breakurl}
+
+
 \newcommand{\R}{I\!\!R}
 \newtheorem{theorem}{Twierdzenie}[section]
 
@@ -311,7 +316,7 @@
 	
 	W celu zapewnienia przejrzystości kodu, nazewnictwo wszystkich elementów oraz dokumentacja kodu są zgodne ze standardową konwencją danego języka. Kod jest napisany w całości w języku angielskim.
 	\begin{table}[H]
-		\begin{tabularx}{\textwidth}{|l|l|l|l|l|}
+		\begin{tabularx}{\textwidth}{|l|l|l|l|X|}
 			\hline
 			Język      & Typy       			& Pliki                 & Zmienne prywatne & Inne zmienne \\ \hline
 			C\# \cite{msdn-gnc}     & PascalCase & PascalCase.cs   		& camelCase        & PascalCase   \\ \hline
@@ -344,9 +349,39 @@
 		\small 
 		Token został wygenerowany przy użyciu narzędzia ze strony \textit{https://jwt.io/}.
 	\end{figure}
+
+	\begin{table}[H]
+		\caption{Domyślna konfiguracja relacji ról do poziomu uprawnień}
+		\begin{tabularx}{\textwidth}{|l|l|X|}
+			\hline
+			\multicolumn{1}{|c|}{\textbf{Aktor}} & \multicolumn{1}{c|}{\textbf{Poziom dostępu}} & \multicolumn{1}{c|}{\textbf{Wymagane role}} \\ \hline
+			Kierowca                             & Podstawowy                                   & Employee                                    \\ \hline
+			Kierownik                            & Pełny                                        & Manager lub Administrator                   \\ \hline
+		\end{tabularx}
+	\end{table}
 	
+	\newpage
 	\section{Interfejs programistyczny}
-	\subsection{Diagram klas}
+	\subsection{Logika biznesowa}
+	Baza danych została automatycznie wygenerowana na podstawie klas opisujących świat biznesowy, przy użyciu \textit{EF Core}. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.64]{images/vs_class_diagram.png}
+		\caption{Diagram klas}
+		\small 
+		Diagram klas został wygenerowany przy użyciu \textit{Visual Studio}.
+	\end{figure}
+
+	\lstinputlisting[language=C,frame=single,caption=Przykład definiowania relacji między klasami w code-first]{source/efcore-model.cs}
+	
+	Definiowanie właściwości kolumn wygenerowanych w bazie odbywa się poprzez umieszczenie odpowiednich adnotacji przy polach:
+	\begin{itemize}
+		\item $[$Key$]$: klucz główny (\textit{PK})
+		\item $[$Required$]$: pole jest wymagane, nie może być puste (null)
+	\end{itemize}
+	Do zdefiniowania relacji między tabelami należy użyć pól typu takiego samego jak \textit{PK} docelowej klasy\cite{msdn-efcore-relationships}. Używanie adnotacji nie jest wymagane, o ile pole zostało nazwane według standardowej konwencji \textit{EF Core} - \textit{NazwaKlasyId} (np. \textit{VehicleId}). Dodatkowo klasę można uzupełnić o pola nawigacyjne (\textit{navigation properties}), pozwalające na odnoszenie się do powiązanej klasy w łatwy sposób w kodzie programu, należy jednak pamiętać że domyślnie \textit{EF Core 2.1} nie wczytuje informacji o powiązanych obiektach; podczas komunikacji z bazą daną należy jawnie wywołać ładowanie powiązanych obiektów za pomocą metody \textit{LINQ} \text{Include()}.
+	
+	\lstinputlisting[language=C,frame=single,caption=Ładowanie powiązanych obiektów na przykładzie relacji wypożyczenia do pojazdu]{source/efcore-loading-related.cs}
 	
 	\subsection{Opis punktów końcowych}
 	\subsubsection{Modele pojazdów}
@@ -786,7 +821,7 @@
 	\end{table}
 	
 	\begin{table}[H]
-		\caption{Filtr modeli pojazdów (\textit{api/vehicles GET})}
+		\caption{Filtr pojazdów (\textit{api/vehicles GET})}
 		\begin{tabularx}{\textwidth}{|l|X|}
 			\hline                                       							
 			\multicolumn{2}{|c|}{\textbf{Filtr modeli pojazdów}}  							        	\\ \hline
@@ -827,7 +862,15 @@
 	
 	Mechanizm filtrowania jest wydajny nawet dla skomplikowanych żądań - implementacja korzysta z interfejsu \textit{IQueryable}, pozwalającego na dodawanie wielu warunków które zostaną wykonane wyłącznie raz. W trakcie wywołania funkcji \textit{ToListAsync()}, warunki dodane do \textit{IQueryable} zostaną przetłumaczone do pojedynczego zapytania \textit{SQL} które zostanie wykonane w bazie danych po czym zwróci listę obiektów.
 	
-	\lstinputlisting[language=C,caption=Logika filtrującą dla modeli pojazdów]{source/iqueryable-filter.cs}
+	\lstinputlisting[language=C,frame=single,caption=Logika filtrującą dla modeli pojazdów]{source/iqueryable-filter.cs}
+	
+	\newpage
+	\subsection{Eksport statystyk floty}
+	System przechowuje informacje na temat bieżących kosztów generowanych przez flotę; raporty zawierające te informacje mogą być wyeksportowane do pliku \textit{.csv} by następnie zostać zaimportowane do narzędzia kalkulacyjnego, takiego jak \textit{Microsoft Excel}.
+	
+	W utworzonym systemie eksport do pliku wywoływany jest przez żądanie \textit{HTTP POST} na adres \textit{api/reports/generate/days}, gdzie \textit{days} to liczba określająca z jak wielu dni wstecz powinny być brane dane dotyczące wypożyczeń.
+	
+	\lstinputlisting[frame=single,caption=Przykładowy raport ze statystykami pojazdów]{source/report.csv}
 	\newpage
 	\section{Interfejs użytkownika}
 	\subsection{Układ interfejsu użytkownika}
@@ -845,8 +888,15 @@
 	\end{figure}
 	
 	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\textwidth]{images/test.png}
+		\caption{Widoki interfejsu użytkownika}
+		\small 
+		Widoki zielone dostępne są dla każdego użytkownika; widoki pomarańczowe wyłącznie dla użytkownika o odpowiednich uprawnieniach. Widok \textit{booking-detail} jest specjalnym przypadkiem oferującym różne możliwości w zależności od uprawnień użytkownika.
+	\end{figure}
 	
-	\section{Konteneryzacja}
+	%\section{Konteneryzacja}
 	%----------------------------------------------------------------------------------------
 	%	SECTION 6
 	%----------------------------------------------------------------------------------------
@@ -859,8 +909,26 @@
 	\newpage
 	\chapter{Testy}
 	\section{Testy jednostkowe}
+	System był testowany przy użyciu testów jednostkowych korzystających z biblioteki \textit{XUnit} oraz napisanych w schludny, zgodny z często stosowaną w języku C\# konwencją \textit{AAA} sposób, bazujący na podziale testu na trzy sekcje:
+	\begin{enumerate}
+		\item Przygotuj (\textit{Arrange}): przygotowanie niezbędnych zmiennych
+		\item Działaj (\textit{Act}): wywołanie metod które mają być testowane 
+		\item Sprawdź (\textit{Assert}): sprawdzenie wyniku 
+	\end{enumerate}
+	
+	\lstinputlisting[language=C,frame=single,caption=Przykład testu jednostkowego zgodnego z konwencją \textit{AAA}]{source/tests-unit.cs}
+	
 	\section{Testy systemowe}
+	Najczęściej stosowanym rodzajem testów były testy systemowe przy użyciu narzędzia \textit{Postman} pozwalającego na wygodne tworzenie i wysyłanie skomplikowanych żądań \textit{HTTP}. \textit{Postman} pozwala również na zapisywanie oraz organizowanie żądań co znacznie przyśpiesza proces testowania.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/tests_postman.png}
+		\caption{Interfejs programu Postman}
+	\end{figure}
+
 	\section{Testy dymne}
+	Testy dymne (\textit{smoke test}) były używane w końcowej fazie projektu; polegały na wcieleniu się w rolę użytkownika i przechodzeniu najczęściej używanych ścieżek (np. tworzeniu wypożyczenia) . Testy tego typu pozwalają szybko zweryfikować czy kluczowa funkcjonalność systemu działa bezproblemowo.
+	
 	%----------------------------------------------------------------------------------------
 	%	SECTION 8
 	%----------------------------------------------------------------------------------------

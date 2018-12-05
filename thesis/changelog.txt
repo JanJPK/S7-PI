@@ -1,2 +1,2 @@
-- zmiana nazewnictwa: wypożyczenie => rezerwacja
-- usunięcie danych z opisu endpointów API (12 stron mniej)
+- zmiana nazewnictwa: "wypożyczenie" => "rezerwacja"
+- usunięcie danych z opisu endpointów API (12 stron mniej); zmiana nazewnictwa: "punkt końcowy" => "endpoint"

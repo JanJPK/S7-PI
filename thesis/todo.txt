@@ -1,1 +1,3 @@
 wskazanie elemnetów interfejsu (walidacja, stylistyka)
+diagramy stanów
+diagram PU

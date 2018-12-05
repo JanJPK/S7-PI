@@ -26,6 +26,8 @@
 \newcommand{\R}{I\!\!R}
 \newtheorem{theorem}{Twierdzenie}[section]
 
+\usepackage[toc,page]{appendix}
+
 \usepackage{listings}
 \usepackage{xcolor}
 \colorlet{punct}{red!60!black}
@@ -33,8 +35,8 @@
 \definecolor{delim}{RGB}{20,105,176}
 \colorlet{numb}{magenta!60!black}
 
-\renewcommand\bibname{Literatura}
-\renewcommand\refname{Literatura}
+%\renewcommand{\bibname}{Literatura}
+%\renewcommand\refname{Literatura}
 \renewcommand\lstlistingname{Listing}
 \renewcommand\lstlistlistingname{Listingi}
 
@@ -59,13 +61,22 @@
 \specialisation{Inżynieria systemów informatycznych (INS)}
 
 \begin{document}
-	%\bibliographystyle{plabbrv}
-	\bibliographystyle{plainnat} 
-	
+	\bibliographystyle{plainnat}
+	\renewcommand{\bibname}{Literatura} 
+	\appendixpageoff
 	\maketitle
 	%\dedication{6cm}{dedykacja \texttt{$\backslash$dedication}}
 	
 	\tableofcontents 
+	
+	\newpage
+	\listoffigures
+	
+	\newpage
+	\listoftables
+	
+	\newpage
+	\lstlistoflistings
 	
 	%----------------------------------------------------------------------------------------
 	%	SECTION 0
@@ -74,7 +85,7 @@
 	%----------------------------------------------------------------------------------------
 	%	SECTION 1
 	%----------------------------------------------------------------------------------------
-	% cel, zakres pracy
+	\newpage
 	\chapter{Wprowadzenie}
 	\section{Wstęp}
 	Celem niniejszej pracy dyplomowej jest opracowanie projektu, implementacja oraz wdrożenie systemu umożliwiającego zarządzanie flotą samochodów. Pierwszym etapem projektu jest zebrane wymagań funkcjonalnych i niefunkcjonalnych oraz określenie zakresu pracy. Drugi etap projektu to wybór technologii i projekt architektury. Ostatnim celem jest implementacja systemu.
@@ -103,7 +114,7 @@
 		\includegraphics[width=\textwidth]{images/vinitysoft.png}
 		\caption{Vinitysoft Fleet Management Software 4.0.}
 	\end{figure}
-
+	
 	Oba wymienione systemy nie oferują integracji z istniejącymi zasobami firmy oraz są drogie w utrzymaniu ze względu na koszt licencji.
 	%----------------------------------------------------------------------------------------
 	%	SECTION 3
@@ -125,14 +136,14 @@
 	\end{table}
 	Rozróżniane są dwa rodzaje aktorów:
 	\begin{itemize}
-		\item Kierowca - użytkownik korzystający z funkcjonalności tworzenia i przeglądania historii rezerwacji
-		\item Kierownik - użytkownik z pełnym dostępem do systemu
+		\item Kierowca - użytkownik korzystający z funkcjonalności tworzenia i przeglądania historii rezerwacji.
+		\item Kierownik - użytkownik z pełnym dostępem do systemu.
 	\end{itemize}
 	Kierownik posiada wszelkie prawa i możliwości Kierowcy.
 	
 	Dodatkowe pojęcia związane z modelami świata biznesowego:
 	\begin{itemize}
-		\item \textbf{Model Pojazdu} - model opisujący specyfikacje techniczną wspólną dla pewnego zbioru pojazdów
+		\item \textbf{Model Pojazdu} - model opisujący specyfikacje techniczną wspólną dla pewnego zbioru pojazdów.
 		\item \textbf{Pojazd} - model opisujący informacje unikatowe dla pewnego przedstawiciela zbioru Modeli Pojazdów.
 	\end{itemize}
 	
@@ -258,17 +269,20 @@
 	
 	\section{Wymagania niefunkcjonalne}
 	\subsection{Interfejs użytkownika}
+	Wymagania dotyczące wyglądu aplikacji są następujące:
 	\begin{itemize}
-		\item wygląd powinien być prosty i nowoczesny
-		\item elementy strony powinny być rozmieszczone w intuicyjny sposób
-		\item Struktura widoków powinna być ułożona zgodnie z zależnościami między wyświetlanymi danymi
-		\item aplikacja być wygodna w użyciu na ekranach komputerów o rozdzielczości HD (1366x768 pikseli) lub większej
+		\item wygląd powinien być prosty i nowoczesny.
+		\item elementy strony powinny być rozmieszczone w intuicyjny sposób.
+		\item struktura widoków powinna być ułożona zgodnie z zależnościami między wyświetlanymi danymi.
+		\item aplikacja powinna być wygodna w użyciu na ekranach komputerów o rozdzielczości HD (1366x768 pikseli) lub większej.
 	\end{itemize}
+	\newpage
 	\subsection{Interfejs programistyczny}
+	Wymagania dotyczące interfejsu programistycznego są następujące:
 	\begin{itemize}
-		\item system powinien wymagać niewielkich modyfikacji w przypadku integracji z istniejącymi zasobami firmy (np. baza danych pracowników)
-		\item komunikacja powinna opierać się na otwartych i uniwersalnych standardach, np. dane w postaci \textit{JSON} lub \textit{XML} przesyłane protokołem \textit{HTTP}
-		\item interfejs programistyczny powinien być niezależny od platformy tak by w przyszłości mógł zostać wykorzystany przez inne aplikacje
+		\item system powinien wymagać niewielkich modyfikacji w przypadku integracji z istniejącymi zasobami firmy (np. baza danych pracowników).
+		\item komunikacja powinna opierać się na otwartych i uniwersalnych standardach, np. dane w postaci \textit{JSON} lub \textit{XML} przesyłane protokołem \textit{HTTP}.
+		\item interfejs programistyczny powinien być niezależny od platformy tak by w przyszłości mógł zostać wykorzystany przez inne aplikacje.
 	\end{itemize}
 	\subsection{Bezpieczeństwo}
 	System powinien być zabezpieczony zarówno po stronie interfejsu użytkownika (np. blokada przed przejściem do podstrony) oraz po stronie interfejsu programistycznego (ignorowanie zapytań od nieupoważnionych aplikacji). Zabezpieczenie powinno obsługiwać różne poziomy autoryzacji w zależności od roli użytkownika.
@@ -300,11 +314,11 @@
 	
 	Aplikacja klienta była rozwijana przy użyciu \textit{Visual Studio Code 1.28}, nowoczesnego edytora który sprawdza się znakomicie przy tworzeniu interfejsów użytkownika ze względu na zintegrowaną konsolę pozwalającą na łatwe zarządzanie paczkami oraz łatwość dostosowywania do potrzeb użytkownika. W trakcie pracy wykorzystano wiele rozszerzeń, najważniejsze z nich to \textit{TSLint}, linter wykrywający błędy w kodzie \textit{TypeScript} oraz \textit{GitLens} — rozszerzenie wspomagające zarządzanie repozytorium \textit{Git}.
 	
-	 Do rozwoju interfejsu programistycznego wykorzystano \textit{Visual Studio 2017} pozwalające na łatwe debugowanie kodu oraz analizę aspektów takich jak wykorzystanie zasobów przez program. \textit{Visual Studio} zostało wzbogacone o narzędzie \textit{JetBrains ReSharper} automatycznie formatujące pliki projektu według zadanego wzorca, zapewniając spójność i przejrzystość kodu.
+	Do rozwoju interfejsu programistycznego wykorzystano \textit{Visual Studio 2017} pozwalające na łatwe debugowanie kodu oraz analizę aspektów takich jak wykorzystanie zasobów przez program. \textit{Visual Studio} zostało wzbogacone o narzędzie \textit{JetBrains ReSharper} automatycznie formatujące pliki projektu według zadanego wzorca, zapewniając spójność i przejrzystość kodu.
 	\subsection{Dodatkowe narzędzia}
 	Interfejs programistyczny testowany był przy pomocy \textit{Postman 6.5.2}, aplikacji pozwalającej na wysyłanie oraz zarządzanie zapytaniami HTTP.
 	
-	Do tworzenia diagramów wykorzystano program \textit{Visual Paradigm}
+	Do tworzenia diagramów wykorzystano program \textit{Visual Paradigm}.
 	
 	%----------------------------------------------------------------------------------------
 	%	SECTION 5
@@ -352,11 +366,49 @@
 		\caption{Diagram przypadków użycia.}
 	\end{figure}
 	
+	\newpage
+	\section{Bezpieczeństwo}
+	Dostęp do systemu został zabezpieczony przy użyciu standardu \textit{JSON Web Token (JWT)} \cite{jwt}. Autoryzacja \textit{JWT} bazuje na generowaniu podpisanych (przez co odpornych na sfałszowanie) tokenów po stronie interfejsu programistycznego, a następnie wysyłaniu ich do aplikacji klienta. \textit{API} wcześniej wygenerowanego wymaga tokena w nagłówku \textit{HTTP} dla każdego żądania wysłanego przez interfejs użytkownika; żądania z niepoprawnym tokenem zostają odrzucone.
+	
+	Schemat działania autoryzacji \textit{JWT} w opisywanym projekcie wygląda następująco:
+	\begin{enumerate}
+		\item Użytkownik loguje się przez interfejs użytkownika, podając nazwę użytkownika oraz hasło
+		\item Interfejs programistyczny weryfikuje dane logowania
+		\item W przypadku prawidłowego hasła utworzony zostaje token \textit{JWT} zawierający:
+		\subitem Informacje o wydającym token
+		\subitem Informacje o użytkowniku: jego identyfikator (nazwa użytkownika) oraz role
+		\item Utworzony token zostaje zaszyfrowany (uniemożliwiając jego sfałszowanie) i zwrócony	
+		\item Odebrany token zostaje umieszczony w pamięci przeglądarki internetowej użytkownika
+	\end{enumerate}
+	Interfejs programistyczny weryfikuje poprawność tokena dla każdego żądania \textit{HTTP} z wyjątkiem tych związanych z procesem autoryzacji użytkownika; jeżeli token jest niepoprawny lub zbyt stary (wydany więcej niż 2 godziny przed weryfikacją), żądanie jest odrzucone.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/jwt.png}
+		\caption{Przykładowy token \textit{JWT}.}
+		\small 
+		Token został wygenerowany przy użyciu narzędzia ze strony \textit{https://jwt.io/}.
+	\end{figure}
+	
+	Przechowywanie ról w tokenie \textit{JWT} pozwala na autoryzację z uwzględnieniem uprawnień użytkownika, przykładowo, ograniczając dostęp do poufnych informacji lub modyfikacji przechowywanych danych przez osoby nieuprawnione.
+	
+	
+	\begin{table}[H]
+		\caption{Domyślna konfiguracja relacji ról do poziomu uprawnień.}
+		\begin{tabularx}{\textwidth}{|l|l|X|}
+			\hline
+			\multicolumn{1}{|c|}{\textbf{Aktor}} & \multicolumn{1}{c|}{\textbf{Poziom dostępu}} & \multicolumn{1}{c|}{\textbf{Wymagane role}} \\ \hline
+			Kierowca                             & Podstawowy                                   & Employee                                    \\ \hline
+			Kierownik                            & Pełny                                        & Manager lub Administrator                   \\ \hline
+		\end{tabularx}
+	\end{table}
+	
+	Zarówno interfejs użytkownika jak i programistyczny utworzone w ramach projektu posiadają mechanizmy obrony przed nieautoryzowanym dostępem: \textit{API} zwraca błąd \textit{401 (Unauthorized)} dla żądań bez poprawnego tokena; Aplikacja użytkownika blokuje dostęp do widoków przy użyciu mechanizmu \textit{RouteGuard}.
 	
 	\newpage
 	\section{Interfejs programistyczny}
 	\subsection{Logika biznesowa}
-			
+	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{images/vs_class_diagram.png}
@@ -364,7 +416,7 @@
 		\small 
 		Diagram klas został wygenerowany przy użyciu \textit{Visual Studio}.
 	\end{figure}
-
+	
 	\begin{table}[H]
 		\caption{Klasy obiektów biznesowych.}
 		\begin{tabularx}{\textwidth}{|l|X|}
@@ -380,21 +432,21 @@
 			Location         & Informacje o budynkach należących do firmy korzystającej z systemu; mogą być pobierane z innej bazy danych \\ \hline
 		\end{tabularx}
 	\end{table}
-
+	
 	Baza danych została automatycznie wygenerowana na podstawie klas opisujących świat biznesowy, przy użyciu \textit{EF Core}. 
 	
 	Do zdefiniowania relacji między tabelami należy użyć pól typu takiego samego jak \textit{PK} docelowej klasy\cite{msdn-efcore-relationships}. Używanie adnotacji nie jest wymagane, o ile pole zostało nazwane według standardowej konwencji \textit{EF Core} — \textit{NazwaKlasyId} (np. \textit{VehicleId}). Dodatkowo klasę można uzupełnić o pola nawigacyjne (\textit{navigation properties}), pozwalające na odnoszenie się do powiązanej klasy w łatwy sposób w kodzie programu, należy jednak pamiętać że domyślnie \textit{EF Core 2.1} nie wczytuje informacji o powiązanych obiektach; podczas komunikacji z bazą daną należy jawnie wywołać ładowanie powiązanych obiektów za pomocą metody \textit{LINQ} \text{Include()}.
 	
 	Definiowanie właściwości kolumn wygenerowanych w bazie odbywa się poprzez umieszczenie odpowiednich adnotacji przy polach:
 	\begin{itemize}
-		\item $[$Key$]$: klucz główny (\textit{PK})
-		\item $[$Required$]$: pole jest wymagane, nie może być puste (null)
+		\item $[$Key$]$: klucz główny (\textit{PK}).
+		\item $[$Required$]$: pole jest wymagane, nie może być puste (null).
 	\end{itemize}
 	
 	\lstinputlisting[language=C,frame=single,caption=Przykład definiowania relacji między klasami w code-first.]{source/efcore-model.cs}
 	
 	\lstinputlisting[language=C,frame=single,caption=Ładowanie powiązanych obiektów na przykładzie relacji rezerwacji do pojazdu.]{source/efcore-loading-related.cs}
-
+	
 	Wszystkie klasy związane z logiką biznesową dziedziczą po klasie \textit{AuditableEntity} posiadającej pola przechowujące informacje (data i nazwa użytkownika) o utworzeniu i ostatniej edycji encji. Klasy związane z elementami generującymi koszty (pojazdami, modelami pojazdów, rezerwacjimi i użytkownikami) dodatkowo dziedziczą po klasie \textit{CostGeneratingEntity} przechowującej informacje o koszcie, zużytym paliwie i przejechanych kilometrach. 
 	
 	Wybrana strategia dziedziczenia to \textit{TPC — Table per Concrete Type}. W strategii \textit{TPC} tabele utworzone w bazie danych zawierają wszystkie kolumny odpowiadające polom wszystkich klas w hierarchii dziedziczenia.
@@ -406,657 +458,598 @@
 	\subsection{Struktura solucji}
 	Kod interfejsu programistycznego znajduje się w jednej solucji podzielonej na projekty.
 	\begin{itemize}
-		\item \textbf{Vehifleet} — solucja
-			\subitem \textbf{Vehifleet.API} — konfiguracja systemu oraz kontrolery; projekt startowy
-			\subitem \textbf{Vehifleet.API.QueryFilters} — filtry używane w żądaniach GET
-			\subitem \textbf{Vehifleet.Data.DbAccess} — konfiguracja połączenia z bazą danych
-			\subitem \textbf{Vehifleet.Data.Dtos} — modele transportowe (\textit{Data Transfer Objects}) używane w komunikacji z interfejsem użytkownika
-			\subitem \textbf{Vehifleet.Data.Models} — modele używane wewnątrz interfejsu programistycznego oraz przy tworzeniu bazy danych
-			\subitem \textbf{Vehifleet.Helper} — pomocnicze metody rozszerzające \cite{msdn-extension}
-			\subitem \textbf{Vehifleet.Repositories} — repozytoria odpowiedzialne za interakcje z bazą danych
-			\subitem \textbf{Vehifleet.Services.UserService} — obsługa logowania użytkowników
-			\subitem \textbf{Vehifleet.Services.CsvService} — serwis generujący raporty ze statystkami
+		\item \textbf{Vehifleet} — solucja.
+		\subitem \textbf{Vehifleet.API} — konfiguracja systemu oraz kontrolery; projekt startowy.
+		\subitem \textbf{Vehifleet.API.QueryFilters} — filtry używane w żądaniach GET.
+		\subitem \textbf{Vehifleet.Data.DbAccess} — konfiguracja połączenia z bazą danych.
+		\subitem \textbf{Vehifleet.Data.Dtos} — modele transportowe (\textit{Data Transfer Objects}) używane w komunikacji z interfejsem użytkownika.
+		\subitem \textbf{Vehifleet.Data.Models} — modele używane wewnątrz interfejsu programistycznego oraz przy tworzeniu bazy danych.
+		\subitem \textbf{Vehifleet.Helper} — pomocnicze metody rozszerzające \cite{msdn-extension}.
+		\subitem \textbf{Vehifleet.Repositories} — repozytoria odpowiedzialne za interakcje z bazą danych.
+		\subitem \textbf{Vehifleet.Services.UserService} — obsługa logowania użytkowników.
+		\subitem \textbf{Vehifleet.Services.CsvService} — serwis generujący raporty ze statystkami.
 	\end{itemize}
+
+	\subsection{Wstrzykiwanie zależności}
+	Obiekty klas z logiką są tworzone przy użyciu wstrzykiwania zależności (\textit{dependency injection}). Większość obiektów jest tworzona dla konkretnego żądania odebranego przez kontroler; po wykonaniu operacji i zwróceniu odpowiedzi obiekt trafia do puli oczekującej na \textit{garbage collector}.
 	
 	\subsection{Kontrolery}
-	
+	Jednymi z najważniejszych klas są kontrolery, komponenty obsługujące żądania \textit{HTTP}. Logika z różnych projektów jest łączona i używana w klasach kontrolerów. 
+	Poniżej zamieszczony został opis wszystkich punktów końcowych (\textit{endpoint}) w interfejsie programistycznym.
 	%----------------------------------------------------------------------------------------
 	\begin{table}[H]
-		\caption{Endpoint \textit{api/vehicle-models}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                         & \multicolumn{2}{l|}{api/vehicle-models}
-			\\ \hline
-			Wymagane role               & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                      & \multicolumn{2}{l|}{GET}
-			\\ \hline
-			\multicolumn{3}{|c|}{ Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)}   & Zawartość         & Tablica \textit{JSON}
-			\\ \cline{2-3}              & Opis         	    & Lista modeli pojazdów
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/vehicle-models/manufacturers GET}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			
-			\\ \hline
-			URL                         & \multicolumn{2}{l|}{api/vehicle-models/manufacturers}
-			\\ \hline
-			Wymagane role               & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                      & \multicolumn{2}{l|}{GET}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)}   & Zawartość        & Tablica \textit{JSON}
-			\\ \cline{2-3}              & Opis         	   & Lista marek pojazdów
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/vehicle-models/id GET}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                         & \multicolumn{2}{l|}{api/vehicle-models/id}
-			\\ \hline
-			Wymagane role               & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                      & \multicolumn{2}{l|}{GET}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)} 	        & Zawartość   	& \textit{JSON}
-			\\ \cline{2-3}                      & Opis         	& Model pojazdu o żądanym \textit{id}
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	& Zawartość     & \lstinputlisting[language=json,nolol=true]{source/vehicle-models-get-by-id-404.json}
-			\\ \cline{2-3}                      & Opis          & Model pojazdu o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/vehicle-models POST}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/vehicle-models}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{POST}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)} 		& Zawartość     & \textit{Id} utworzonego modelu pojazdu
-			\\ \cline{2-3}                  & Opis         	& Model pojazdu został utworzony
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/vehicle-models/id PUT}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/vehicle-models/id}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{PUT}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			200 (OK) 		 & Opis      	& Model pojazdu został zaktualizowany
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	    & Zawartość     & \lstinputlisting[language=json,nolol=true]{source/vehicle-models-put-404.json}  
-			\\ \cline{2-3}                          & Opis          & Model pojazdu o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/vehicle-models/id DELETE}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/vehicle-models/id}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{DELETE}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			200 (OK)			                & Opis         	& Model pojazdu został usunięty
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	& Zawartość     & \lstinputlisting[language=json,nolol=true]{source/vehicle-models-delete-404.json}   	
-			\\ \cline{2-3}                      & Opis          & Model pojazdu o żądanym \textit{id} nie istnieje
-			\\ \hline
-			\multirow{2}{*}{400 (Bad Request)} 	& Zawartość     & \lstinputlisting[language=json,nolol=true]{source/vehicle-models-delete-400.json}   	
-			\\ \cline{2-3}                      & Opis          & System posiada egzemplarze modelu pojazdu o żądanym \textit{id}, nie może on zostać usunięty
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	%----------------------------------------------------------------------------------------
-	\newpage
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/vehicles}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                         & \multicolumn{2}{l|}{api/vehicles}
-			\\ \hline
-			Wymagane role               & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                      & \multicolumn{2}{l|}{GET}
-			\\ \hline
-			\multicolumn{3}{|c|}{ Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)}   & Zawartość         & Tablica \textit{JSON}
-			\\ \cline{2-3}              & Opis         	    & Lista pojazdów
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/vehicles/id GET}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                         & \multicolumn{2}{l|}{api/vehicles/id}
-			\\ \hline
-			Wymagane role               & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                      & \multicolumn{2}{l|}{GET}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)} 	        & Zawartość   	& \textit{JSON}
-			\\ \cline{2-3}                      & Opis         	& Pojazd o żądanym \textit{id}
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	& Zawartość     & \lstinputlisting[language=json,nolol=true]{source/vehicles-get-by-id-404.json}
-			\\ \cline{2-3}                      & Opis          & Pojazd o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/vehicles POST}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/vehicles}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{POST}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)} 		& Zawartość     & \textit{Id} utworzonego pojazdu
-			\\ \cline{2-3}                  & Opis         	& Pojazd został utworzony
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/vehicles/id PUT}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/vehicles/id}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{PUT}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			200 (OK) 		                        & Opis      	& Pojazd zostało zaktualizowane
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	    & Zawartość     & \lstinputlisting[language=json,nolol=true]{source/vehicles-put-404.json}  
-			\\ \cline{2-3}                          & Opis          & Pojazd o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/vehicles/id DELETE}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/vehicles/id}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{DELETE}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			200 (OK)			                & Opis         	& Pojazd został usunięty
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	& Zawartość     & \lstinputlisting[language=json,nolol=true]{source/vehicles-delete-404.json}   	
-			\\ \cline{2-3}                      & Opis          & Pojazd o żądanym \textit{id} nie istnieje
-			\\ \hline
-			\multirow{2}{*}{400 (Bad Request)} 	& Zawartość     & \lstinputlisting[language=json,nolol=true]{source/vehicles-delete-400.json}   	
-			\\ \cline{2-3}                      & Opis          & System posiada rezerwacje przypisane do pojazdu o żądanym \textit{id}, nie może on zostać usunięty
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	%----------------------------------------------------------------------------------------
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/insurances/vehicle/id}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                         & \multicolumn{2}{l|}{api/insurances}
-			\\ \hline
-			Wymagane role               & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                      & \multicolumn{2}{l|}{GET}
-			\\ \hline
-			\multicolumn{3}{|c|}{ Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)}   & Zawartość         & Tablica \textit{JSON}
-			\\ \cline{2-3}              & Opis         	    & Lista ubezpieczeń przypisanych do danego pojazdu
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/insurances/id GET}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                         & \multicolumn{2}{l|}{api/insurances/id}
-			\\ \hline
-			Wymagane role               & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                      & \multicolumn{2}{l|}{GET}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)} 	        & Zawartość   	& \textit{JSON}
-			\\ \cline{2-3}                      & Opis         	& Ubezpieczenie o żądanym \textit{id}
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	& Zawartość     & \lstinputlisting[language=json,nolol=true]{source/insurances-get-by-id-404.json}
-			\\ \cline{2-3}                      & Opis          & Ubezpieczenie o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/insurances POST}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/insurances}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{POST}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)} 		& Zawartość     & \textit{Id} utworzonego ubezpieczenia
-			\\ \cline{2-3}                  & Opis         	& Ubezpieczenie został utworzony
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/insurances/id PUT}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/insurances/id}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{PUT}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			200 (OK) 		                        & Opis      	& Ubezpieczenie zostało zaktualizowane
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	    & Zawartość     & \lstinputlisting[language=json,nolol=true]{source/insurances-put-404.json}
-			\\ \cline{2-3}                          & Opis          & Ubezpieczenie o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/insurances/id DELETE}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/insurances/id}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{DELETE}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			200 (OK)			                & Opis         	& Ubezpieczenie został usunięty
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	& Zawartość     & \lstinputlisting[language=json,nolol=true]{source/insurances-delete-404.json}
-			\\ \cline{2-3}                      & Opis          & Ubezpieczenie o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	%----------------------------------------------------------------------------------------
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/maintenances/vehicle/id}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                         & \multicolumn{2}{l|}{api/maintenances}
-			\\ \hline
-			Wymagane role               & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                      & \multicolumn{2}{l|}{GET}
-			\\ \hline
-			\multicolumn{3}{|c|}{ Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)}   & Zawartość         & Tablica \textit{JSON}
-			\\ \cline{2-3}              & Opis         	    & Lista napraw przypisanych do danego pojazdu
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/maintenances/id GET}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                         & \multicolumn{2}{l|}{api/maintenances/id}
-			\\ \hline
-			Wymagane role               & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                      & \multicolumn{2}{l|}{GET}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)} 	        & Zawartość   	& \textit{JSON}
-			\\ \cline{2-3}                      & Opis         	& Naprawa o żądanym \textit{id}
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	& Zawartość     & \lstinputlisting[language=json,nolol=true]{source/maintenances-get-by-id-404.json}
-			\\ \cline{2-3}                      & Opis          & Naprawa o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/maintenances POST}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/maintenances}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{POST}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)} 		& Zawartość     & \textit{Id} utworzonego ubezpieczenia
-			\\ \cline{2-3}                  & Opis         	& Naprawa została utworzona
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/maintenances/id PUT}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/maintenances/id}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{PUT}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			200 (OK) 		                        & Opis      	& Naprawa została zauktualizowana
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	    & Zawartość     & \lstinputlisting[language=json,nolol=true]{source/maintenances-put-404.json}
-			\\ \cline{2-3}                          & Opis          & Naprawa o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/maintenances/id DELETE}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/maintenances/id}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{DELETE}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			200 (OK)			                & Opis         	& Naprawa została usunięta
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	& Zawartość     & \lstinputlisting[language=json,nolol=true]{source/maintenances-delete-404.json}
-			\\ \cline{2-3}                      & Opis          & Naprawa o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	%----------------------------------------------------------------------------------------
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/bookings/vehicle/id}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                         & \multicolumn{2}{l|}{api/bookings}
-			\\ \hline
-			Wymagane role               & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                      & \multicolumn{2}{l|}{GET}
-			\\ \hline
-			\multicolumn{3}{|c|}{ Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)}   & Zawartość         & Tablica \textit{JSON}
-			\\ \cline{2-3}              & Opis         	    & Lista rezerwacji
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/bookings/id GET}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                         & \multicolumn{2}{l|}{api/bookings/id}
-			\\ \hline
-			Wymagane role               & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                      & \multicolumn{2}{l|}{GET}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)} 	        & Zawartość   	& \textit{JSON}
-			\\ \cline{2-3}                      & Opis         	& Rezerwacja o żądanym \textit{id}
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	& Zawartość     & \lstinputlisting[language=json,nolol=true]{source/booking-get-by-id-404.json}
-			\\ \cline{2-3}                      & Opis          & Rezerwacja o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/bookings POST}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/bookings}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Manager, Administrator}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{POST}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			\multirow{2}{*}{200 (OK)} 		& Zawartość     & \textit{Id} utworzonej rezerwacji
-			\\ \cline{2-3}                  & Opis         	& Rezerwacja została utworzona
-			\\ \hline
-			\multirow{2}{*}{400 (Bad Request)} 	& Zawartość     &  \lstinputlisting[language=json,nolol=true]{source/booking-post-400-1.json}  
-			\\ \cline{2-3}                      & Opis          & Pracownik powiązany z rezerwacją nie istnieje      						    
-			\\ \hline
-			\multirow{2}{*}{400 (Bad Request)} 	& Zawartość     &  \lstinputlisting[language=json,nolol=true]{source/booking-post-400-2.json}  
-			\\ \cline{2-3}                      & Opis          & Pojazd powiązany z rezerwacją nie istnieje      								
-			\\ \hline      
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/bookings/id PUT}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/bookings/id}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{PUT}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			200 (OK) 		                        & Opis      	& Rezerwacja została zauktualizowana
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	    & Zawartość     & \lstinputlisting[language=json,nolol=true]{source/booking-put-404.json}
-			\\ \cline{2-3}                          & Opis          & Rezerwacja o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Endpoint \textit{api/bookings/id DELETE}.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{3}{|c|}{Opis}
-			\\ \hline
-			URL                       & \multicolumn{2}{l|}{api/bookings/id}
-			\\ \hline
-			Wymagane role             & \multicolumn{2}{l|}{Employee}
-			\\ \hline
-			Metoda                    & \multicolumn{2}{l|}{DELETE}
-			\\ \hline
-			\multicolumn{3}{|c|}{Odpowiedzi}
-			\\ \hline
-			200 (OK)			                & Opis         	& Rezerwacja została usunięta
-			\\ \hline
-			\multirow{2}{*}{404 (Not Found)} 	& Zawartość     & \lstinputlisting[language=json,nolol=true]{source/booking-delete-404.json}
-			\\ \cline{2-3}                      & Opis          & Rezerwacja o żądanym \textit{id} nie istnieje
-			\\ \hline
-		\end{tabularx}
-	\end{table}
-	%----------------------------------------------------------------------------------------
-	
-	
-	\subsection{Filtrowanie wyników żądań GET}
-	Interfejs programistyczny umożliwia filtrowanie wyników żądań \textit{GET} poprzez warunki przesyłane w \textit{URL}.
-	
-	Mechanizm filtrowania jest wydajny nawet dla skomplikowanych żądań - implementacja korzysta z interfejsu \textit{IQueryable}, pozwalającego na dodawanie wielu warunków które zostaną wykonane wyłącznie raz. W trakcie wywołania funkcji \textit{ToListAsync()}, warunki dodane do \textit{IQueryable} zostaną przetłumaczone do pojedynczego zapytania \textit{SQL} które zostanie wykonane w bazie danych po czym zwróci listę obiektów.
-	
-	\lstinputlisting[language=C,frame=single,caption=Logika filtrującą dla modeli pojazdów.]{source/iqueryable-filter.cs}
-	
-	\begin{table}[H]
-		\caption{Filtr modeli pojazdów (\textit{api/vehicle-models GET}).}
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline                                       							
-			\multicolumn{2}{|c|}{\textbf{Filtr modeli pojazdów}}  							        \\ \hline
-			URL                 & api/vehicle-models     							             	\\ \hline
-			\multicolumn{2}{|c|}{\textbf{Warunki}}     												\\ \hline
-			\textbf{Nazwa}      & \textbf{Opis}              										\\ \hline
-			Manufacturer        & Producent         												\\ \hline
-			\multicolumn{2}{|c|}{\textbf{Przykładowy filtr}}										\\ \hline
-			URL                 & api/vehicle-models?manufacturer=Ford								\\ \hline
-			\multicolumn{2}{|l|}{API zwróci wyłącznie modele samochodów wyprodukowane przez Forda}	\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Filtr pojazdów (\textit{api/vehicles GET}).}
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline                                       							
-			\multicolumn{2}{|c|}{\textbf{Filtr modeli pojazdów}}  							        	\\ \hline
-			URL                 & api/vehicle-models     							             		\\ \hline
-			\multicolumn{2}{|c|}{\textbf{Warunki}}     													\\ \hline
-			\textbf{Nazwa}      & \textbf{Opis}              											\\ \hline
-			Manufacturer        & Producent         													\\ \hline
-			VehicleModelId      & Id modelu	        													\\ \hline
-			LocationCode        & Id obecnej lokalizacji												\\ \hline
-			ChassisCode         & Kod karoserii 	  													\\ \hline
-			MinBookingDays      & Minimalna ilość dni w których pojazd jest dostępny					\\ \hline
-			Status              & Obecny status pojazdu         										\\ \hline										
-			\multicolumn{2}{|c|}{\textbf{Przykładowy filtr}}											\\ \hline
-			URL                 & api/vehicles?Manufacturer=Ford\&LocationCode=KRK-1\&MinBookingDays=30	\\ \hline
-			\multicolumn{2}{|X|}{API zwróci wyłącznie samochodowy wyprodukowane przez Forda, przebywające w lokalizacji KRK-1 oraz dostępne na co najmniej 30 dni}		\\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\caption{Filtr rezerwacji (\textit{api/bookings GET}).}
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline                                       							
-			\multicolumn{2}{|c|}{\textbf{Filtr rezerwacji}}							        		\\ \hline
-			URL                 & api/bookings     							             			\\ \hline
-			\multicolumn{2}{|c|}{\textbf{Warunki}}     												\\ \hline
-			\textbf{Nazwa}      & \textbf{Opis}              										\\ \hline
-			EmployeeId        	& Id pracownika który utworzył rezerwację 						    \\ \hline
-			EmployeeUserName	& Nazwa użytkownika który utworzył rezerwację						\\ \hline	
-			VehicleId	        & Id rezerwowanego pojazdu       									\\ \hline
-			Statuses        	& Dozwolone statusy rezerwacji         							    \\ \hline
-			FromDate       		& Data po której rozpoczęły się rezerwacji						    \\ \hline
-			ToDate 			    & Data przed którą zakończyły się rezerwacji						\\ \hline											
-			\multicolumn{2}{|c|}{\textbf{Przykładowy filtr}}										\\ \hline
-			URL                 & api/bookings?Statuses=Completed\&Statuses=Rejected\&Em-ployeeUserName=jkowalski \\ \hline
-			\multicolumn{2}{|X|}{API zwróci zakończone (\textit{Completed}) lub odrzucone (\textit{Rejected}) rezerwacji utworzone przez użytkownika jkowalski}	\\ \hline
-		\end{tabularx}
-	\end{table}
+	\caption{Endpoint \textit{api/vehicle-models GET}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                         & \multicolumn{2}{l|}{api/vehicle-models}
+		\\ \hline
+		\textbf{Wymagane role}               & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                      & \multicolumn{2}{l|}{GET}
+		\\ \hline
+		\multicolumn{3}{|c|}{ Odpowiedzi}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)}   & \textbf{Zawartość}         & Tablica \textit{JSON}
+		\\ \cline{2-3}              & \textbf{Opis}         	    & Lista modeli pojazdów
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/vehicle-models/manufacturers GET}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		
+		\\ \hline
+		\textbf{URL}                         & \multicolumn{2}{l|}{api/vehicle-models/manufacturers}
+		\\ \hline
+		\textbf{Wymagane role}               & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                      & \multicolumn{2}{l|}{GET}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)}   & \textbf{Zawartość}        & Tablica \textit{JSON}
+		\\ \cline{2-3}              & \textbf{Opis}         	   & Lista marek pojazdów
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/vehicle-models/id GET}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                         & \multicolumn{2}{l|}{api/vehicle-models/id}
+		\\ \hline
+		\textbf{Wymagane role}               & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                      & \multicolumn{2}{l|}{GET}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)} 	        & \textbf{Zawartość}   	& \textit{JSON}
+		\\ \cline{2-3}                      & \textbf{Opis}         	& Model pojazdu o żądanym \textit{id}
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	& \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/vehicle-models-get-by-id-404.json}
+		\\ \cline{2-3}                      & \textbf{Opis}          & Model pojazdu o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/vehicle-models POST}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/vehicle-models}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{POST}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)} 		& \textbf{Zawartość}     & \textit{Id} utworzonego modelu pojazdu
+		\\ \cline{2-3}                  & \textbf{Opis}         	& Model pojazdu został utworzony
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/vehicle-models/id PUT}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/vehicle-models/id}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Manager, Administrator}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{PUT}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		200 (OK) 		 & \textbf{Opis}      	& Model pojazdu został zaktualizowany
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	    & \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/vehicle-models-put-404.json}  
+		\\ \cline{2-3}                          & \textbf{Opis}          & Model pojazdu o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/vehicle-models/id DELETE}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/vehicle-models/id}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Manager, Administrator}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{DELETE}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		200 (OK)			                & \textbf{Opis}         	& Model pojazdu został usunięty
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	& \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/vehicle-models-delete-404.json}   	
+		\\ \cline{2-3}                      & \textbf{Opis}          & Model pojazdu o żądanym \textit{id} nie istnieje
+		\\ \hline
+		\multirow{2}{*}{400 (Bad Request)} 	& \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/vehicle-models-delete-400.json}   	
+		\\ \cline{2-3}                      & \textbf{Opis}          & System posiada egzemplarze modelu pojazdu o żądanym \textit{id}, nie może on zostać usunięty
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+%----------------------------------------------------------------------------------------
+\begin{table}[H]
+	\caption{Endpoint \textit{api/vehicles GET}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                         & \multicolumn{2}{l|}{api/vehicles}
+		\\ \hline
+		\textbf{Wymagane role}               & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                      & \multicolumn{2}{l|}{GET}
+		\\ \hline
+		\multicolumn{3}{|c|}{ Odpowiedzi}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)}   & \textbf{Zawartość}         & Tablica \textit{JSON}
+		\\ \cline{2-3}              & \textbf{Opis}         	    & Lista pojazdów
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/vehicles/id GET}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                         & \multicolumn{2}{l|}{api/vehicles/id}
+		\\ \hline
+		\textbf{Wymagane role}               & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                      & \multicolumn{2}{l|}{GET}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)} 	        & \textbf{Zawartość}   	& \textit{JSON}
+		\\ \cline{2-3}                      & \textbf{Opis}         	& Pojazd o żądanym \textit{id}
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	& \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/vehicles-get-by-id-404.json}
+		\\ \cline{2-3}                      & \textbf{Opis}          & Pojazd o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/vehicles POST}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/vehicles}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Manager, Administrator}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{POST}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)} 		& \textbf{Zawartość}     & \textit{Id} utworzonego pojazdu
+		\\ \cline{2-3}                  & \textbf{Opis}         	& Pojazd został utworzony
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/vehicles/id PUT}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/vehicles/id}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Manager, Administrator}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{PUT}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		200 (OK) 		                        & \textbf{Opis}      	& Pojazd zostało zaktualizowane
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	    & \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/vehicles-put-404.json}  
+		\\ \cline{2-3}                          & \textbf{Opis}          & Pojazd o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/vehicles/id DELETE}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/vehicles/id}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Manager, Administrator}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{DELETE}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		200 (OK)			                & \textbf{Opis}         	& Pojazd został usunięty
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	& \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/vehicles-delete-404.json}   	
+		\\ \cline{2-3}                      & \textbf{Opis}          & Pojazd o żądanym \textit{id} nie istnieje
+		\\ \hline
+		\multirow{2}{*}{400 (Bad Request)} 	& \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/vehicles-delete-400.json}   	
+		\\ \cline{2-3}                      & \textbf{Opis}          & System posiada rezerwacje przypisane do pojazdu o żądanym \textit{id}, nie może on zostać usunięty
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+%----------------------------------------------------------------------------------------
+\begin{table}[H]
+	\caption{Endpoint \textit{api/insurances/vehicle/id GET}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                         & \multicolumn{2}{l|}{api/insurances/vehicle/id}
+		\\ \hline
+		\textbf{Wymagane role}               & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                      & \multicolumn{2}{l|}{GET}
+		\\ \hline
+		\multicolumn{3}{|c|}{ Odpowiedzi}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)}   & \textbf{Zawartość}         & Tablica \textit{JSON}
+		\\ \cline{2-3}              & \textbf{Opis}         	    & Lista ubezpieczeń przypisanych do danego pojazdu
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/insurances/id GET}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                         & \multicolumn{2}{l|}{api/insurances/id}
+		\\ \hline
+		\textbf{Wymagane role}               & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                      & \multicolumn{2}{l|}{GET}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)} 	        & \textbf{Zawartość}   	& \textit{JSON}
+		\\ \cline{2-3}                      & \textbf{Opis}         	& Ubezpieczenie o żądanym \textit{id}
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	& \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/insurances-get-by-id-404.json}
+		\\ \cline{2-3}                      & \textbf{Opis}          & Ubezpieczenie o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/insurances POST}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/insurances}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Manager, Administrator}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{POST}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)} 		& \textbf{Zawartość}     & \textit{Id} utworzonego ubezpieczenia
+		\\ \cline{2-3}                  & \textbf{Opis}         	& Ubezpieczenie został utworzony
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/insurances/id PUT}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/insurances/id}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Manager, Administrator}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{PUT}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		200 (OK) 		                        & \textbf{Opis}      	& Ubezpieczenie zostało zaktualizowane
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	    & \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/insurances-put-404.json}
+		\\ \cline{2-3}                          & \textbf{Opis}          & Ubezpieczenie o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/insurances/id DELETE}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/insurances/id}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Manager, Administrator}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{DELETE}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		200 (OK)			                & \textbf{Opis}         	& Ubezpieczenie został usunięty
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	& \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/insurances-delete-404.json}
+		\\ \cline{2-3}                      & \textbf{Opis}          & Ubezpieczenie o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+%----------------------------------------------------------------------------------------
+\begin{table}[H]
+	\caption{Endpoint \textit{api/maintenances/vehicle/id GET}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                         & \multicolumn{2}{l|}{api/maintenances/vehicle/id}
+		\\ \hline
+		\textbf{Wymagane role}               & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                      & \multicolumn{2}{l|}{GET}
+		\\ \hline
+		\multicolumn{3}{|c|}{ Odpowiedzi}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)}   & \textbf{Zawartość}         & Tablica \textit{JSON}
+		\\ \cline{2-3}              & \textbf{Opis}         	    & Lista napraw przypisanych do danego pojazdu
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/maintenances/id GET}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                         & \multicolumn{2}{l|}{api/maintenances/id}
+		\\ \hline
+		\textbf{Wymagane role}               & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                      & \multicolumn{2}{l|}{GET}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)} 	        & \textbf{Zawartość}   	& \textit{JSON}
+		\\ \cline{2-3}                      & \textbf{Opis}         	& Naprawa o żądanym \textit{id}
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	& \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/maintenances-get-by-id-404.json}
+		\\ \cline{2-3}                      & \textbf{Opis}          & Naprawa o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/maintenances POST}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/maintenances}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Manager, Administrator}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{POST}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)} 		& \textbf{Zawartość}     & \textit{Id} utworzonego ubezpieczenia
+		\\ \cline{2-3}                  & \textbf{Opis}         	& Naprawa została utworzona
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/maintenances/id PUT}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/maintenances/id}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Manager, Administrator}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{PUT}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		200 (OK) 		                        & \textbf{Opis}      	& Naprawa została zauktualizowana
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	    & \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/maintenances-put-404.json}
+		\\ \cline{2-3}                          & \textbf{Opis}          & Naprawa o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/maintenances/id DELETE}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/maintenances/id}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Manager, Administrator}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{DELETE}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		200 (OK)			                & \textbf{Opis}         	& Naprawa została usunięta
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	& \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/maintenances-delete-404.json}
+		\\ \cline{2-3}                      & \textbf{Opis}          & Naprawa o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+%----------------------------------------------------------------------------------------
+\begin{table}[H]
+	\caption{Endpoint \textit{api/bookings GET}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                         & \multicolumn{2}{l|}{api/bookings}
+		\\ \hline
+		\textbf{Wymagane role}               & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                      & \multicolumn{2}{l|}{GET}
+		\\ \hline
+		\multicolumn{3}{|c|}{ Odpowiedzi}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)}   & \textbf{Zawartość}         & Tablica \textit{JSON}
+		\\ \cline{2-3}              & \textbf{Opis}         	    & Lista rezerwacji
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/bookings/id GET}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                         & \multicolumn{2}{l|}{api/bookings/id}
+		\\ \hline
+		\textbf{Wymagane role}               & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                      & \multicolumn{2}{l|}{GET}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)} 	        & \textbf{Zawartość}   	& \textit{JSON}
+		\\ \cline{2-3}                      & \textbf{Opis}         	& Rezerwacja o żądanym \textit{id}
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	& \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/booking-get-by-id-404.json}
+		\\ \cline{2-3}                      & \textbf{Opis}          & Rezerwacja o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/bookings POST}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/bookings}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{POST}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		\multirow{2}{*}{200 (OK)} 		& \textbf{Zawartość}     & \textit{Id} utworzonej rezerwacji
+		\\ \cline{2-3}                  & \textbf{Opis}         	& Rezerwacja została utworzona
+		\\ \hline
+		\multirow{2}{*}{400 (Bad Request)} 	& \textbf{Zawartość}     &  \lstinputlisting[language=json,nolol=true]{source/booking-post-400-1.json}  
+		\\ \cline{2-3}                      & \textbf{Opis}          & Pracownik powiązany z rezerwacją nie istnieje      						    
+		\\ \hline
+		\multirow{2}{*}{400 (Bad Request)} 	& \textbf{Zawartość}     &  \lstinputlisting[language=json,nolol=true]{source/booking-post-400-2.json}  
+		\\ \cline{2-3}                      & \textbf{Opis}          & Pojazd powiązany z rezerwacją nie istnieje      								
+		\\ \hline      
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/bookings/id PUT}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/bookings/id}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{PUT}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		200 (OK) 		                        & \textbf{Opis}      	& Rezerwacja została zauktualizowana
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	    & \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/booking-put-404.json}
+		\\ \cline{2-3}                          & \textbf{Opis}          & Rezerwacja o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+	\caption{Endpoint \textit{api/bookings/id DELETE}.}
+	\begin{tabularx}{\textwidth}{|l|l|X|}
+		\hline
+		\multicolumn{3}{|c|}{\textbf{\textbf{Opis}}}
+		\\ \hline
+		\textbf{URL}                       & \multicolumn{2}{l|}{api/bookings/id}
+		\\ \hline
+		\textbf{Wymagane role}             & \multicolumn{2}{l|}{Employee}
+		\\ \hline
+		\textbf{Metoda}                    & \multicolumn{2}{l|}{DELETE}
+		\\ \hline
+		\multicolumn{3}{|c|}{\textbf{Odpowiedzi}}
+		\\ \hline
+		200 (OK)			                & \textbf{Opis}         	& Rezerwacja została usunięta
+		\\ \hline
+		\multirow{2}{*}{404 (Not Found)} 	& \textbf{Zawartość}     & \lstinputlisting[language=json,nolol=true]{source/booking-delete-404.json}
+		\\ \cline{2-3}                      & \textbf{Opis}          & Rezerwacja o żądanym \textit{id} nie istnieje
+		\\ \hline
+	\end{tabularx}
+\end{table}
+%----------------------------------------------------------------------------------------
+
 	
 	\newpage
 	\subsection{Eksport statystyk floty}
@@ -1076,52 +1069,44 @@
 		\item \textbf{widok szczegółowy} (\textit{detail}) który zawiera komplet informacji o danym obiekcie i umożliwia jego edycję.
 		\item \textbf{widok listy} (\textit{list}) zawierający małą ilość informacji wymaganych do identyfikacji danego obiektu oraz możliwość przejścia do \textbf{widoku szczegółowego}. Widoki tego typu są punktem wejściowym do bardziej zaawansowanej logiki interfejsu, dostępnym bezpośrednio za pomocą paska nawigacji (\textit{navbar}).
 	\end{itemize}
-	\begin{figure}[h]
+	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{images/angular_views.png}
 		\caption{Widoki interfejsu użytkownika.}
 		\small 
 		Widoki zielone dostępne są dla każdego użytkownika; widoki pomarańczowe wyłącznie dla użytkownika o odpowiednich uprawnieniach. Widok \textit{booking-detail} jest specjalnym przypadkiem oferującym różne możliwości w zależności od uprawnień użytkownika.
 	\end{figure}
-	\subsection{Wygląd i funkcjonalność}
-	Interfejs użytkownika jest schludny i prosty
+
+	\section{Walidacja danych}
+	Dane wprowadzane przez użytkownika są sprawdzane pod kątem poprawności.W przypadku pól tekstowych walidacja najczęściej weryfikuje obecność jakiegokolwiek tekstu; pola które powinny zawierać liczby są weryfikowane przy użyciu wyrażeń regularnych.
 	
+	\lstinputlisting[frame=single,caption=Przykładowy walidator używający wyrażenia regularnego.]{source/validator.js}
 	
-	\newpage
-	\section{Bezpieczeństwo}
-	Dostęp do systemu został zabezpieczony przy użyciu standardu \textit{JSON Web Token (JWT)} \cite{jwt}. Autoryzacja \textit{JWT} bazuje na generowaniu podpisanych (przez co odpornych na sfałszowanie) tokenów po stronie interfejsu programistycznego, a następnie wysyłaniu ich do aplikacji klienta. \textit{API} wcześniej wygenerowanego wymaga tokena w nagłówku \textit{HTTP} dla każdego żądania wysłanego przez interfejs użytkownika; żądania z niepoprawnym tokenem zostają odrzucone.
-	
-	Schemat działania autoryzacji \textit{JWT} w opisywanym projekcie wygląda następująco:
-	\begin{enumerate}
-		\item Użytkownik loguje się przez interfejs użytkownika, podając nazwę użytkownika oraz hasło
-		\item Interfejs programistyczny weryfikuje dane logowania
-		\item W przypadku prawidłowego hasła utworzony zostaje token \textit{JWT} zawierający:
-		\subitem Informacje o wydającym token
-		\subitem Informacje o użytkowniku: jego identyfikator (nazwa użytkownika) oraz role
-		\item Utworzony token zostaje zaszyfrowany (uniemożliwiając jego sfałszowanie) i zwrócony	
-		\item Odebrany token zostaje umieszczony w pamięci przeglądarki internetowej użytkownika
-	\end{enumerate}
-	Interfejs programistyczny weryfikuje poprawność tokena dla każdego żądania \textit{HTTP} z wyjątkiem tych związanych z procesem autoryzacji użytkownika; jeżeli token jest niepoprawny lub zbyt stary (wydany więcej niż 2 godziny przed weryfikacją), żądanie jest odrzucone.
-	
-	Przechowywanie ról w tokenie \textit{JWT} pozwala na autoryzację z uwzględnieniem uprawnień użytkownika, przykładowo, ograniczając dostęp do poufnych informacji lub modyfikacji przechowywanych danych przez osoby nieuprawnione.
-	
-	\begin{figure}[h]
+	W przypadku wykrycia błędnych danych, pod polem zawierającym niepoprawne dane pojawia się opis błędy oraz przycisk zatwierdzający zmiany zostaje zablokowany.
+	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.54]{images/jwt.png}
-		\caption{Przykładowy token \textit{JWT}.}
-		\small 
-		Token został wygenerowany przy użyciu narzędzia ze strony \textit{https://jwt.io/}.
+		\includegraphics[scale=0.7]{images/insurance_validation_errors.png}
+		\caption{Widok z polami zawierającymi błędne wartości.}
 	\end{figure}
+
+	\newpage
+	\section{Stopka audytowa}
+	Każdy widok szczegółowy korzysta z komponentu \textit{AuditFooter} wyświetlającego nazwę użytkownika który utworzył/modyfikował obiekt oraz datę kiedy akcja została wykonana.
 	
-	\begin{table}[H]
-		\caption{Domyślna konfiguracja relacji ról do poziomu uprawnień.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{1}{|c|}{\textbf{Aktor}} & \multicolumn{1}{c|}{\textbf{Poziom dostępu}} & \multicolumn{1}{c|}{\textbf{Wymagane role}} \\ \hline
-			Kierowca                             & Podstawowy                                   & Employee                                    \\ \hline
-			Kierownik                            & Pełny                                        & Manager lub Administrator                   \\ \hline
-		\end{tabularx}
-	\end{table}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{images/insurance_footer.png}
+		\caption{Stopka audytowa.}
+	\end{figure}
+
+	\section{Dialogi}
+	Każda akcja która niesie za sobą znaczne (np. akceptacja rezerwacji) lub nieodwracalne (np. usunięcie obiektu) musi zostać zatwierdzona przez użytkownika w dialu który pojawia się po naciśnięciu przycisku zapisu/usuwania.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{images/insurance_confirmation.png}
+		\caption{Przykładowy dialog.}
+	\end{figure}
 	
 	%\section{Konteneryzacja}
 	%----------------------------------------------------------------------------------------
@@ -1145,6 +1130,7 @@
 	
 	\lstinputlisting[language=C,frame=single,caption=Przykład testu jednostkowego zgodnego z konwencją \textit{AAA}.]{source/tests-unit.cs}
 	
+	\newpage
 	\section{Testy systemowe}
 	Najczęściej stosowanym rodzajem testów były testy systemowe przy użyciu narzędzia \textit{Postman} pozwalającego na wygodne tworzenie i wysyłanie skomplikowanych żądań \textit{HTTP}. \textit{Postman} pozwala również na zapisywanie oraz organizowanie żądań co znacznie przyśpiesza proces testowania.
 	\begin{figure}[H]
@@ -1166,11 +1152,11 @@
 	\section{Możliwości rozwoju}
 	System może być rozwinięty na wiele sposobów; kilka z nich:
 	\begin{itemize}
-		\item automatyczna generacja raportów o kosztach (np. co miesiąc) oraz wprowadzenie serwisu wysyłającego raport e-mailem do użytkowników 
-		\item wyświetlanie statystyk w formie graficznej w interfejsie użytkownika
-		\item przystosowanie aplikacji to użycia na urządzeniach mobilnych
-		\item udostępnienie interfejsu programistycznego innym systemom - przykładowo system zbierający koszty generowane przez dany dział w firmie mógłby sprawdzać wydatki pracownika wiążące się z rezerwowaniem pojazdów
-		\item konteneryzacja aplikacji
+		\item automatyczna generacja raportów o kosztach (np. co miesiąc) oraz wprowadzenie serwisu wysyłającego raport e-mailem do użytkowników.
+		\item wyświetlanie statystyk w formie graficznej w interfejsie użytkownika.
+		\item przystosowanie aplikacji to użycia na urządzeniach mobilnych.
+		\item udostępnienie interfejsu programistycznego innym systemom - przykładowo system zbierający koszty generowane przez dany dział w firmie mógłby sprawdzać wydatki pracownika wiążące się z rezerwowaniem pojazdów.
+		\item konteneryzacja aplikacji.
 		\item przechowywanie pełnej historii edycji oraz generowanie raportów audytowych w formacie zgodnym z \textit{Microsoft Excel}.
 	\end{itemize}
 	
@@ -1178,110 +1164,7 @@
 	%----------------------------------------------------------------------------------------
 	%	SECTION OLD
 	%----------------------------------------------------------------------------------------
-	\chapter{Instrukcja użytkownika}
-	\section{Ekran logowania}
-	Jedyny widok dostępny dla niezalogowanego użytkownika. Aplikacja uniemożliwia dostęp do wszystkich innych widoków osobom niezalogowanym; przy ręcznej zmianie adresu w przeglądarce nieupoważniony użytkownik zostanie przekierowany do tego widoku.
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{images/views/dashboard-login.png}
-		\caption{Widok logowania (dashboard-login).} 		
-	\end{figure}
 	
-	\section{Ekran wylogowywania}
-	Podstawowy widok zalogowanego użytkownika z informacjami o użytkowniku i możliwością wylogowania się.
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{images/views/dashboard-logout.png}
-		\caption{Widok zalogowanego użytkownika (dashboard-user-details).} 
-	\end{figure}
-	
-	\section{Dostępne pojazdy}
-	Lista dostępnych pojazdów która może być dodatkowo filtrowana. Po kliknięciu na jakikolwiek pojazd, jego dokładne informacje zostają wczytane i wyświetlone w oknie po prawej stronie; użytkownik może utworzyć nową rezerwację używając przycisku \textit{Book}.
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{images/views/vehicle-booking-2.png}
-		\caption{Widok listy dostępnych pojazdów (vehicle-list-booking).}
-	\end{figure}
-	
-	\newpage
-	\section{Historia rezerwacji}
-	Widok zawiera rezerwacji utworzone tylko i wyłącznie przez zalogowanego użytkownika; użytkownik bez praw kierownika nie jest w stanie przeglądać cudzych rezerwacji. Kliknięcie w rekord otwiera szczegółowy widok rezerwacji.
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{images/views/booking-list-manage.png}
-		\caption{Widok listy historii rezerwacji (booking-personal).}	
-	\end{figure}
-	
-	\newpage
-	\section{Szczegóły rezerwacji}
-	W tym widoku można zarówno utworzyć nowe rezerwację, jak i edytować już istniejące.
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{images/views/booking-detail.png}
-		\caption{Widok szczegółowy rezerwacji (booking-details).} 		
-	\end{figure}
-
-	\newpage	
-	\section{Szczegóły rezerwacji w trybie kierownika}
-	Jeżeli zalogowany użytkownik posiada pełne uprawnienia i przegląda cudze rezerwacji, po stronie prawej zostają wyświetlone dodatkowe informacje o użytkowniku który utworzył rezerwację.
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{images/views/booking-detail-manager.png}
-		\caption{Widok szczegółowy rezerwacji w trybie kierownika (booking-details).}		
-	\end{figure}
-	
-	\newpage
-	\section{Wszystkie pojazdy}
-	Widok pozwala na przeglądanie wszystkich pojazdów śledzonych w systemie oraz na filtrowanie. Kliknięcie w rekord przechodzi do widoku szczegółów wybranego pojazdu.
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{images/views/vehicle-list.png}
-		\caption{Widok listy pojazdów (vehicle-list).}
-	\end{figure}
-	
-	\newpage
-	\section{Szczegóły pojazdu}	
-	\begin{figure}[H]
-		Widok zawierający wszystkie informacje na temat pojazdu wraz z listą ubezpieczeń i napraw, które mogą być dodawane lub edytowane po wybraniu poprzez kliknięcie. Użytkownik może wyświetlić wszystkie rezerwacji danego pojazdu lub jego dokładną specyfikacje techniczną po kliknięciu na jeden z dwóch odnośników na dole okna.
-		\centering
-		\includegraphics[width=\textwidth]{images/views/vehicle-detail.png}
-		\caption{Widok szczegółowy pojazdu (vehicle-details).}		
-	\end{figure}
-	
-	\newpage
-	\section{Szczegóły ubezpieczenia}
-	Widok pozwalający na edycję ubezpieczenia.
-	\begin{figure}[H]
-		\centering
-		\includegraphics[scale=0.32]{images/views/insurance-detail.png}
-		\caption{Widok szczegółowy ubezpieczenia (insurance-details).}		
-	\end{figure}
-	
-	\section{Szczegóły naprawy}
-	Widok pozwalający na edycję zdarzenia naprawy.
-	\begin{figure}[H]
-		\centering
-		\includegraphics[scale=0.32]{images/views/maintenance-detail.png}
-		\caption{Widok szczegółowy naprawy (maintenance-details).}
-	\end{figure}
-
-	\newpage	
-	\section{Wszystkie modele pojazdów}	
-	Widok umożliwia przeglądanie modeli pojazdów. Kliknięcie w rekord przechodzi do widoku szczegółowego.
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{images/views/vehicle-model-list.png}
-		\caption{Widok listy modeli pojazdów (vehicle-model-list).}
-	\end{figure}
-	
-	\newpage
-	\section{Szczegóły modelu pojazdu}
-	Widok pozwalający na dodawanie oraz edycje modeli pojazdów. Użytkownik może również wyświetlić wszystkie pojazdy tego typu lub wprowadzić informację o nowym egzemplarzu za pomocą odnośników na dole okna.
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{images/views/vehicle-model-detail.png}
-		\caption{Widok szczegółowy modelu pojazdu (vehicle-model-details).}
-	\end{figure}
 	%----------------------------------------------------------------------------------------
 	%	SECTION OLD
 	%----------------------------------------------------------------------------------------
@@ -1317,12 +1200,116 @@
 	\addcontentsline{toc}{chapter}{Literatura}
 	\bibliography{bibliography}
 	
-	%opcjonalnie może się tu pojawić spis rysunków i tabel
-	\newpage
-	\listoffigures
-	\newpage
-	\listoftables
-	\newpage
-	\lstlistoflistings
+	\newpage 
+	
+	\begin{appendices}
+		
+		\chapter{Instrukcja użytkownika}
+		\section{Ekran logowania}
+		Jedyny widok dostępny dla niezalogowanego użytkownika. Aplikacja uniemożliwia dostęp do wszystkich innych widoków osobom niezalogowanym; przy ręcznej zmianie adresu w przeglądarce nieupoważniony użytkownik zostanie przekierowany do tego widoku.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{images/views/dashboard-login.png}
+			\caption{Widok logowania (dashboard-login).} 		
+		\end{figure}
+		
+		\section{Ekran wylogowywania}
+		Podstawowy widok zalogowanego użytkownika z informacjami o użytkowniku i możliwością wylogowania się.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{images/views/dashboard-logout.png}
+			\caption{Widok zalogowanego użytkownika (dashboard-user-details).} 
+		\end{figure}
+		
+		\section{Dostępne pojazdy}
+		Lista dostępnych pojazdów która może być dodatkowo filtrowana. Po kliknięciu na jakikolwiek pojazd, jego dokładne informacje zostają wczytane i wyświetlone w oknie po prawej stronie; użytkownik może utworzyć nową rezerwację używając przycisku \textit{Book}.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{images/views/vehicle-booking-2.png}
+			\caption{Widok listy dostępnych pojazdów (vehicle-list-booking).}
+		\end{figure}
+		
+		\newpage
+		\section{Historia rezerwacji}
+		Widok zawiera rezerwacje utworzone tylko i wyłącznie przez zalogowanego użytkownika; użytkownik bez praw kierownika nie jest w stanie przeglądać cudzych rezerwacji. Kliknięcie w rekord otwiera szczegółowy widok rezerwacji.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{images/views/booking-list-manage.png}
+			\caption{Widok listy historii rezerwacji (booking-personal).}	
+		\end{figure}
+		
+		\newpage
+		\section{Szczegóły rezerwacji}
+		W tym widoku można zarówno utworzyć nowe rezerwację, jak i edytować już istniejące.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{images/views/booking-detail.png}
+			\caption{Widok szczegółowy rezerwacji (booking-details).} 		
+		\end{figure}
+		
+		\newpage	
+		\section{Szczegóły rezerwacji w trybie kierownika}
+		Jeżeli zalogowany użytkownik posiada pełne uprawnienia i przegląda cudze rezerwacji, po stronie prawej zostają wyświetlone dodatkowe informacje o użytkowniku który utworzył rezerwację.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{images/views/booking-detail-manager.png}
+			\caption{Widok szczegółowy rezerwacji w trybie kierownika (booking-details).}		
+		\end{figure}
+		
+		\newpage
+		\section{Wszystkie pojazdy}
+		Widok pozwala na przeglądanie wszystkich pojazdów. Lista może być filtrowana po numerze karoserii, kodzie obecnej lokalizacji oraz statusie.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{images/views/vehicle-list.png}
+			\caption{Widok listy pojazdów (vehicle-list).}
+		\end{figure}
+		
+		\newpage
+		\section{Szczegóły pojazdu}	
+		\begin{figure}[H]
+			Widok zawierający wszystkie informacje na temat pojazdu wraz z listą ubezpieczeń i napraw, które mogą być dodawane lub edytowane. Użytkownik może wyświetlić wszystkie rezerwacje danego pojazdu lub jego dokładną specyfikacje techniczną po kliknięciu na odpowiedni odnośnik na dole okna.
+			\centering
+			\includegraphics[width=\textwidth]{images/views/vehicle-detail.png}
+			\caption{Widok szczegółowy pojazdu (vehicle-details).}		
+		\end{figure}
+		
+		\newpage
+		\section{Szczegóły ubezpieczenia}
+		Widok pozwalający na utworzenie lub modyfikację ubezpieczenia.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.32]{images/views/insurance-detail.png}
+			\caption{Widok szczegółowy ubezpieczenia (insurance-details).}		
+		\end{figure}
+		
+		\section{Szczegóły naprawy}
+		Widok pozwalający na utworzenie lub modyfikację zdarzenia serwisowego.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.32]{images/views/maintenance-detail.png}
+			\caption{Widok szczegółowy naprawy (maintenance-details).}
+		\end{figure}
+		
+		\newpage	
+		\section{Wszystkie modele pojazdów}	
+		Widok zawiera listę modeli pojazdów; lista może być filtrowana po nazwie producenta.
+		
+		Pod listą znajduje się przycisk umożliwiający wprowadzenie nowego pojazdu.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{images/views/vehicle-model-list.png}
+			\caption{Widok listy modeli pojazdów (vehicle-model-list).}
+		\end{figure}
+		
+		\newpage
+		\section{Szczegóły modelu pojazdu}
+		Widok pozwala na dodawanie oraz edycje modeli pojazdów. Za pomocą odnośników na dole strony można wyszukać wszystkie pojazdy danego rodzaju oraz wprowadzić nowy egzemplarz.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{images/views/vehicle-model-detail.png}
+			\caption{Widok szczegółowy modelu pojazdu (vehicle-model-details).}
+		\end{figure}
+	\end{appendices}
 \end{document}
 

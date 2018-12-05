@@ -15,5 +15,4 @@ public class Vehicle
     public int Id { get; set; }
 
     public virtual ICollection<Booking> Bookings { get; set; }
-
 }

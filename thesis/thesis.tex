@@ -33,6 +33,8 @@
 \definecolor{delim}{RGB}{20,105,176}
 \colorlet{numb}{magenta!60!black}
 
+\renewcommand\bibname{Literatura}
+\renewcommand\refname{Literatura}
 \renewcommand\lstlistingname{Listing}
 \renewcommand\lstlistlistingname{Listingi}
 
@@ -52,7 +54,7 @@
 \engtitle{A web application supporting cars fleet management}
 \author{Jan Pajdak}
 \supervisor{dr inż. Jarosław Mierzwa, K-9}
-\guardian{dr hab. inż. Olgierd Unold Prof. nadzw. PWr, K-9}
+%\guardian{dr hab. inż. Olgierd Unold Prof. nadzw. PWr, K-9}
 \field{Informatyka (INF)}
 \specialisation{Inżynieria systemów informatycznych (INS)}
 
@@ -94,8 +96,14 @@
 	%----------------------------------------------------------------------------------------
 	\newpage
 	\chapter{Istniejące rozwiązania}
-	Jednymi z popularniejszych rozwiązań obecnych na rynku są \textit{Fleetly} oraz \textit{Vinity Fleet Manager}. Sposób działania \textit{Fleetly} jest bliski działaniu systemu który został stworzony w ramach projektu, skupia się on jednak zanadto na aspekcie wypożyczalni i pomija funkcjonalności przydatne w prowadzeniu firmy niezwiązanej z wypożyczaniem samochodów. \textit{Vinity Fleet Manager} posiada przestarzały interfejs, mały nacisk na kontrolę dostępu do pojazdów i system śledzenia towarów. 
+	Jednymi z popularniejszych rozwiązań obecnych na rynku są \textit{Fleetly} (\textit{https://www.fleetly.co/}) oraz \textit{Vinitysoft Fleet Manager} (\textit{https://www.vinitysoft.com/}). Sposób działania \textit{Fleetly} jest bliski działaniu systemu który został stworzony w ramach projektu, skupia się on jednak zanadto na aspekcie wypożyczalni i pomija funkcjonalności przydatne w prowadzeniu firmy niezwiązanej z wypożyczaniem samochodów. Dodatkowym problemem \textit{Fleetly} jest przechowywanie danych w chmurze — wiele firm preferuje posiadanie własnych systemów ze względów bezpieczeństwa danych.  \textit{Vinitysoft Fleet Manager} kładzie mały nacisk na kontrolę dostępu do pojazdów i system śledzenia towarów; jest to system przeznaczony dla firm których procesy główne opierają się na wykorzystywaniu samochodów. Kolejnym problemem tego systemu jest przestarzały i mało intuicyjny interfejs użytkownika.
 	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/vinitysoft.png}
+		\caption{Vinitysoft Fleet Management Software 4.0.}
+	\end{figure}
+
 	Oba wymienione systemy nie oferują integracji z istniejącymi zasobami firmy oraz są drogie w utrzymaniu ze względu na koszt licencji.
 	%----------------------------------------------------------------------------------------
 	%	SECTION 3
@@ -271,20 +279,32 @@
 	\newpage
 	\chapter{Zastosowane technologie i narzędzia}
 	\section{Zastosowane technologie}
-	Interfejs użytkownika wykorzystuje platformę \textit{Angular 7}. Podstawowymi elementami w \textit{Angular} są komponenty \cite{angular-components}, każdy z nich złożony z: pliku klasy \textit{TypeScript} zawierającej logikę, wzorca \textit{htm} opisującego wygląd widoku oraz opcjonalnego stylu \textit{css}; w przypadku jego braku styl brany jest z komponentu-rodzica. Warto zwrócić uwagę na język programowania wykorzystywany przez platformę \textit{Angular} — \textit{TypeScript} \cite{msdn-ts}, będący rozszerzeniem języka \textit{JavaScript}. \textit{TypeScript} dodaje silniejsze typowanie i kładzie większy nacisk na programowanie obiektowe, jednocześnie pozostając w pełni kompatybilnym z \textit{JavaScript}, do którego jest kompilowany i  następnie uruchamiany jest w przeglądarce. Proces kompilacji pozwala na usunięcie wielu błędów, które w przypadku \textit{JavaScript} zostałyby zauważone dopiero po uruchomieniu aplikacji.
-	
+	\subsection{Interfejs użytkownika}
+	Interfejs użytkownika wykorzystuje platformę \textit{Angular 7}. Podstawowymi elementami w \textit{Angular} są komponenty \cite{angular-components}, każdy z nich złożony z: pliku klasy \textit{TypeScript} zawierającej logikę, wzorca \textit{htm} opisującego wygląd widoku oraz opcjonalnego stylu \textit{css}; w przypadku jego braku styl brany jest z komponentu-rodzica. Warto zwrócić uwagę na język programowania wykorzystywany przez platformę \textit{Angular} — \textit{TypeScript} \cite{msdn-ts}, będący rozszerzeniem języka \textit{JavaScript}. \textit{TypeScript} dodaje silniejsze typowanie i kładzie większy nacisk na programowanie obiektowe, jednocześnie pozostając w pełni kompatybilnym z \textit{JavaScript}, do którego jest kompilowany. Proces kompilacji pozwala na usunięcie wielu błędów, które w przypadku \textit{JavaScript} zostałyby zauważone dopiero po uruchomieniu aplikacji.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/ts-to-js.png}
+		\caption{Przykład kompilacji kodu TypeScript do JavaScript. (\textit{http://www.typescriptlang.org})}
+	\end{figure}
 	Jednym z ważniejszych komponentów aplikacji jest \textit{Bootstrap} - framework interfejsu użytkownika pozwalający w prosty sposób tworzyć estetyczne strony internetowe. Dodatkowo, w projekcie wykorzystano motywy \textit{Bootswatch}.
 	
+	\subsection{Interfejs programistyczny}
 	Interfejs programistyczny oparty został na technologii \textit{ASP.NET Core 2.1} — jest to nowoczesna platforma oferująca działanie na wielu systemach operacyjnych oraz większa wydajność względem starszych rozwiązań firmy Microsoft. Wykorzystany język programowania to obiektowy, kompilowany i statycznie typowany \textit{C\# 7.3}. Bardzo ważnym elementem tej części projektu jest \textit{EF (Entity Framework) Core 2.1} \cite{msdn-efcore}, framework ORM (Object-Relational Mapping) pozwalający na konwersję miedzy tabelami bazy danych a klasami \textit{C\#}. Jedną z najważniejszych funkcjonalności \textit{EF Core} jest wykorzystana w niniejszym projekcie możliwość utworzenia bazy danych przy użyciu konwencji \textit{Code First}; baza danych jest automatycznie generowana na podstawie klas \text{C\#} znajdujących się w projekcie. \textit{EF Core} współpracuje z większością popularnych baz danych; na potrzeby tego projektu wykorzystano \textit{MS SQL Server}.
 	
 	\section{Wykorzystane narzędzia}
 	W trakcie realizacji projektu wykorzystane zostały narzędzia najczęściej używane przy wybranych technologiach.
-	
+	\subsection{Repozytorium}
 	Do zarządzania kodem został wykorzystany system kontroli wersji \textit{Git}. Lokalna kopia projektu była synchronizowana ze zdalnym, prywatnym repozytorium znajdującym się na serwisie \text{GitHub}. Wykorzystane rozwiązanie pozwala na łatwy dostęp do wcześniejszych wersji projektu oraz zmniejsza ryzyko utraty kodu, gdyż nie jest on przechowywany tylko w jednym miejscu.
+	\subsection{Edytory i środowiska programistyczne}
+	Ze względu na wykorzystane technologie, kod był rozwijany z pomocą narzędzi Microsoft, oferujących najlepsze wsparcie dla \textit{TypeScript} oraz \textit{C\#}. 
 	
-	Ze względu na wykorzystane technologie, kod był rozwijany z pomocą narzędzi Microsoft, oferujących najlepsze wsparcie dla \textit{TypeScript} oraz \textit{C\#}. Aplikacja klienta była rozwijana przy użyciu \textit{Visual Studio Code 1.28}, nowoczesnego edytora który sprawdza się znakomicie przy tworzeniu interfejsów użytkownika ze względu na zintegrowaną konsolę pozwalającą na łatwe zarządzanie paczkami oraz łatwość dostosowywania do potrzeb użytkownika. W trakcie pracy wykorzystano wiele rozszerzeń, najważniejsze z nich to \textit{TSLint}, linter wykrywający błędy w kodzie \textit{TypeScript} oraz \textit{GitLens} — rozszerzenie wspomagające zarządzanie repozytorium \textit{Git}. Do rozwoju serwisów wykorzystano \textit{Visual Studio 2017} pozwalające na łatwe debugowanie kodu oraz analizę aspektów takich jak wykorzystanie zasobów przez program. \textit{Visual Studio} zostało wzbogacone o narzędzie \textit{JetBrains ReSharper} automatycznie formatujące pliki projektu według zadanego wzorca, zapewniając spójność i przejrzystość kodu.
+	Aplikacja klienta była rozwijana przy użyciu \textit{Visual Studio Code 1.28}, nowoczesnego edytora który sprawdza się znakomicie przy tworzeniu interfejsów użytkownika ze względu na zintegrowaną konsolę pozwalającą na łatwe zarządzanie paczkami oraz łatwość dostosowywania do potrzeb użytkownika. W trakcie pracy wykorzystano wiele rozszerzeń, najważniejsze z nich to \textit{TSLint}, linter wykrywający błędy w kodzie \textit{TypeScript} oraz \textit{GitLens} — rozszerzenie wspomagające zarządzanie repozytorium \textit{Git}.
 	
+	 Do rozwoju interfejsu programistycznego wykorzystano \textit{Visual Studio 2017} pozwalające na łatwe debugowanie kodu oraz analizę aspektów takich jak wykorzystanie zasobów przez program. \textit{Visual Studio} zostało wzbogacone o narzędzie \textit{JetBrains ReSharper} automatycznie formatujące pliki projektu według zadanego wzorca, zapewniając spójność i przejrzystość kodu.
+	\subsection{Dodatkowe narzędzia}
 	Interfejs programistyczny testowany był przy pomocy \textit{Postman 6.5.2}, aplikacji pozwalającej na wysyłanie oraz zarządzanie zapytaniami HTTP.
+	
+	Do tworzenia diagramów wykorzystano program \textit{Visual Paradigm}
 	
 	%----------------------------------------------------------------------------------------
 	%	SECTION 5
@@ -294,9 +314,9 @@
 	\section{Architektura}
 	System został stworzony przy użyciu klasycznej architektury w której można wyodrębić trzy moduły - interfejs użytkownika (\textit{UI}), interfejs programistyczny (\textit{API}) oraz bazę danych (\textit{DB}). 
 	
-	\begin{figure}[h]
+	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.6]{images/architecture.png}
+		\includegraphics[scale=0.2]{images/architecture.png}
 		\caption{Uproszczony schemat architektury z wyodrębnionymi najważniejszymi elementami składowymi.}
 	\end{figure}
 	
@@ -324,32 +344,27 @@
 		\caption{Najważniejsze konwencje nazewnicze.}
 	\end{table}
 	
-	\section{Przypadki użycia}
-	
-	
-	
-	\begin{figure}[h]
+	\newpage
+	\section{Przypadki użycia}	
+	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.54]{images/jwt.png}
-		\caption{Przykładowy token \textit{JWT}.}
-		\small 
-		Token został wygenerowany przy użyciu narzędzia ze strony \textit{https://jwt.io/}.
+		\includegraphics[width=\textwidth]{images/use_case_1.png}
+		\caption{Diagram przypadków użycia.}
 	\end{figure}
 	
-	\begin{table}[H]
-		\caption{Domyślna konfiguracja relacji ról do poziomu uprawnień.}
-		\begin{tabularx}{\textwidth}{|l|l|X|}
-			\hline
-			\multicolumn{1}{|c|}{\textbf{Aktor}} & \multicolumn{1}{c|}{\textbf{Poziom dostępu}} & \multicolumn{1}{c|}{\textbf{Wymagane role}} \\ \hline
-			Kierowca                             & Podstawowy                                   & Employee                                    \\ \hline
-			Kierownik                            & Pełny                                        & Manager lub Administrator                   \\ \hline
-		\end{tabularx}
-	\end{table}
 	
 	\newpage
 	\section{Interfejs programistyczny}
 	\subsection{Logika biznesowa}
-	
+			
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/vs_class_diagram.png}
+		\caption{Diagram klas.}
+		\small 
+		Diagram klas został wygenerowany przy użyciu \textit{Visual Studio}.
+	\end{figure}
+
 	\begin{table}[H]
 		\caption{Klasy obiektów biznesowych.}
 		\begin{tabularx}{\textwidth}{|l|X|}
@@ -365,6 +380,7 @@
 			Location         & Informacje o budynkach należących do firmy korzystającej z systemu; mogą być pobierane z innej bazy danych \\ \hline
 		\end{tabularx}
 	\end{table}
+
 	Baza danych została automatycznie wygenerowana na podstawie klas opisujących świat biznesowy, przy użyciu \textit{EF Core}. 
 	
 	Do zdefiniowania relacji między tabelami należy użyć pól typu takiego samego jak \textit{PK} docelowej klasy\cite{msdn-efcore-relationships}. Używanie adnotacji nie jest wymagane, o ile pole zostało nazwane według standardowej konwencji \textit{EF Core} — \textit{NazwaKlasyId} (np. \textit{VehicleId}). Dodatkowo klasę można uzupełnić o pola nawigacyjne (\textit{navigation properties}), pozwalające na odnoszenie się do powiązanej klasy w łatwy sposób w kodzie programu, należy jednak pamiętać że domyślnie \textit{EF Core 2.1} nie wczytuje informacji o powiązanych obiektach; podczas komunikacji z bazą daną należy jawnie wywołać ładowanie powiązanych obiektów za pomocą metody \textit{LINQ} \text{Include()}.
@@ -375,27 +391,32 @@
 		\item $[$Required$]$: pole jest wymagane, nie może być puste (null)
 	\end{itemize}
 	
-	\lstinputlisting[language=C,frame=single,caption=Przykład definiowania relacji między klasami w code-first]{source/efcore-model.cs}
+	\lstinputlisting[language=C,frame=single,caption=Przykład definiowania relacji między klasami w code-first.]{source/efcore-model.cs}
 	
-	\lstinputlisting[language=C,frame=single,caption=Ładowanie powiązanych obiektów na przykładzie relacji rezerwacji do pojazdu]{source/efcore-loading-related.cs}
-	
-	\newpage 
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{images/vs_class_diagram.png}
-		\caption{Diagram klas.}
-		\small 
-		Diagram klas został wygenerowany przy użyciu \textit{Visual Studio}.
-	\end{figure}
-	
-	\newpage 
+	\lstinputlisting[language=C,frame=single,caption=Ładowanie powiązanych obiektów na przykładzie relacji rezerwacji do pojazdu.]{source/efcore-loading-related.cs}
+
 	Wszystkie klasy związane z logiką biznesową dziedziczą po klasie \textit{AuditableEntity} posiadającej pola przechowujące informacje (data i nazwa użytkownika) o utworzeniu i ostatniej edycji encji. Klasy związane z elementami generującymi koszty (pojazdami, modelami pojazdów, rezerwacjimi i użytkownikami) dodatkowo dziedziczą po klasie \textit{CostGeneratingEntity} przechowującej informacje o koszcie, zużytym paliwie i przejechanych kilometrach. 
 	
 	Wybrana strategia dziedziczenia to \textit{TPC — Table per Concrete Type}. W strategii \textit{TPC} tabele utworzone w bazie danych zawierają wszystkie kolumny odpowiadające polom wszystkich klas w hierarchii dziedziczenia.
 	
-	\lstinputlisting[language=C,frame=single,caption=Klasa abstrakcyjna AuditableEntity]{source/efcore-auditable.cs}
+	\lstinputlisting[language=C,frame=single,caption=Klasa abstrakcyjna AuditableEntity.]{source/efcore-auditable.cs}
 	
-	\lstinputlisting[language=C,frame=single,caption=Klasa abstrakcyjna CostGeneratingEntity]{source/efcore-costgenerating.cs}
+	\lstinputlisting[language=C,frame=single,caption=Klasa abstrakcyjna CostGeneratingEntity.]{source/efcore-costgenerating.cs}
+	
+	\subsection{Struktura solucji}
+	Kod interfejsu programistycznego znajduje się w jednej solucji podzielonej na projekty.
+	\begin{itemize}
+		\item \textbf{Vehifleet} — solucja
+			\subitem \textbf{Vehifleet.API} — konfiguracja systemu oraz kontrolery; projekt startowy
+			\subitem \textbf{Vehifleet.API.QueryFilters} — filtry używane w żądaniach GET
+			\subitem \textbf{Vehifleet.Data.DbAccess} — konfiguracja połączenia z bazą danych
+			\subitem \textbf{Vehifleet.Data.Dtos} — modele transportowe (\textit{Data Transfer Objects}) używane w komunikacji z interfejsem użytkownika
+			\subitem \textbf{Vehifleet.Data.Models} — modele używane wewnątrz interfejsu programistycznego oraz przy tworzeniu bazy danych
+			\subitem \textbf{Vehifleet.Helper} — pomocnicze metody rozszerzające \cite{msdn-extension}
+			\subitem \textbf{Vehifleet.Repositories} — repozytoria odpowiedzialne za interakcje z bazą danych
+			\subitem \textbf{Vehifleet.Services.UserService} — obsługa logowania użytkowników
+			\subitem \textbf{Vehifleet.Services.CsvService} — serwis generujący raporty ze statystkami
+	\end{itemize}
 	
 	\subsection{Kontrolery}
 	
@@ -980,7 +1001,7 @@
 	
 	Mechanizm filtrowania jest wydajny nawet dla skomplikowanych żądań - implementacja korzysta z interfejsu \textit{IQueryable}, pozwalającego na dodawanie wielu warunków które zostaną wykonane wyłącznie raz. W trakcie wywołania funkcji \textit{ToListAsync()}, warunki dodane do \textit{IQueryable} zostaną przetłumaczone do pojedynczego zapytania \textit{SQL} które zostanie wykonane w bazie danych po czym zwróci listę obiektów.
 	
-	\lstinputlisting[language=C,frame=single,caption=Logika filtrującą dla modeli pojazdów]{source/iqueryable-filter.cs}
+	\lstinputlisting[language=C,frame=single,caption=Logika filtrującą dla modeli pojazdów.]{source/iqueryable-filter.cs}
 	
 	\begin{table}[H]
 		\caption{Filtr modeli pojazdów (\textit{api/vehicle-models GET}).}
@@ -1043,7 +1064,7 @@
 	
 	W utworzonym systemie eksport do pliku wywoływany jest przez żądanie \textit{HTTP POST} na adres \textit{api/reports/generate/days}, gdzie \textit{days} to liczba określająca z jak wielu dni wstecz powinny być brane dane dotyczące rezerwacji.
 	
-	\lstinputlisting[frame=single,caption=Przykładowy raport ze statystykami pojazdów]{source/report.csv}
+	\lstinputlisting[frame=single,caption=Przykładowy raport ze statystykami pojazdów.]{source/report.csv}
 	\newpage
 	
 	
@@ -1057,12 +1078,16 @@
 	\end{itemize}
 	\begin{figure}[h]
 		\centering
-		\includegraphics[scale=0.62]{images/angular_views.png}
+		\includegraphics[width=\textwidth]{images/angular_views.png}
 		\caption{Widoki interfejsu użytkownika.}
 		\small 
 		Widoki zielone dostępne są dla każdego użytkownika; widoki pomarańczowe wyłącznie dla użytkownika o odpowiednich uprawnieniach. Widok \textit{booking-detail} jest specjalnym przypadkiem oferującym różne możliwości w zależności od uprawnień użytkownika.
 	\end{figure}
+	\subsection{Wygląd i funkcjonalność}
+	Interfejs użytkownika jest schludny i prosty
 	
+	
+	\newpage
 	\section{Bezpieczeństwo}
 	Dostęp do systemu został zabezpieczony przy użyciu standardu \textit{JSON Web Token (JWT)} \cite{jwt}. Autoryzacja \textit{JWT} bazuje na generowaniu podpisanych (przez co odpornych na sfałszowanie) tokenów po stronie interfejsu programistycznego, a następnie wysyłaniu ich do aplikacji klienta. \textit{API} wcześniej wygenerowanego wymaga tokena w nagłówku \textit{HTTP} dla każdego żądania wysłanego przez interfejs użytkownika; żądania z niepoprawnym tokenem zostają odrzucone.
 	
@@ -1080,6 +1105,23 @@
 	
 	Przechowywanie ról w tokenie \textit{JWT} pozwala na autoryzację z uwzględnieniem uprawnień użytkownika, przykładowo, ograniczając dostęp do poufnych informacji lub modyfikacji przechowywanych danych przez osoby nieuprawnione.
 	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.54]{images/jwt.png}
+		\caption{Przykładowy token \textit{JWT}.}
+		\small 
+		Token został wygenerowany przy użyciu narzędzia ze strony \textit{https://jwt.io/}.
+	\end{figure}
+	
+	\begin{table}[H]
+		\caption{Domyślna konfiguracja relacji ról do poziomu uprawnień.}
+		\begin{tabularx}{\textwidth}{|l|l|X|}
+			\hline
+			\multicolumn{1}{|c|}{\textbf{Aktor}} & \multicolumn{1}{c|}{\textbf{Poziom dostępu}} & \multicolumn{1}{c|}{\textbf{Wymagane role}} \\ \hline
+			Kierowca                             & Podstawowy                                   & Employee                                    \\ \hline
+			Kierownik                            & Pełny                                        & Manager lub Administrator                   \\ \hline
+		\end{tabularx}
+	\end{table}
 	
 	%\section{Konteneryzacja}
 	%----------------------------------------------------------------------------------------
@@ -1101,7 +1143,7 @@
 		\item Sprawdź (\textit{Assert}): sprawdzenie wyniku 
 	\end{enumerate}
 	
-	\lstinputlisting[language=C,frame=single,caption=Przykład testu jednostkowego zgodnego z konwencją \textit{AAA}]{source/tests-unit.cs}
+	\lstinputlisting[language=C,frame=single,caption=Przykład testu jednostkowego zgodnego z konwencją \textit{AAA}.]{source/tests-unit.cs}
 	
 	\section{Testy systemowe}
 	Najczęściej stosowanym rodzajem testów były testy systemowe przy użyciu narzędzia \textit{Postman} pozwalającego na wygodne tworzenie i wysyłanie skomplikowanych żądań \textit{HTTP}. \textit{Postman} pozwala również na zapisywanie oraz organizowanie żądań co znacznie przyśpiesza proces testowania.
@@ -1111,7 +1153,7 @@
 		\caption{Interfejs programu Postman.}
 	\end{figure}
 	\section{Testy dymne}
-	Testy dymne (\textit{smoke test}) były używane w końcowej fazie projektu; polegały na wcieleniu się w rolę użytkownika i przechodzeniu najczęściej używanych ścieżek (np. tworzeniu rezerwacji) . Testy tego typu pozwalają szybko zweryfikować czy kluczowa funkcjonalność systemu działa bezproblemowo.
+	Testy dymne (\textit{smoke test}) były użyte w końcowej fazie projektu; polegały na wcieleniu się w rolę użytkownika i przechodzeniu najczęściej używanych ścieżek (np. tworzeniu rezerwacji). Testy tego typu pozwalają szybko zweryfikować czy kluczowa funkcjonalność systemu działa bezproblemowo.
 	
 	%----------------------------------------------------------------------------------------
 	%	SECTION 8
@@ -1137,111 +1179,108 @@
 	%	SECTION OLD
 	%----------------------------------------------------------------------------------------
 	\chapter{Instrukcja użytkownika}
+	\section{Ekran logowania}
+	Jedyny widok dostępny dla niezalogowanego użytkownika. Aplikacja uniemożliwia dostęp do wszystkich innych widoków osobom niezalogowanym; przy ręcznej zmianie adresu w przeglądarce nieupoważniony użytkownik zostanie przekierowany do tego widoku.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{images/views/dashboard-login.png}
-		\caption{Widok logowania (dashboard-login).}
-		\small 
-		Jedyny widok dostępny dla niezalogowanego użytkownika. Aplikacja uniemożliwia dostęp do wszystkich innych widoków osobom niezalogowanym; przy ręcznej zmianie adresu w przeglądarce nieupoważniony użytkownik zostanie przekierowany do tego widoku.
+		\caption{Widok logowania (dashboard-login).} 		
 	\end{figure}
 	
-	%\subsection{Ekran wylogowywania}
+	\section{Ekran wylogowywania}
+	Podstawowy widok zalogowanego użytkownika z informacjami o użytkowniku i możliwością wylogowania się.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{images/views/dashboard-logout.png}
-		\caption{Widok zalogowanego użytkownika (dashboard-user-details).}
-		\small 
-		Podstawowy widok zalogowanego użytkownika z informacjami o użytkowniku i możliwością wylogowania się.
+		\caption{Widok zalogowanego użytkownika (dashboard-user-details).} 
 	\end{figure}
 	
-	%\subsection{Dostępne pojazdy}
+	\section{Dostępne pojazdy}
+	Lista dostępnych pojazdów która może być dodatkowo filtrowana. Po kliknięciu na jakikolwiek pojazd, jego dokładne informacje zostają wczytane i wyświetlone w oknie po prawej stronie; użytkownik może utworzyć nową rezerwację używając przycisku \textit{Book}.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{images/views/vehicle-booking-2.png}
 		\caption{Widok listy dostępnych pojazdów (vehicle-list-booking).}
-		\small 
-		Lista dostępnych pojazdów która może być dodatkowo filtrowana. Po kliknięciu na jakikolwiek pojazd, jego dokładne informacje zostają wczytane i wyświetlone w oknie po prawej stronie; użytkownik może utworzyć nową rezerwację używając przycisku \textit{Book}.
 	\end{figure}
 	
-	%\subsection{Historia rezerwacji}
+	\newpage
+	\section{Historia rezerwacji}
+	Widok zawiera rezerwacji utworzone tylko i wyłącznie przez zalogowanego użytkownika; użytkownik bez praw kierownika nie jest w stanie przeglądać cudzych rezerwacji. Kliknięcie w rekord otwiera szczegółowy widok rezerwacji.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{images/views/booking-list-manage.png}
-		\caption{Widok listy historii rezerwacji (booking-personal).}
-		\small 
-		Widok zawiera rezerwacji utworzone tylko i wyłącznie przez zalogowanego użytkownika; użytkownik bez praw kierownika nie jest w stanie przeglądać cudzych rezerwacji. Kliknięcie w rekord otwiera szczegółowy widok rezerwacji.
+		\caption{Widok listy historii rezerwacji (booking-personal).}	
 	\end{figure}
 	
-	%\subsection{Szczegóły rezerwacji}
+	\newpage
+	\section{Szczegóły rezerwacji}
+	W tym widoku można zarówno utworzyć nowe rezerwację, jak i edytować już istniejące.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{images/views/booking-detail.png}
-		\caption{Widok szczegółowy rezerwacji (booking-details).}
-		\small 
-		W tym widoku można zarówno utworzyć nowe rezerwację, jak i edytować już istniejące.
+		\caption{Widok szczegółowy rezerwacji (booking-details).} 		
 	\end{figure}
-	
-	%\subsection{Szczegóły rezerwacji w trybie kierownika}
+
+	\newpage	
+	\section{Szczegóły rezerwacji w trybie kierownika}
+	Jeżeli zalogowany użytkownik posiada pełne uprawnienia i przegląda cudze rezerwacji, po stronie prawej zostają wyświetlone dodatkowe informacje o użytkowniku który utworzył rezerwację.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{images/views/booking-detail-manager.png}
-		\caption{Widok szczegółowy rezerwacji w trybie kierownika (booking-details).}
-		\small 
-		Jeżeli zalogowany użytkownik posiada pełne uprawnienia i przegląda cudze rezerwacji, po stronie prawej zostają wyświetlone dodatkowe informacje o użytkowniku który utworzył rezerwację.
+		\caption{Widok szczegółowy rezerwacji w trybie kierownika (booking-details).}		
 	\end{figure}
 	
-	%\subsection{Wszystkie pojazdy}
+	\newpage
+	\section{Wszystkie pojazdy}
+	Widok pozwala na przeglądanie wszystkich pojazdów śledzonych w systemie oraz na filtrowanie. Kliknięcie w rekord przechodzi do widoku szczegółów wybranego pojazdu.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{images/views/vehicle-list.png}
 		\caption{Widok listy pojazdów (vehicle-list).}
-		\small 
-		Widok pozwala na przeglądanie wszystkich pojazdów śledzonych w systemie oraz na filtrowanie. Kliknięcie w rekord przechodzi do widoku szczegółów wybranego pojazdu.
 	\end{figure}
 	
-	%\subsection{Szczegóły pojazdu}
+	\newpage
+	\section{Szczegóły pojazdu}	
 	\begin{figure}[H]
+		Widok zawierający wszystkie informacje na temat pojazdu wraz z listą ubezpieczeń i napraw, które mogą być dodawane lub edytowane po wybraniu poprzez kliknięcie. Użytkownik może wyświetlić wszystkie rezerwacji danego pojazdu lub jego dokładną specyfikacje techniczną po kliknięciu na jeden z dwóch odnośników na dole okna.
 		\centering
 		\includegraphics[width=\textwidth]{images/views/vehicle-detail.png}
-		\caption{Widok szczegółowy pojazdu (vehicle-details).}
-		\small 
-		Widok zawierający wszystkie informacje na temat pojazdu wraz z listą ubezpieczeń i napraw, które mogą być dodawane lub edytowane po wybraniu poprzez kliknięcie. Użytkownik może wyświetlić wszystkie rezerwacji danego pojazdu lub jego dokładną specyfikacje techniczną po kliknięciu na jeden z dwóch odnośników na dole okna.
+		\caption{Widok szczegółowy pojazdu (vehicle-details).}		
 	\end{figure}
 	
-	%\subsection{Szczegóły ubezpieczenia}
+	\newpage
+	\section{Szczegóły ubezpieczenia}
+	Widok pozwalający na edycję ubezpieczenia.
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=\textwidth]{images/views/insurance-detail.png}
-		\caption{Widok szczegółowy ubezpieczenia (insurance-details).}
-		\small 
-		Widok pozwalający na edycję ubezpieczenia.
+		\includegraphics[scale=0.32]{images/views/insurance-detail.png}
+		\caption{Widok szczegółowy ubezpieczenia (insurance-details).}		
 	\end{figure}
 	
-	%\subsection{Szczegóły naprawy}
+	\section{Szczegóły naprawy}
+	Widok pozwalający na edycję zdarzenia naprawy.
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=\textwidth]{images/views/maintenance-detail.png}
+		\includegraphics[scale=0.32]{images/views/maintenance-detail.png}
 		\caption{Widok szczegółowy naprawy (maintenance-details).}
-		\small 
-		Widok pozwalający na edycję zdarzenia naprawy.
 	\end{figure}
-	
-	%\subsection{Wszystkie modele pojazdów}
+
+	\newpage	
+	\section{Wszystkie modele pojazdów}	
+	Widok umożliwia przeglądanie modeli pojazdów. Kliknięcie w rekord przechodzi do widoku szczegółowego.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{images/views/vehicle-model-list.png}
 		\caption{Widok listy modeli pojazdów (vehicle-model-list).}
-		\small 
-		Widok umożliwia przeglądanie modeli pojazdów. Kliknięcie w rekord przechodzi do widoku szczegółowego. 
 	\end{figure}
 	
-	%\subsection{Szczegóły modelu pojazdu}
+	\newpage
+	\section{Szczegóły modelu pojazdu}
+	Widok pozwalający na dodawanie oraz edycje modeli pojazdów. Użytkownik może również wyświetlić wszystkie pojazdy tego typu lub wprowadzić informację o nowym egzemplarzu za pomocą odnośników na dole okna.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{images/views/vehicle-model-detail.png}
 		\caption{Widok szczegółowy modelu pojazdu (vehicle-model-details).}
-		\small 
-		Widok pozwalający na dodawanie oraz edycje modeli pojazdów. Użytkownik może również wyświetlić wszystkie pojazdy tego typu lub wprowadzić informację o nowym egzemplarzu za pomocą odnośników na dole okna.
 	\end{figure}
 	%----------------------------------------------------------------------------------------
 	%	SECTION OLD

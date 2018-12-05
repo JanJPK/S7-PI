@@ -1,3 +1,10 @@
 wskazanie elemnetów interfejsu (walidacja, stylistyka)
 diagramy stanów
 diagram PU
+
+istniejace rozw
+    zdjecia i adres
+
+funkcjonale skrotowe
+
+architektura, pu, diagram klas

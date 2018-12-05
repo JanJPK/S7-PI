@@ -1,4 +1,4 @@
-﻿namespace Vehifleet.Services.Helper
+﻿namespace Vehifleet.Services.UserService
 {
     public class LoginCredentials
     {

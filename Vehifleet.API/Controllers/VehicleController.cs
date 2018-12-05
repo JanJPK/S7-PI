@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vehifleet.API.QueryFilters;
@@ -19,14 +20,17 @@ namespace Vehifleet.API.Controllers
         private readonly IGenericRepository<Vehicle, int> vehicleRepository;
         private readonly IGenericRepository<VehicleModel, int> vehicleModelRepository;
         private readonly IGenericRepository<Booking, int> bookingRepository;
+        private readonly IMapper mapper;
 
         public VehicleController(IGenericRepository<Vehicle, int> vehicleRepository,
                                  IGenericRepository<VehicleModel, int> vehicleModelRepository,
-                                 IGenericRepository<Booking, int> bookingRepository)
+                                 IGenericRepository<Booking, int> bookingRepository,
+                                 IMapper mapper)
         {
             this.vehicleRepository = vehicleRepository;
             this.vehicleModelRepository = vehicleModelRepository;
             this.bookingRepository = bookingRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -39,7 +43,7 @@ namespace Vehifleet.API.Controllers
                                 .Include(v => v.Location)
                                 .ToListAsync();
 
-            return Ok(Mapper.Map<IEnumerable<VehicleListItemDto>>(vehicles));
+            return Ok(mapper.Map<IEnumerable<VehicleListItemDto>>(vehicles));
         }
 
         [HttpGet("{id}")]
@@ -49,11 +53,11 @@ namespace Vehifleet.API.Controllers
 
             if (vehicle == null)
             {
-                return NotFound();
+                return NotFound("No such vehicle.");
             }
             else
             {
-                var dto = Mapper.Map<VehicleDto>(vehicle);
+                var dto = mapper.Map<VehicleDto>(vehicle);
                 dto.HasBookings = await bookingRepository.Get()
                                                    .Where(b => b.VehicleId == id)
                                                    .AnyAsync();
@@ -67,10 +71,10 @@ namespace Vehifleet.API.Controllers
         {
             if (!await vehicleModelRepository.Exists(vehicleDto.VehicleModelId))
             {
-                return NotFound("No such vehicle.");
+                return NotFound("No such vehicle model.");
             }
 
-            var vehicle = Mapper.Map<Vehicle>(vehicleDto);
+            var vehicle = mapper.Map<Vehicle>(vehicleDto);
             await vehicleRepository.Insert(vehicle);
             return Ok(vehicle.Id);
         }
@@ -80,10 +84,10 @@ namespace Vehifleet.API.Controllers
         {
             if (!await vehicleRepository.Exists(id))
             {
-                return NotFound("No such vehicle.");
+                return NotFound("No such vehicle model.");
             }
 
-            var vehicle = Mapper.Map<Vehicle>(vehicleDto);
+            var vehicle = mapper.Map<Vehicle>(vehicleDto);
             await vehicleRepository.Update(vehicle);
             return Ok();
         }
@@ -94,7 +98,7 @@ namespace Vehifleet.API.Controllers
             var vehicle = await vehicleRepository.GetById(id);
             if (vehicle == null)
             {
-                return NotFound();
+                return NotFound("No such vehicle.");
             }
 
             bool hasBookings = await bookingRepository.Get().Where(b => b.VehicleId == id).AnyAsync();

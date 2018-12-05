@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Vehifleet.Services.Helper
+namespace Vehifleet.Services.UserService
 {
     public class JwtOptions
     {

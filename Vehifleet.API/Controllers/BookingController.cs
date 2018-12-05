@@ -10,7 +10,6 @@ using Vehifleet.Data.Models.BaseEntities;
 using Vehifleet.Data.Models.Enums;
 using Vehifleet.Helper.Extensions;
 using Vehifleet.Repositories.Interfaces;
-using Vehifleet.Services.Interfaces;
 
 namespace Vehifleet.API.Controllers
 {
@@ -22,16 +21,19 @@ namespace Vehifleet.API.Controllers
         private readonly IGenericRepository<Vehicle, int> vehicleRepository;
         private readonly IEmployeeRepository employeeRepository;
         private readonly IGenericRepository<VehicleModel, int> vehicleModelRepository;
+        private readonly IMapper mapper;
 
         public BookingController(IGenericRepository<Booking, int> bookingRepository,
                                  IGenericRepository<Vehicle, int> vehicleRepository,
                                  IEmployeeRepository employeeRepository,
-                                 IGenericRepository<VehicleModel, int> vehicleModelRepository)
+                                 IGenericRepository<VehicleModel, int> vehicleModelRepository,
+                                 IMapper mapper)
         {
             this.bookingRepository = bookingRepository;
             this.vehicleRepository = vehicleRepository;
             this.employeeRepository = employeeRepository;
             this.vehicleModelRepository = vehicleModelRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -46,7 +48,7 @@ namespace Vehifleet.API.Controllers
             var bookings = await filter.Filter(query)
                                        .ToListAsync();
 
-            return Ok(Mapper.Map<IEnumerable<BookingListItemDto>>(bookings));
+            return Ok(mapper.Map<IEnumerable<BookingListItemDto>>(bookings));
         }
 
         [HttpGet("{id}")]
@@ -56,11 +58,11 @@ namespace Vehifleet.API.Controllers
 
             if (booking == null)
             {
-                return NotFound();
+                return NotFound("No such booking.");
             }
             else
             {
-                return Ok(Mapper.Map<BookingDto>(booking));
+                return Ok(mapper.Map<BookingDto>(booking));
             }
         }
 
@@ -77,7 +79,7 @@ namespace Vehifleet.API.Controllers
                 return NotFound("No such employee.");
             }
 
-            var booking = Mapper.Map<Booking>(bookingDto);
+            var booking = mapper.Map<Booking>(bookingDto);
             var vehicle = await vehicleRepository.GetById(booking.VehicleId);
             vehicle.Status = VehicleStatus.Unavailable;
             await bookingRepository.Insert(booking);
@@ -91,10 +93,10 @@ namespace Vehifleet.API.Controllers
             var oldBooking = await bookingRepository.GetById(id);
             if (oldBooking == null)
             {
-                return NotFound();
+                return NotFound("No such booking.");
             }
 
-            var booking = Mapper.Map<Booking>(bookingDto);
+            var booking = mapper.Map<Booking>(bookingDto);
             if (booking.Status == BookingStatus.Completed)
             {
                 
@@ -144,12 +146,12 @@ namespace Vehifleet.API.Controllers
             var booking = await bookingRepository.GetById(id);
             if (booking == null)
             {
-                return NotFound();
+                return NotFound("No such booking.");
             }
 
             if (booking.Status != BookingStatus.Created)
             {
-                return BadRequest("Cannot delete bookings that have been submitted");
+                return BadRequest("Cannot delete bookings that have been submitted.");
             }
 
             var vehicle = await vehicleRepository.GetById(booking.VehicleId);

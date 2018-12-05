@@ -17,12 +17,15 @@ namespace Vehifleet.API.Controllers
     {
         private readonly IGenericRepository<Insurance, int> insuranceRepository;
         private readonly IGenericRepository<Vehicle, int> vehicleRepository;
+        private readonly IMapper mapper;
 
         public InsuranceController(IGenericRepository<Insurance, int> insuranceRepository,
-                                   IGenericRepository<Vehicle, int> vehicleRepository)
+                                   IGenericRepository<Vehicle, int> vehicleRepository, 
+                                   IMapper mapper)
         {
             this.insuranceRepository = insuranceRepository;
             this.vehicleRepository = vehicleRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet("vehicle/{id}")]
@@ -37,7 +40,7 @@ namespace Vehifleet.API.Controllers
 
             var insurances = await query.ToListAsync();
 
-            return Ok(Mapper.Map<IEnumerable<InsuranceDto>>(insurances));
+            return Ok(mapper.Map<IEnumerable<InsuranceDto>>(insurances));
         }
 
         [HttpGet("{id}")]
@@ -47,18 +50,18 @@ namespace Vehifleet.API.Controllers
 
             if (insurance == null)
             {
-                return NotFound();
+                return NotFound("No such insurance.");
             }
             else
             {
-                return Ok(Mapper.Map<InsuranceDto>(insurance));
+                return Ok(mapper.Map<InsuranceDto>(insurance));
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] InsuranceDto insuranceDto)
         {
-            var insurance = Mapper.Map<Insurance>(insuranceDto);
+            var insurance = mapper.Map<Insurance>(insuranceDto);
             await insuranceRepository.Insert(insurance);
             return Ok(insurance.Id);
         }
@@ -68,10 +71,10 @@ namespace Vehifleet.API.Controllers
         {
             if (!await insuranceRepository.Exists(id))
             {
-                return NotFound("No such maintenance.");
+                return NotFound("No such insurance.");
             }
 
-            var insurance = Mapper.Map<Insurance>(insuranceDto);
+            var insurance = mapper.Map<Insurance>(insuranceDto);
             await insuranceRepository.Update(insurance);
             return Ok();
         }

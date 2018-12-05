@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Vehifleet.Data.Models.Booking">
+    <Position X="11.75" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAAAAAAAAAACAAAAgDAAAgAAAIAAAAEACAAA=</HashCode>
+      <FileName>Booking.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Employee" />
+      <Property Name="Vehicle" />
+      <Property Name="Status" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Vehifleet.Data.Models.Employee">
+    <Position X="14.5" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAAAEAAAAABAAAAAAAAAAEIAAAAAAAA=</HashCode>
+      <FileName>Employee.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vehifleet.Data.Models.EmployeeIdentity">
+    <Position X="17.5" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>EmployeeIdentity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Employee" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Vehifleet.Data.Models.Insurance">
+    <Position X="11.75" Y="8" Width="1.75" />
+    <AssociationLine Name="Vehicle" Type="Vehifleet.Data.Models.Vehicle" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="13.5" Y="8.5" />
+        <Point X="13.875" Y="8.5" />
+        <Point X="13.875" Y="7.63" />
+        <Point X="14.432" Y="7.63" />
+        <Point X="14.432" Y="7.625" />
+        <Point X="14.5" Y="7.625" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAICAAAAAAAAAAAAAAEAABAgBAAAgAAAAAAAAEAAEAA=</HashCode>
+      <FileName>Insurance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Vehicle" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Vehifleet.Data.Models.Location">
+    <Position X="17.5" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAIAAIAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Location.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vehifleet.Data.Models.Maintenance">
+    <Position X="17.5" Y="6.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAICAAAAAAAgAAIAAAAAABAgFAAAgAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Maintenance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Vehicle" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Vehifleet.Data.Models.Vehicle">
+    <Position X="14.5" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ABACAEAEAAAgAAAEAAIABAAAAAAAAAAgBAEGEAAAAAA=</HashCode>
+      <FileName>Vehicle.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="VehicleModel" />
+      <Property Name="Location" />
+      <Property Name="Status" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Vehifleet.Data.Models.VehicleModel">
+    <Position X="14.5" Y="9.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAgCAAAAAAAAgAAAIgABAAQAACAAAAAABAgAAAIAAAA=</HashCode>
+      <FileName>VehicleModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Vehifleet.Data.Models.Enums.BookingStatus">
+    <Position X="11.5" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAQAAAIAAAAAACAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\BookingStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Vehifleet.Data.Models.Enums.VehicleStatus">
+    <Position X="11.5" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAMAAAAgQAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\VehicleStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Leelawadee UI" Size="9.75" />
+</ClassDiagram>

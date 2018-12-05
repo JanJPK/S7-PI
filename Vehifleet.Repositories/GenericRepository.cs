@@ -17,7 +17,7 @@ namespace Vehifleet.Repositories
     {
         protected VehifleetContext Context;
 
-        protected DbSet<TEntity> Set => Context.Set<TEntity>();
+        public DbSet<TEntity> Set => Context.Set<TEntity>();
 
         protected GenericRepository(VehifleetContext context)
         {

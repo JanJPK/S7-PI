@@ -22,8 +22,8 @@ using Vehifleet.Helper.Extensions;
 using Vehifleet.Repositories;
 using Vehifleet.Repositories.Interfaces;
 using Vehifleet.Services;
-using Vehifleet.Services.Helper;
-using Vehifleet.Services.Interfaces;
+using Vehifleet.Services.CsvService;
+using Vehifleet.Services.UserService;
 
 namespace Vehifleet.API
 {
@@ -100,6 +100,14 @@ namespace Vehifleet.API
                 //o.AddPolicy("ApiUser", policy => policy.RequireClaim("rol", "api_access"));
             });
 
+            // AutoMapper
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapperProfile());
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             // Services
             services.AddDbContext<VehifleetContext>(c => c.UseSqlServer(Configuration["ConnectionStrings:VehifleetDb"]));
             services.AddScoped<IGenericRepository<Booking, int>, BookingRepository>();
@@ -113,7 +121,7 @@ namespace Vehifleet.API
             services.AddScoped<IGenericRepository<VehicleModel, int>, VehicleModelRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserAuditService, UserAuditService>();
-            services.AddScoped<IStatusService, StatusService>();
+            services.AddScoped<ICsvService, CsvService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
@@ -136,7 +144,7 @@ namespace Vehifleet.API
                 });
             }
 
-            ConfigureAutoMapper();
+            //ConfigureAutoMapper();
             app.UseCors("AllowAllOriginsHeadersAndMethods");
             app.UseAuthentication();
             app.UseMvc();

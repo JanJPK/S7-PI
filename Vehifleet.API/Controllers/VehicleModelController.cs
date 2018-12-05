@@ -56,7 +56,7 @@ namespace Vehifleet.API.Controllers
 
             if (vehicleModel == null)
             {
-                return NotFound();
+                return NotFound("No such vehicle model.");
             }
             else
             {
@@ -79,8 +79,13 @@ namespace Vehifleet.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] VehicleModelDto vehicleModelDto)
         {
-            var vehicle = Mapper.Map<VehicleModel>(vehicleModelDto);
-            await vehicleModelRepository.Insert(vehicle);
+            if (!await vehicleModelRepository.Exists(id))
+            {
+                return NotFound("No such vehicle model.");
+            }
+
+            var vehicleModel = Mapper.Map<VehicleModel>(vehicleModelDto);
+            await vehicleModelRepository.Insert(vehicleModel);
             return Ok();
         }
 

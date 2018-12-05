@@ -17,12 +17,15 @@ namespace Vehifleet.API.Controllers
     {
         private readonly IGenericRepository<Maintenance, int> maintenanceRepository;
         private readonly IGenericRepository<Vehicle, int> vehicleRepository;
+        private readonly IMapper mapper;
 
         public MaintenanceController(IGenericRepository<Maintenance, int> maintenanceRepository,
-                                     IGenericRepository<Vehicle, int> vehicleRepository)
+                                     IGenericRepository<Vehicle, int> vehicleRepository,
+                                     IMapper mapper)
         {
             this.maintenanceRepository = maintenanceRepository;
             this.vehicleRepository = vehicleRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet("vehicle/{id}")]
@@ -37,7 +40,7 @@ namespace Vehifleet.API.Controllers
 
             var maintenances = await query.ToListAsync();
 
-            return Ok(Mapper.Map<IEnumerable<MaintenanceDto>>(maintenances));
+            return Ok(mapper.Map<IEnumerable<MaintenanceDto>>(maintenances));
         }
 
         [HttpGet("{id}")]
@@ -47,18 +50,18 @@ namespace Vehifleet.API.Controllers
 
             if (maintenance == null)
             {
-                return NotFound();
+                return NotFound("No such maintenance.");
             }
             else
             {
-                return Ok(Mapper.Map<MaintenanceDto>(maintenance));
+                return Ok(mapper.Map<MaintenanceDto>(maintenance));
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] MaintenanceDto maintenanceDto)
         {
-            var maintenance = Mapper.Map<Maintenance>(maintenanceDto);
+            var maintenance = mapper.Map<Maintenance>(maintenanceDto);
             await maintenanceRepository.Insert(maintenance);
             return Ok(maintenance.Id);
         }
@@ -71,7 +74,7 @@ namespace Vehifleet.API.Controllers
                 return NotFound("No such maintenance.");
             }
 
-            var maintenance = Mapper.Map<Maintenance>(maintenanceDto);
+            var maintenance = mapper.Map<Maintenance>(maintenanceDto);
             await maintenanceRepository.Update(maintenance);
             return Ok();
         }

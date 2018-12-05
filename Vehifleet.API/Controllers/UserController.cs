@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
 using Vehifleet.Repositories.Interfaces;
-using Vehifleet.Services.Helper;
-using Vehifleet.Services.Interfaces;
+using Vehifleet.Services.UserService;
 
 namespace Vehifleet.API.Controllers
 {
@@ -15,12 +14,15 @@ namespace Vehifleet.API.Controllers
     {
         private readonly IEmployeeRepository employeeRepository;
         private readonly IUserService userService;
+        private readonly IMapper mapper;
 
         public UserController(IEmployeeRepository employeeRepository, 
-                              IUserService userService)
+                              IUserService userService,
+                              IMapper mapper)
         {
             this.employeeRepository = employeeRepository;
             this.userService = userService;
+            this.mapper = mapper;
         }
 
         [HttpGet("employees/{id}")]
@@ -34,14 +36,14 @@ namespace Vehifleet.API.Controllers
             }
             else
             {
-                return Ok(Mapper.Map<EmployeeDto>(employee));
+                return Ok(mapper.Map<EmployeeDto>(employee));
             }
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] EmployeeRegisterDto dto)
         {
-            var identity = Mapper.Map<EmployeeIdentity>(dto);
+            var identity = mapper.Map<EmployeeIdentity>(dto);
 
             if (await userService.CreateUser(identity, dto.Password))
             {
@@ -60,7 +62,7 @@ namespace Vehifleet.API.Controllers
             if (employee != null)
             {
                 
-                return Ok(Mapper.Map<EmployeeDto>(employee));
+                return Ok(mapper.Map<EmployeeDto>(employee));
             }
             else
             {

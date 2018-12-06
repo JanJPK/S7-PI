@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Vehifleet.API\Vehifleet.API.csproj" />
+    <ProjectReference Include="..\Vehifleet.Data.Dtos\Vehifleet.Data.Dtos.csproj" />
     <ProjectReference Include="..\Vehifleet.Data.Models\Vehifleet.Data.Models.csproj" />
     <ProjectReference Include="..\Vehifleet.Repositories\Vehifleet.Repositories.csproj" />
   </ItemGroup>

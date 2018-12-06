@@ -2,6 +2,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Vehifleet.Data.Dtos;
+using Vehifleet.Data.Models;
 using Vehifleet.Repositories.Interfaces;
 using Vehifleet.Services.UserService;
 
@@ -46,6 +47,22 @@ namespace Vehifleet.API.Controllers
             if (employee != null)
             {
                 return Ok(mapper.Map<EmployeeDto>(employee));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("register")]
+        // Used for tests.
+        public async Task<IActionResult> Register([FromBody] EmployeeRegisterDto dto)
+        {
+            var identity = mapper.Map<EmployeeIdentity>(dto);
+
+            if (await userService.CreateUser(identity, dto.Password))
+            {
+                return Ok();
             }
             else
             {

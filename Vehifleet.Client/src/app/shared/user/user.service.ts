@@ -4,7 +4,9 @@ import { environment } from '../../../environments/environment';
 import { Employee } from '../../classes/employee/employee';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoggerService } from '../logger/logger.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { ModalService } from '../modal/modal.service';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,11 @@ export class UserService {
   employeeLogin: Employee;
   jwtHelper: JwtHelperService;
 
-  constructor(private http: HttpClient, private logger: LoggerService) {
+  constructor(
+    private http: HttpClient,
+    private logger: LoggerService,
+    private modalService: ModalService
+  ) {
     this.jwtHelper = new JwtHelperService();
   }
 
@@ -30,22 +36,15 @@ export class UserService {
           'Content-Type': 'application/json'
         })
       })
+      .pipe(catchError(this.handleError('delete', null)))
       .subscribe(response => {
-        this.logger.info(`Login response: ${response}`);
-        this.logger.info(
-          `login token: ${this.jwtHelper.decodeToken(this.getToken())}`
-        );
+        console.log('dupa');
+        console.log(response);
         this.employeeLogin = <Employee>response;
         let token = this.employeeLogin.jwt;
         localStorage.setItem('jwt', token);
         localStorage.setItem('user', JSON.stringify(this.employeeLogin));
-        //this.invalidLogin = false;
-        //this.router.navigate(['/']);
-      }),
-      err => {
-        this.logger.warn(`Failed login: ${err}`);
-        //this.invalidLogin = true;
-      };
+      });
   }
 
   getEmployeeById(id: number): Observable<Employee> {
@@ -79,12 +78,10 @@ export class UserService {
   }
 
   isLoggedIn(): boolean {
-    //this.logger.info('Verifying user login');
     if (!this.employeeLogin) {
       return false;
     }
     if (!this.jwtHelper.isTokenExpired(this.getToken())) {
-      //this.logger.info('Token is not expired');
       return true;
     } else {
       this.logger.warn('Token is expired');
@@ -97,13 +94,9 @@ export class UserService {
     if (!this.isLoggedIn()) {
       return false;
     }
-
-    //this.logger.info(`Verifying user roles; need ${roles}`);
     let tokenRoles = this.jwtHelper.decodeToken(this.getToken()).role;
-    //this.logger.info(`Roles found: ${tokenRoles}`);
-
     for (let role of tokenRoles) {
-      if (role.indexOf(role) > -1) {
+      if (roles.indexOf(role) > -1) {
         return true;
       }
     }
@@ -112,5 +105,15 @@ export class UserService {
 
   isElevatedUser(): boolean {
     return this.hasRole(['Administrator', 'Manager']);
+  }
+
+  handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      this.logger.error(error);
+      this.modalService.showErrorModal(
+        'Login failed: incorrect username or password.'
+      );
+      return of(result as T);
+    };
   }
 }

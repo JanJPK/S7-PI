@@ -49,13 +49,13 @@ export class BookingListFilterComponent extends BaseFormComponent {
     }
     let filter = new BookingListFilter();
     filter.statuses = selectedStatuses;
-    let fromDate = new Date(this.form.get('fromDate').value);
-    if (fromDate != null) {
-      filter.fromDate = fromDate.toDateString();
+    let fromDate = this.form.get('fromDate').value;
+    if (fromDate != null && fromDate != '') {
+      filter.fromDate = new Date(fromDate).toDateString();
     }
-    let toDate = new Date(this.form.get('toDate').value);
-    if (toDate != null) {
-      filter.toDate = toDate.toDateString();
+    let toDate = this.form.get('toDate').value;
+    if (toDate != null && toDate != '') {
+      filter.toDate = new Date(toDate).toDateString();
     }
     filter.employeeUserName = this.form.get('employeeUserName').value;
     this.filterEvent.emit(filter);
@@ -71,7 +71,7 @@ export class BookingListFilterComponent extends BaseFormComponent {
     this.statuses = [
       { name: 'Created', selected: false },
       { name: 'Submitted', selected: true },
-      { name: 'Accepted', selected: true },
+      { name: 'Accepted', selected: false },
       { name: 'Rejected', selected: false },
       { name: 'Completed', selected: false }
     ];

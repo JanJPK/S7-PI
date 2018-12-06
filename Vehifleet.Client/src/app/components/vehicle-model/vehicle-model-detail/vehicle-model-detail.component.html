@@ -1,4 +1,4 @@
-<div *ngIf="vehicleModel">
+<div *ngIf="vehicleModel; else: loading">
   <div class="row justify-content-center">
     <div class="col col-lg-4">
       <div class="card border-primary">
@@ -188,3 +188,5 @@
     </div>
   </div>
 </div>
+
+<ng-template #loading> <app-loading></app-loading> </ng-template>

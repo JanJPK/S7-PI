@@ -13,5 +13,8 @@ export class Booking extends CostGenerating {
   constructor(id?: number) {
     super();
     this.id = id;
+    this.cost = 0;
+    this.fuelConsumed = 0;
+    this.mileage = 0;
   }
 }

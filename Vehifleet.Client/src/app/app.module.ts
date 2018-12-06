@@ -40,6 +40,7 @@ import { ErrorModalComponent } from './shared/modal/error-modal/error-modal.comp
 import { SuccessModalComponent } from './shared/modal/success-modal/success-modal.component';
 import { VehicleListBookingFilterComponent } from './components/vehicle/vehicle-list-booking-filter/vehicle-list-booking-filter.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
+import { BookingListPersonalFilterComponent } from './components/bookings/booking-list-personal-filter/booking-list-personal-filter.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,7 +72,8 @@ import { LoadingComponent } from './components/shared/loading/loading.component'
     ErrorModalComponent,
     SuccessModalComponent,
     VehicleListBookingFilterComponent,
-    LoadingComponent
+    LoadingComponent,
+    BookingListPersonalFilterComponent
   ],
   imports: [
     BrowserModule,

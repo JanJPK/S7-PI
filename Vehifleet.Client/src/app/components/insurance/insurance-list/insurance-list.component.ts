@@ -13,6 +13,8 @@ export class InsuranceListComponent implements OnInit {
   set selectedVehicleId(vehicleId: number) {
     this.vehicleId = vehicleId;
   }
+  @Input()
+  isBooked: boolean;
 
   vehicleId: number;
   insurances: Insurance[];

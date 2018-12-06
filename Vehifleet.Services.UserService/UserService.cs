@@ -51,8 +51,7 @@ namespace Vehifleet.Services.UserService
         {
             await roleRepository.AddUserToRole(userId, roleId);
         }
-
-        // TODO: Refactor entire registering process with SecureString / byte[] for password       
+    
         public async Task<bool> CreateUser(EmployeeIdentity identity, string password)
         {
             var result = await userManager.CreateAsync(identity, password);

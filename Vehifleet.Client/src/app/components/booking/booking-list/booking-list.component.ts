@@ -27,7 +27,7 @@ export class BookingListComponent implements OnInit {
     if (vehicleId != 0) {
       filter.vehicleId = vehicleId;
     } else {
-      filter.statuses = ['Accepted', 'Submitted', 'Completed'];
+      filter.statuses = ['Submitted'];
       filter.fromDate = this.dateConverter.addDays(new Date(), -90).toJSON();
     }
     this.get(filter);

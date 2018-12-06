@@ -1,4 +1,4 @@
-<div *ngIf="booking">
+<div *ngIf="booking; else: loading">
   <div class="row justify-content-center">
     <div class="col col-lg-4">
       <div class="card border-primary">
@@ -53,6 +53,12 @@
                   class="form-control"
                   formControlName="purpose"
                 ></textarea>
+                <div
+                  *ngIf="isInvalid('purpose')"
+                  class="invalid-feedback d-block"
+                >
+                  Purpose is required.
+                </div>
               </div>
             </fieldset>
           </form>
@@ -134,15 +140,20 @@
           </div>
         </div>
 
-        <div *ngIf="isCurrentStatus('Created')">
+        <div *ngIf="canBeEdited() && isCurrentStatus('Created')">
           <div class="card-body">
             <div class="btn-group" role="group">
-              <button class="btn btn-primary mb-3" (click)="submit()">
+              <button
+                class="btn btn-primary mb-3"
+                (click)="onSubmit()"
+                [disabled]="!form.valid"
+              >
                 Save
               </button>
               <button
-                class="btn btn-primary mb-3"
-                (click)="onChangeStatus('Submit')"
+                class="btn btn-success mb-3"
+                (click)="onChangeStatus('Submitted')"
+                [disabled]="!form.valid"
               >
                 Submit
               </button>
@@ -157,11 +168,11 @@
           </div>
         </div>
 
-        <div *ngIf="isCurrentStatus('Submitted')">
+        <div *ngIf="canBeEdited() && isCurrentStatus('Submitted')">
           <div class="card-body">
             <div class="btn-group" role="group">
               <button
-                class="btn btn-primary mb-3"
+                class="btn btn-success mb-3"
                 (click)="onChangeStatus('Accepted')"
               >
                 Accept
@@ -176,11 +187,18 @@
           </div>
         </div>
 
-        <div *ngIf="isCurrentStatus('Accepted')">
+        <div *ngIf="canBeEdited() && isCurrentStatus('Accepted')">
           <div class="card-body">
             <div class="btn-group" role="group">
               <button
                 class="btn btn-primary mb-3"
+                (click)="onSubmit()"
+                [disabled]="!form.valid"
+              >
+                Save
+              </button>
+              <button
+                class="btn btn-success mb-3"
                 (click)="onChangeStatus('Completed')"
               >
                 Complete
@@ -189,10 +207,14 @@
           </div>
         </div>
 
-        <div *ngIf="isCurrentStatus('Completed')">
+        <div *ngIf="canBeEdited() && isCurrentStatus('Completed')">
           <div class="card-body">
             <div class="btn-group" role="group">
-              <button class="btn btn-primary mb-3" (clikc)="onSubmit()">
+              <button
+                class="btn btn-primary mb-3"
+                (clikc)="onSubmit()"
+                [disabled]="!form.valid"
+              >
                 Save
               </button>
             </div>
@@ -289,3 +311,5 @@
     </div>
   </div>
 </div>
+
+<ng-template #loading> <app-loading></app-loading> </ng-template>

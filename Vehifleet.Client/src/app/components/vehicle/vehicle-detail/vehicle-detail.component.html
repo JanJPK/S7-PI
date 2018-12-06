@@ -20,16 +20,26 @@
             <fieldset>
               <div class="form-group">
                 <label>Status:</label>
-                <select
-                  type="text"
-                  class="form-control"
-                  formControlName="status"
-                  id="status"
-                >
-                  <option *ngFor="let status of statuses" [ngValue]="status">
-                    {{ status }}
-                  </option>
-                </select>
+                <div *ngIf="vehicle.status == 'Booked'; else: notBooked">
+                  <input
+                    type="text"
+                    readonly=""
+                    class="form-control"
+                    placeholder="Booked"
+                  />
+                </div>
+                <ng-template #notBooked>
+                  <select
+                    type="text"
+                    class="form-control"
+                    formControlName="status"
+                    id="status"
+                  >
+                    <option *ngFor="let status of statuses" [ngValue]="status">
+                      {{ status }}
+                    </option>
+                  </select>
+                </ng-template>
               </div>
 
               <div class="form-group">
@@ -234,11 +244,21 @@
     </div>
 
     <div class="col col-lg-4">
-      <app-insurance-list [selectedVehicleId]="vehicle.id">
+      <app-insurance-list
+        [selectedVehicleId]="vehicle.id"
+        [isBooked]="
+          vehicle.status == 'Decomissioned' || vehicle.status == 'Booked'
+        "
+      >
       </app-insurance-list>
     </div>
     <div class="col col-lg-4">
-      <app-maintenance-list [selectedVehicleId]="vehicle.id">
+      <app-maintenance-list
+        [selectedVehicleId]="vehicle.id"
+        [isBooked]="
+          vehicle.status == 'Decomissioned' || vehicle.status == 'Booked'
+        "
+      >
       </app-maintenance-list>
     </div>
   </div>

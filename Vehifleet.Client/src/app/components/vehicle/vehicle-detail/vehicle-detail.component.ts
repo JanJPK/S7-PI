@@ -120,7 +120,7 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
       mileage: this.vehicle.mileage
     });
     this.form.controls['locationCode'].setValue(this.vehicle.locationCode);
-    if (this.vehicle.status != 'Available') {
+    if (this.vehicle.status == 'Booked') {
       this.form.disable();
     }
   }

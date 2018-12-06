@@ -14,6 +14,8 @@ export class MaintenanceListComponent implements OnInit {
   set selectedVehicleId(vehicleId: number) {
     this.vehicleId = vehicleId;
   }
+  @Input()
+  isBooked: boolean;
 
   vehicleId: number;
   maintenances: Maintenance[];

@@ -83,7 +83,7 @@ namespace Vehifleet.API.Controllers
 
             var booking = mapper.Map<Booking>(bookingDto);
             var vehicle = await vehicleRepository.GetById(booking.VehicleId);
-            vehicle.Status = VehicleStatus.Unavailable;
+            vehicle.Status = VehicleStatus.Booked;
             await bookingRepository.Insert(booking);
             await vehicleRepository.Update(vehicle);
             return Ok(booking.Id);

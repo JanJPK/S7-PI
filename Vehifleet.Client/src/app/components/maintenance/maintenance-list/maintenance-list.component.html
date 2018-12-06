@@ -23,7 +23,7 @@
     </div>
 
     <div class="card-body">
-      <button class="btn btn-primary" (click)="select(0)">
+      <button class="btn btn-primary" (click)="select(0)" [disabled]="isBooked">
         New maintenance
       </button>
     </div>

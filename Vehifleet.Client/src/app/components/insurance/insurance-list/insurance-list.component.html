@@ -23,7 +23,9 @@
     </div>
 
     <div class="card-body">
-      <button class="btn btn-primary" (click)="select(0)">New insurance</button>
+      <button class="btn btn-primary" (click)="select(0)" [disabled]="isBooked">
+        New insurance
+      </button>
     </div>
   </div>
 </div>

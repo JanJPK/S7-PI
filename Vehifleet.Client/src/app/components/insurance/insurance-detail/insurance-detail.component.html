@@ -1,4 +1,4 @@
-<div *ngIf="insurance && vehicle">
+<div *ngIf="insurance && vehicle; else: loading">
   <div class="row justify-content-center">
     <div class="col col-lg-4">
       <div class="card border-primary">
@@ -100,7 +100,11 @@
             <div class="btn-group" role="group">
               <button
                 class="btn btn-primary mb-3"
-                [disabled]="!form.valid || !vehicle.status == 'Available'"
+                [disabled]="
+                  !form.valid ||
+                  vehicle.status == 'Decomissioned' ||
+                  vehicle.status == 'Booked'
+                "
                 (click)="onSubmit()"
               >
                 Save
@@ -108,7 +112,10 @@
               <button
                 class="btn btn-danger mb-3"
                 (click)="onDelete()"
-                [disabled]="vehicle.status == 'Decomissioned'"
+                [disabled]="
+                  vehicle.status == 'Decomissioned' ||
+                  vehicle.status == 'Booked'
+                "
               >
                 Delete
               </button>
@@ -127,3 +134,5 @@
     </div>
   </div>
 </div>
+
+<ng-template #loading> <app-loading></app-loading> </ng-template>

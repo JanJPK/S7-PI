@@ -78,12 +78,14 @@ export class BookingDetailComponent extends BaseFormDetailComponent {
       });
     } else {
       this.booking = new Booking(0);
+      this.booking.employeeId = this.userService.getEmployee().id;
       this.booking.status = 'Created';
       this.booking.startDate = new Date();
       this.booking.endDate = this.datepickerConverter.addDays(new Date(), 2);
       const vehicleId = +this.route.snapshot.paramMap.get('vehicleId');
       this.vehicleService.getById(vehicleId).subscribe(vehicle => {
         this.vehicle = vehicle;
+        this.booking.vehicleId = vehicleId;
         this.setUpForm();
       });
     }
@@ -113,6 +115,12 @@ export class BookingDetailComponent extends BaseFormDetailComponent {
     if (!this.canBeEdited()) {
       this.form.disable();
     }
+
+    if (this.booking.status != 'Created') {
+      if (!this.canBeEdited('Submitted')) {
+        this.form.get('notes').disable();
+      }
+    }
   }
 
   setUpDatepicker() {
@@ -135,26 +143,30 @@ export class BookingDetailComponent extends BaseFormDetailComponent {
     this.endDateMax = this.datepickerConverter.dateToNgbDate(endDateMax);
   }
 
-  canBeEdited(): boolean {
+  canBeEdited(status: string = null): boolean {
     const currentUserId = this.userService.getEmployee().id;
     const isCurrentUserElevated = this.userService.isElevatedUser();
-    switch (this.booking.status) {
+    if (status == null) {
+      status = this.booking.status;
+    }
+    switch (status) {
       case 'Created': {
         if (this.booking.employeeId == currentUserId) {
           return true;
         }
+        break;
       }
       case 'Submitted': {
         if (this.booking.employeeId != currentUserId && isCurrentUserElevated) {
           return true;
         }
+        break;
       }
       case 'Accepted': {
         if (this.booking.employeeId == currentUserId) {
           return true;
-        } else if (isCurrentUserElevated) {
-          return true;
         }
+        break;
       }
       case 'Rejected': {
         return false;
@@ -163,46 +175,21 @@ export class BookingDetailComponent extends BaseFormDetailComponent {
         if (this.booking.employeeId != currentUserId && isCurrentUserElevated) {
           return true;
         }
+        break;
       }
       default: {
         return false;
+        break;
       }
     }
-    if (this.booking.status == 'Created' || this.booking.status == 'Accepted') {
-    }
-    // if(this.userService.isElevatedUser()) {
-    //   if(currentUserId) {
-    //     return false;
-    //   } else {
-    //     return this.booking.status != 'Created';
-    //   }
-    // } else {
-
-    // }
   }
-
-  // canBeEdited(status: string): boolean {
-  //   if (status == 'Created' || status == 'Accepted') {
-  //     // Employees can edit their unsubmitted and accepted (ongoing) bookings.
-  //     return this.userService.getEmployee().id == this.booking.employeeId;
-  //   } else if (status == 'Submitted' || status == 'Completed') {
-  //     // Managers can edit submitted and completed bookings,
-  //     // unless they are the ones who created them.
-  //     return (
-  //       this.userService.isElevatedUser() &&
-  //       this.userService.getEmployee().id != this.booking.employeeId
-  //     );
-  //   } else {
-  //     return false;
-  //   }
-  // }
 
   isCurrentStatus(status: string): boolean {
     return status == this.booking.status;
   }
 
-  onChangeStatus(status: string) {
-    switch (status) {
+  onChangeStatus(newStatus: string) {
+    switch (newStatus) {
       case 'Submitted': {
         this.modalService
           .showConfirmModal(
@@ -210,30 +197,44 @@ export class BookingDetailComponent extends BaseFormDetailComponent {
           )
           .then(confirmed => {
             if (confirmed == 'true') {
-              this.booking.status = status;
+              this.booking.status = newStatus;
+              this.form.patchValue({
+                status: newStatus
+              });
               this.onSubmit();
+              this.form.disable();
             }
           });
+        break;
       }
       case 'Accepted': {
         this.modalService
           .showConfirmModal('Do you want to accept this booking?')
           .then(confirmed => {
             if (confirmed == 'true') {
-              this.booking.status = status;
+              this.booking.status = newStatus;
+              this.form.patchValue({
+                status: newStatus
+              });
               this.onSubmit();
             }
           });
+        break;
       }
       case 'Rejected': {
         this.modalService
           .showConfirmModal('Do you want to reject this booking?')
           .then(confirmed => {
             if (confirmed == 'true') {
-              this.booking.status = status;
+              this.booking.status = newStatus;
+              this.form.patchValue({
+                status: newStatus
+              });
               this.onSubmit();
+              this.form.disable();
             }
           });
+        break;
       }
       case 'Completed': {
         this.modalService
@@ -242,10 +243,18 @@ export class BookingDetailComponent extends BaseFormDetailComponent {
           )
           .then(confirmed => {
             if (confirmed == 'true') {
-              this.booking.status = status;
+              this.booking.status = newStatus;
+              this.form.patchValue({
+                status: newStatus
+              });
               this.onSubmit();
+              this.form.disable();
             }
           });
+        break;
+      }
+      default: {
+        return;
       }
     }
   }
@@ -257,6 +266,8 @@ export class BookingDetailComponent extends BaseFormDetailComponent {
     this.booking.purpose = this.form.get('purpose').value;
     this.booking.notes = this.form.get('notes').value;
     this.booking.cost = this.form.get('cost').value;
+    this.booking.mileage = this.form.get('mileage').value;
+    this.booking.fuelConsumed = this.form.get('fuelConsumed').value;
   }
 
   onSubmit() {
@@ -275,7 +286,7 @@ export class BookingDetailComponent extends BaseFormDetailComponent {
       this.bookingService.create(this.booking).subscribe(id => {
         if (id != null) {
           this.modalService.showSuccessModal('Boking has been created.');
-          this.router.navigate([`/vehicles/bookings/${id}`]);
+          this.router.navigate([`/bookings/${id}`]);
           this.get();
         } else {
           this.modalService.showSuccessModal('Boking creation has failed.');

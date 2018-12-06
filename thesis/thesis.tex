@@ -90,10 +90,10 @@
 	\section{Wstęp}
 	Celem niniejszej pracy dyplomowej jest opracowanie projektu, implementacja oraz wdrożenie systemu umożliwiającego zarządzanie flotą samochodów. Pierwszym etapem projektu jest zebrane wymagań funkcjonalnych i niefunkcjonalnych oraz określenie zakresu pracy. Drugi etap projektu to wybór technologii i projekt architektury. Ostatnim celem jest implementacja systemu.
 	
-	Temat projektu został wybrany ze względu na chęć wykorzystania wiedzy z dziedziny motoryzacji w celu stworzenia aplikacji ułatwiającej zarządzanie pojazdami. Z uwagi na rosnącą popularność rozwiązań związanych z wypożyczaniem samochodów celem projektu jest system, który można opisać jako wewnątrzfirmową wypożyczalnie umożliwiająca jak największe wykorzystanie dostępnej floty pojazdów przez pracowników, którzy nie mają potrzeby posiadania firmowego samochodu na wyłączność. 
+	Temat projektu został wybrany ze względu na chęć wykorzystania wiedzy z dziedziny motoryzacji w celu stworzenia aplikacji ułatwiającej zarządzanie pojazdami. Z uwagi na rosnącą popularność rozwiązań związanych z wypożyczaniem samochodów celem projektu jest system, który można opisać jako wewnątrzfirmową wypożyczalnie umożliwiająca jak największe wykorzystanie dostępnej floty pojazdów przez pracowników, którzy nie mają potrzeby posiadania firmowego samochodu na wyłączność.
 	
 	\section{Cel i zakres pracy}
-	Celem projektu jest stworzenie aplikacji umożliwiającej zarządzanie flotą samochodów. Aplikacja jest skierowana do firm które nie mają potrzeby lub wystarczających środków by zapewnić pracownikom samochody na wyłączność. Przykładowym przypadkiem użycia systemu może być jednorazowa potrzeba odwiedzenia klienta lub wyjazd na szkolenie. Typowe rozwiązania dla firm obecne na rynku skierowane są do firm świadczących usługi spedycyjne — aplikacje posiadają warstwę śledzenia ładunków oraz tworzenia zadań przewozowych dla kierowców; programy służące do obsługi komercyjnych wypożyczalni pomijają proces autoryzacji rezerwacji — zwykle sprawdzana jest zdolność wypożyczającego do zapłaty.
+	Celem projektu jest stworzenie aplikacji umożliwiającej zarządzanie flotą samochodów. Aplikacja jest skierowana do firm, które nie mają potrzeby lub wystarczających środków, by zapewnić pracownikom samochody na wyłączność. Przykładowym przypadkiem użycia systemu może być jednorazowa potrzeba odwiedzenia klienta lub wyjazd na szkolenie. Typowe rozwiązania dla firm obecne na rynku skierowane są do firm świadczących usługi spedycyjne — aplikacje posiadają warstwę śledzenia ładunków oraz tworzenia zadań przewozowych dla kierowców; programy służące do obsługi komercyjnych wypożyczalni pomijają proces autoryzacji rezerwacji — zwykle sprawdzana jest zdolność wypożyczającego do zapłaty.
 	
 	Projekt utworzony w ramach tej pracy łączy mechanikę z komercyjnych wypożyczalni z dodatkową warstwą biznesową pozwalającą kontrolować sposób używania pojazdów.
 	
@@ -102,12 +102,14 @@
 	\section{Układ pracy}
 	W rozdziale pierwszym zawarto wstęp oraz krótki opis celu projektu. Drugi rozdział porównuje istniejące rozwiązania do aplikacji będącej celem projektu. Rozdział trzeci zawiera wymagania funkcjonalne oraz niefunkcjonalne. W kolejnym, czwartym rozdziale znajduje się opis wybranych technologii oraz narzędzi, wraz z uzasadnieniem. Rozdział piąty skupia się na opisie technicznym projektu oraz jego implementacji. Szósty rozdział zawiera opis sposobu testowania systemu. Ostatni, siódmy rozdział zawiera podsumowanie projektu.
 	
+	Dodatkowo, jako dodatek dołączona została instrukcja użytkownika.
+	
 	%----------------------------------------------------------------------------------------
-	%	SECTION 2
+	% SECTION 2
 	%----------------------------------------------------------------------------------------
 	\newpage
 	\chapter{Istniejące rozwiązania}
-	Jednymi z popularniejszych rozwiązań obecnych na rynku są \textit{Fleetly} (\textit{https://www.fleetly.co/}) oraz \textit{Vinitysoft Fleet Manager} (\textit{https://www.vinitysoft.com/}). Sposób działania \textit{Fleetly} jest bliski działaniu systemu który został stworzony w ramach projektu, skupia się on jednak zanadto na aspekcie wypożyczalni i pomija funkcjonalności przydatne w prowadzeniu firmy niezwiązanej z wypożyczaniem samochodów. Dodatkowym problemem \textit{Fleetly} jest przechowywanie danych w chmurze — wiele firm preferuje posiadanie własnych systemów ze względów bezpieczeństwa danych.  \textit{Vinitysoft Fleet Manager} kładzie mały nacisk na kontrolę dostępu do pojazdów i system śledzenia towarów; jest to system przeznaczony dla firm których procesy główne opierają się na wykorzystywaniu samochodów. Kolejnym problemem tego systemu jest przestarzały i mało intuicyjny interfejs użytkownika.
+	Jednymi z popularniejszych rozwiązań obecnych na rynku są \textit{Fleetly} (\textit{https://www.fleetly.co/}) oraz \textit{Vinitysoft Fleet Manager} (\textit{https://www.vinitysoft.com/}). Sposób działania \textit{Fleetly} jest bliski działaniu systemu, który został stworzony w ramach projektu, skupia się on jednak zanadto na aspekcie wypożyczalni i pomija funkcjonalności przydatne w prowadzeniu firmy niezwiązanej z wypożyczaniem samochodów. Dodatkowym problemem \textit{Fleetly} jest przechowywanie danych w chmurze — wiele firm preferuje posiadanie własnych systemów ze względów bezpieczeństwa danych. \textit{Vinitysoft Fleet Manager} kładzie mały nacisk na kontrolę dostępu do pojazdów i system śledzenia towarów; jest to system przeznaczony dla firm których procesy główne opierają się na wykorzystywaniu samochodów. Kolejnym problemem tego systemu jest przestarzały i mało intuicyjny interfejs użytkownika.
 	
 	\begin{figure}[H]
 		\centering
@@ -130,7 +132,7 @@
 			Nazwa                & Krótka nazwa\\ \hline
 			Opis                 & Dokładny opis\\ \hline
 			Aktor                & Grupa użytkowników\\ \hline
-			Kryterium spełnienia & Funkcjonalność która musi zostać zaimplementowana by wymaganie można było uznać jako spełnione\\ \hline
+			Kryterium spełnienia & Funkcjonalność, która musi zostać zaimplementowana by wymaganie można było uznać jako spełnione\\ \hline
 			Ograniczenia         & Ograniczenia funkcjonalności, jeżeli takie istnieją\\ \hline
 		\end{tabularx}
 	\end{table}
@@ -143,8 +145,8 @@
 	
 	Dodatkowe pojęcia związane z modelami świata biznesowego:
 	\begin{itemize}
-		\item \textbf{Model Pojazdu} - model opisujący specyfikacje techniczną wspólną dla pewnego zbioru pojazdów.
-		\item \textbf{Pojazd} - model opisujący informacje unikatowe dla pewnego przedstawiciela zbioru Modeli Pojazdów.
+		\item \textbf{Model Pojazdu} — model opisujący specyfikacje techniczną wspólną dla pewnego zbioru pojazdów.
+		\item \textbf{Pojazd} — model opisujący informacje unikatowe dla pewnego przedstawiciela zbioru Modeli Pojazdów.
 	\end{itemize}
 	
 	\begin{table}[H]
@@ -155,7 +157,7 @@
 			Opis                 & System powinien pozwalać na dodawanie i edycję modeli pojazdów; specyfikacji technicznej dla danego modelu.    \\ \hline
 			Aktor                & Kierownik \\ \hline
 			Kryterium spełnienia & Kierownik może dodawać nowe modele samochodów. Informacje mogą zostać w późniejszym czasie zmodyfikowane lub usunięte.\\ \hline
-			Ograniczenia         & Model pojazdu może zostać usunięty wyłącznie gdy nie ma żadnych pojazdów \\ \hline
+			Ograniczenia         & Model pojazdu może zostać usunięty wyłącznie, gdy nie ma żadnych pojazdów \\ \hline
 		\end{tabularx}
 	\end{table}
 	
@@ -167,7 +169,7 @@
 			Opis                 & System powinien pozwalać na dodawanie i edycję pojazdów będących egzemplarzami modeli z wymagania \#2; pojazd zawiera informacje unikalne dla danego egzemplarza, takie jak numer rejestracyjny.     \\ \hline
 			Aktor                & Kierownik \\ \hline
 			Kryterium spełnienia & Kierownik może dodawać nowe pojazdy dla wybranego modelu. Informacje mogą zostać w późniejszym czasie zmodyfikowane lub usunięte.\\ \hline
-			Ograniczenia         & Pojazd nie może być modyfikowany gdy jest obecnie zarezerwowany. Pojazd który był rezerwowany nie może zostać usunięty — może zostać oznaczony jako wycofany z użycia. \\ \hline
+			Ograniczenia         & Pojazd nie może być modyfikowany, gdy jest obecnie zarezerwowany. Pojazd który był rezerwowany, nie może zostać usunięty — może zostać oznaczony jako wycofany z użycia. \\ \hline
 		\end{tabularx}
 	\end{table}
 	
@@ -190,7 +192,7 @@
 			Nazwa                & Zarządzanie serwisami pojazdu \\ \hline
 			Opis                 & System powinien umożliwiać wprowadzanie informacji związanych z serwisami danego pojazdu. \\ \hline
 			Aktor                & Kierownik \\ \hline
-			Kryterium spełnienia & Kierownik może przeglądać historię napraw danego pojazdu oraz wprowadzać nowe dane. System rozróżnia różne rodzaje serwisowania takie jak regularny przegląd, zdarzenie wyjątkowe czy naprawa powypadkowa. System bierze pod uwagę obecny stan pojazdu podczas tworzenia rezerwacji; pojazd nie może zostać zarezerwowany gdy jest obecnie naprawiany. \\ \hline
+			Kryterium spełnienia & Kierownik może przeglądać historię napraw danego pojazdu oraz wprowadzać nowe dane. System rozróżnia różne rodzaje serwisowania takie jak regularny przegląd, zdarzenie wyjątkowe czy naprawa powypadkowa. System bierze pod uwagę obecny stan pojazdu podczas tworzenia rezerwacji; pojazd nie może zostać zarezerwowany, gdy jest obecnie naprawiany. \\ \hline
 			Ograniczenia         & \\ \hline
 		\end{tabularx}
 	\end{table}
@@ -200,7 +202,7 @@
 			\hline
 			Numer                & 5 \\ \hline
 			Nazwa                & Tworzenie rezerwacji \\ \hline
-			Opis                 & System powinien umożliwiać przeglądanie dostępnych pojazdów (dostępność określana jest na podstawie informacji z wymagania \#2) i tworzenie rezerwacji wraz z niezbędnymi danymi takimi jak okres czasu i potrzeba stojąca za rezerwacją\\ \hline
+			Opis                 & System powinien umożliwiać przeglądanie dostępnych pojazdów (dostępność określana jest na podstawie informacji z wymagania \#2) i tworzenie rezerwacji wraz z niezbędnymi danymi takimi jak okres i potrzeba stojąca za rezerwacją\\ \hline
 			Aktor                & Kierowca \\ \hline
 			Kryterium spełnienia & Kierowca może utworzyć rezerwację \\ \hline
 			Ograniczenia         & Kierowca nie może utworzyć rezerwacji dla innego użytkownika \\ \hline
@@ -212,7 +214,7 @@
 			\hline
 			Numer                & 6 \\ \hline
 			Nazwa                & Kontrola rezerwacji\\ \hline
-			Opis                 & System umożliwia kontrolowanie stanu rezerwacji. rezerwację uznane jest za obowiązujące dopiero po akceptacji przez uprawnioną do tego osobę.\\ \hline
+			Opis                 & System umożliwia kontrolowanie stanu rezerwacji. Rezerwację uznane jest za obowiązujące dopiero po akceptacji przez uprawnioną do tego osobę.\\ \hline
 			Aktor                & Kierownik \\ \hline
 			Kryterium spełnienia & Kierownik może przeglądać rezerwacji utworzone przez użytkowników systemu oraz zmieniać ich obecny stan po ocenie zasadności rezerwacji \\ \hline
 			Ograniczenia         & Kierownik nie może akceptować własnych rezerwacji \\ \hline
@@ -310,9 +312,9 @@
 	\subsection{Repozytorium}
 	Do zarządzania kodem został wykorzystany system kontroli wersji \textit{Git}. Lokalna kopia projektu była synchronizowana ze zdalnym, prywatnym repozytorium znajdującym się na serwisie \text{GitHub}. Wykorzystane rozwiązanie pozwala na łatwy dostęp do wcześniejszych wersji projektu oraz zmniejsza ryzyko utraty kodu, gdyż nie jest on przechowywany tylko w jednym miejscu.
 	\subsection{Edytory i środowiska programistyczne}
-	Ze względu na wykorzystane technologie, kod był rozwijany z pomocą narzędzi Microsoft, oferujących najlepsze wsparcie dla \textit{TypeScript} oraz \textit{C\#}. 
+	Ze względu na wykorzystane technologie, kod był rozwijany z pomocą narzędzi Microsoft, oferujących najlepsze wsparcie dla \textit{TypeScript} oraz \textit{C\#}.
 	
-	Aplikacja klienta była rozwijana przy użyciu \textit{Visual Studio Code 1.28}, nowoczesnego edytora który sprawdza się znakomicie przy tworzeniu interfejsów użytkownika ze względu na zintegrowaną konsolę pozwalającą na łatwe zarządzanie paczkami oraz łatwość dostosowywania do potrzeb użytkownika. W trakcie pracy wykorzystano wiele rozszerzeń, najważniejsze z nich to \textit{TSLint}, linter wykrywający błędy w kodzie \textit{TypeScript} oraz \textit{GitLens} — rozszerzenie wspomagające zarządzanie repozytorium \textit{Git}.
+	Aplikacja klienta była rozwijana przy użyciu \textit{Visual Studio Code 1.28}, nowoczesnego edytora, który sprawdza się znakomicie przy tworzeniu interfejsów użytkownika ze względu na zintegrowaną konsolę pozwalającą na łatwe zarządzanie paczkami oraz łatwość dostosowywania do potrzeb użytkownika. W trakcie pracy wykorzystano wiele rozszerzeń, najważniejsze z nich to \textit{TSLint}, linter wykrywający błędy w kodzie \textit{TypeScript} oraz \textit{GitLens} — rozszerzenie wspomagające zarządzanie repozytorium \textit{Git}.
 	
 	Do rozwoju interfejsu programistycznego wykorzystano \textit{Visual Studio 2017} pozwalające na łatwe debugowanie kodu oraz analizę aspektów takich jak wykorzystanie zasobów przez program. \textit{Visual Studio} zostało wzbogacone o narzędzie \textit{JetBrains ReSharper} automatycznie formatujące pliki projektu według zadanego wzorca, zapewniając spójność i przejrzystość kodu.
 	\subsection{Dodatkowe narzędzia}
@@ -326,7 +328,7 @@
 	\newpage
 	\chapter{Projekt i implementacja}
 	\section{Architektura}
-	System został stworzony przy użyciu klasycznej architektury w której można wyodrębić trzy moduły - interfejs użytkownika (\textit{UI}), interfejs programistyczny (\textit{API}) oraz bazę danych (\textit{DB}). 
+	System został stworzony przy użyciu klasycznej architektury, w której można wyodrębić trzy moduły - interfejs użytkownika (\textit{UI}), interfejs programistyczny (\textit{API}) oraz bazę danych (\textit{DB}). 
 	
 	\begin{figure}[H]
 		\centering
@@ -1078,7 +1080,7 @@
 	\end{figure}
 
 	\section{Walidacja danych}
-	Dane wprowadzane przez użytkownika są sprawdzane pod kątem poprawności.W przypadku pól tekstowych walidacja najczęściej weryfikuje obecność jakiegokolwiek tekstu; pola które powinny zawierać liczby są weryfikowane przy użyciu wyrażeń regularnych.
+	Dane wprowadzane przez użytkownika są sprawdzane pod kątem poprawności.W przypadku pól tekstowych walidacja najczęściej weryfikuje obecność jakiegokolwiek tekstu; pola, które powinny zawierać liczby, są weryfikowane przy użyciu wyrażeń regularnych.
 	
 	\lstinputlisting[frame=single,caption=Przykładowy walidator używający wyrażenia regularnego.]{source/validator.js}
 	
@@ -1091,7 +1093,7 @@
 
 	\newpage
 	\section{Stopka audytowa}
-	Każdy widok szczegółowy korzysta z komponentu \textit{AuditFooter} wyświetlającego nazwę użytkownika który utworzył/modyfikował obiekt oraz datę kiedy akcja została wykonana.
+	Każdy widok szczegółowy korzysta z komponentu \textit{AuditFooter} wyświetlającego nazwę użytkownika, który utworzył/modyfikował obiekt oraz datę kiedy akcja została wykonana.
 	
 	\begin{figure}[H]
 		\centering
@@ -1124,11 +1126,16 @@
 	System był testowany przy użyciu testów jednostkowych korzystających z biblioteki \textit{XUnit} oraz napisanych w schludny, zgodny z często stosowaną w języku C\# konwencją \textit{AAA} sposób, bazujący na podziale testu na trzy sekcje:
 	\begin{enumerate}
 		\item Przygotuj (\textit{Arrange}): przygotowanie niezbędnych zmiennych
-		\item Działaj (\textit{Act}): wywołanie metod które mają być testowane 
+		\item Działaj (\textit{Act}): wywołanie metod, które mają być testowane 
 		\item Sprawdź (\textit{Assert}): sprawdzenie wyniku 
 	\end{enumerate}
+	W testach klas wymagających wstrzykiwania zależności wykorzystano bibliotekę \textit{Moq} do tworzenia atrap obiektów.
 	
-	\lstinputlisting[language=C,frame=single,caption=Przykład testu jednostkowego zgodnego z konwencją \textit{AAA}.]{source/tests-unit.cs}
+	Przetestowane zostały m. in. kluczowe funkcjonalności kontrolerów oraz metody rozszerzeń.
+	
+	\lstinputlisting[language=C,frame=single,caption=Test jednostkowy metody rozszerzeń.]{source/tests-unit.cs}
+	\newpage
+	\lstinputlisting[language=C,frame=single,caption=Test kontrolera korzystający z \textit{Moq}.]{source/tests-integration.cs}
 	
 	\newpage
 	\section{Testy systemowe}
@@ -1147,7 +1154,7 @@
 	\newpage
 	\chapter{Podsumowanie}
 	\section{Wnioski}
-	Celem pracy było utworzenie systemu pozwalającego na kontrolę dostępu do pojazdów oraz śledzeniu ich stanu; cel ten został spełniony. System został napisany w sposób zgodny ze standardami co pozwala na łatwiejsze utrzymanie (w tym dalszą rozbudowę). Zastosowanie nowoczesnych technologii takich jak framework \textit{ASP.NET Core 2.1} pozwala na łatwe rozwijanie aplikacji przy użyciu języka \textit{C\#}, dodatkowo oferując wiele zalet takich jak multiplatformowość i zwiększoną wydajność względem tradycyjnego \textit{ASP.NET Framework}. Użycie aplikacji webowej jako interfejsu użytkownika pozwala na dostęp do systemu bez potrzeby instalacji aplikacji klienckiej. Aplikacja webowa eliminuje również problemy takie jak aktualizacje do nowych wersji i zmniejsza koszt utrzymania całego systemu.
+	Celem pracy było utworzenie systemu pozwalającego na kontrolę dostępu do pojazdów oraz śledzeniu ich stanu; cel ten został spełniony. System został napisany w sposób zgodny ze standardami, co pozwala na łatwiejsze utrzymanie (w tym dalszą rozbudowę). Zastosowanie nowoczesnych technologii takich jak framework \textit{ASP.NET Core 2.1} pozwala na łatwe rozwijanie aplikacji przy użyciu języka \textit{C\#}, dodatkowo oferując wiele zalet takich jak multiplatformowość i zwiększoną wydajność względem tradycyjnego \textit{ASP.NET Framework}. Użycie aplikacji webowej jako interfejsu użytkownika pozwala na dostęp do systemu bez potrzeby instalacji aplikacji klienckiej. Aplikacja webowa eliminuje również problemy takie jak aktualizacje do nowych wersji i zmniejsza koszt utrzymania całego systemu.
 	
 	\section{Możliwości rozwoju}
 	System może być rozwinięty na wiele sposobów; kilka z nich:
@@ -1155,7 +1162,7 @@
 		\item automatyczna generacja raportów o kosztach (np. co miesiąc) oraz wprowadzenie serwisu wysyłającego raport e-mailem do użytkowników.
 		\item wyświetlanie statystyk w formie graficznej w interfejsie użytkownika.
 		\item przystosowanie aplikacji to użycia na urządzeniach mobilnych.
-		\item udostępnienie interfejsu programistycznego innym systemom - przykładowo system zbierający koszty generowane przez dany dział w firmie mógłby sprawdzać wydatki pracownika wiążące się z rezerwowaniem pojazdów.
+		\item udostępnienie interfejsu programistycznego innym systemom — przykładowo system zbierający koszty generowane przez dany dział w firmie mógłby sprawdzać wydatki pracownika wiążące się z rezerwowaniem pojazdów.
 		\item konteneryzacja aplikacji.
 		\item przechowywanie pełnej historii edycji oraz generowanie raportów audytowych w formacie zgodnym z \textit{Microsoft Excel}.
 	\end{itemize}
@@ -1269,6 +1276,8 @@
 		\section{Szczegóły pojazdu}	
 		\begin{figure}[H]
 			Widok zawierający wszystkie informacje na temat pojazdu wraz z listą ubezpieczeń i napraw, które mogą być dodawane lub edytowane. Użytkownik może wyświetlić wszystkie rezerwacje danego pojazdu lub jego dokładną specyfikacje techniczną po kliknięciu na odpowiedni odnośnik na dole okna.
+			
+			Pojazd nie może być edytowany jeżeli jest obecnie zarezerwowany.
 			\centering
 			\includegraphics[width=\textwidth]{images/views/vehicle-detail.png}
 			\caption{Widok szczegółowy pojazdu (vehicle-details).}		

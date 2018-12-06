@@ -39,10 +39,6 @@ export class VehicleModelDetailComponent extends BaseFormDetailComponent {
     cost: new FormControl('')
   });
 
-  get newEntity(): boolean {
-    return this.vehicleModel.id == 0;
-  }
-
   constructor(
     private vehicleModelService: VehicleModelService,
     private modalService: ModalService,
@@ -92,6 +88,7 @@ export class VehicleModelDetailComponent extends BaseFormDetailComponent {
 
   onSubmit() {
     this.readForm();
+    console.log(this.vehicleModel.id);
     if (this.vehicleModel.id != 0) {
       this.vehicleModelService
         .update(this.vehicleModel, this.vehicleModel.id)

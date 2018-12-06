@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vehifleet.API.QueryFilters;
@@ -13,30 +14,34 @@ namespace Vehifleet.API.Controllers
 {
     [ApiController]
     [Route("api/vehicle-models")]
-    //[Authorize(Policy = "RequireEmployeeRole")]
     public class VehicleModelController : ControllerBase
     {
         private readonly IGenericRepository<VehicleModel, int> vehicleModelRepository;
         private readonly IGenericRepository<Vehicle, int> vehicleRepository;
+        private readonly IMapper mapper;
 
         public VehicleModelController(IGenericRepository<VehicleModel, int> vehicleModelRepository,
-                                      IGenericRepository<Vehicle, int> vehicleRepository)
+                                      IGenericRepository<Vehicle, int> vehicleRepository,
+                                      IMapper mapper)
         {
             this.vehicleModelRepository = vehicleModelRepository;
             this.vehicleRepository = vehicleRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
+        [Authorize(Policy = "RequireEmployeeRole")]
         public async Task<IActionResult> Get([FromQuery] VehicleModelFilter filter)
         {
             var query = filter.Filter(vehicleModelRepository.Get());
 
             var vehicleModels = await query.ToListAsync();
 
-            return Ok(Mapper.Map<IEnumerable<VehicleModelDto>>(vehicleModels));
+            return Ok(mapper.Map<IEnumerable<VehicleModelDto>>(vehicleModels));
         }
 
         [HttpGet("manufacturers")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         public async Task<IActionResult> GetManufacturers()
         {
             var query = vehicleModelRepository.Get();
@@ -50,6 +55,7 @@ namespace Vehifleet.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         public async Task<IActionResult> GetById(int id)
         {
             var vehicleModel = await vehicleModelRepository.GetById(id);
@@ -60,7 +66,7 @@ namespace Vehifleet.API.Controllers
             }
             else
             {
-                var dto = Mapper.Map<VehicleModelDto>(vehicleModel);
+                var dto = mapper.Map<VehicleModelDto>(vehicleModel);
                 dto.HasVehicles = await vehicleRepository.Get()
                                                          .Where(v => v.VehicleModel.Id == id)
                                                          .AnyAsync();
@@ -69,14 +75,16 @@ namespace Vehifleet.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "RequireElevatedRights")]
         public async Task<IActionResult> Create([FromBody] VehicleModelDto vehicleModelDto)
         {
-            var vehicleModel = Mapper.Map<VehicleModel>(vehicleModelDto);
+            var vehicleModel = mapper.Map<VehicleModel>(vehicleModelDto);
             await vehicleModelRepository.Insert(vehicleModel);
             return Ok(vehicleModel.Id);
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "RequireElevatedRights")]
         public async Task<IActionResult> Update(int id, [FromBody] VehicleModelDto vehicleModelDto)
         {
             if (!await vehicleModelRepository.Exists(id))
@@ -84,12 +92,13 @@ namespace Vehifleet.API.Controllers
                 return NotFound("No such vehicle model.");
             }
 
-            var vehicleModel = Mapper.Map<VehicleModel>(vehicleModelDto);
-            await vehicleModelRepository.Insert(vehicleModel);
+            var vehicleModel = mapper.Map<VehicleModel>(vehicleModelDto);
+            await vehicleModelRepository.Update(vehicleModel);
             return Ok();
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "RequireElevatedRights")]
         public async Task<IActionResult> Delete(int id)
         {
             if (!await vehicleModelRepository.Exists(id))

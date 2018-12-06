@@ -2,9 +2,9 @@
 
 namespace Vehifleet.Data.Dtos.Validators
 {
-    public class BookingDtoValidator : AbstractValidator<BookingDto>
+    public class MaintenanceValidator : AbstractValidator<MaintenanceDto>
     {
-        public BookingDtoValidator()
+        public MaintenanceValidator()
         {
             RuleFor(dto => dto.Id)
                .GreaterThanOrEqualTo(0)
@@ -13,10 +13,6 @@ namespace Vehifleet.Data.Dtos.Validators
             RuleFor(dto => dto.VehicleId)
                .GreaterThanOrEqualTo(1)
                .WithMessage("Invalid vehicle Id.");
-
-            RuleFor(dto => dto.EmployeeId)
-               .GreaterThanOrEqualTo(1)
-               .WithMessage("Invalid employee Id.");
 
             RuleFor(dto => dto.StartDate)
                .LessThan(dto => dto.EndDate)

@@ -14,23 +14,19 @@ namespace Vehifleet.API
         {
             var host = BuildWebHost(args);            
 
-            using (var scope = host.Services.CreateScope())
-            {
-                try
-                {                    
-                    var context = scope.ServiceProvider.GetService<VehifleetContext>();
-                    var configuration = scope.ServiceProvider.GetService<IConfiguration>();                    
-                    if (Convert.ToBoolean(configuration["Database:SeedOnStartup"]))
-                    {
-                        //context.SeedDatabase();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    var logger = scope.ServiceProvider.GetService<ILogger<Program>>();
-                    logger.LogError(ex, "Exception occured during database migration or seeding.");
-                }
-            }
+            //using (var scope = host.Services.CreateScope())
+            //{
+            //    try
+            //    {                    
+            //        var context = scope.ServiceProvider.GetService<VehifleetContext>();
+            //        var configuration = scope.ServiceProvider.GetService<IConfiguration>();                    
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        var logger = scope.ServiceProvider.GetService<ILogger<Program>>();
+            //        logger.LogError(ex, "Exception occured during database migration or seeding.");
+            //    }
+            //}
 
             host.Run();
         }

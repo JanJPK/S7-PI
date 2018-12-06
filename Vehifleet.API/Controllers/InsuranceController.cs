@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vehifleet.Data.Dtos;
@@ -12,7 +13,7 @@ namespace Vehifleet.API.Controllers
 {
     [ApiController]
     [Route("api/insurances")]
-    //[Authorize(Policy = "RequireEmployeeRole")]
+    [Authorize(Policy = "RequireElevatedRights")]
     public class InsuranceController : ControllerBase
     {
         private readonly IGenericRepository<Insurance, int> insuranceRepository;
@@ -63,19 +64,33 @@ namespace Vehifleet.API.Controllers
         {
             var insurance = mapper.Map<Insurance>(insuranceDto);
             await insuranceRepository.Insert(insurance);
+
+            var vehicle = await vehicleRepository.GetById(insurance.VehicleId);
+            vehicle.Cost += insurance.Cost;
+            vehicle.AdjustCanBeBookedUntil(insurance.EndDate);
+            await vehicleRepository.Update(vehicle);
+
             return Ok(insurance.Id);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] InsuranceDto insuranceDto)
         {
-            if (!await insuranceRepository.Exists(id))
+            var oldInsurance = await insuranceRepository.GetById(id);
+            if (oldInsurance == null)
             {
                 return NotFound("No such insurance.");
             }
 
             var insurance = mapper.Map<Insurance>(insuranceDto);
             await insuranceRepository.Update(insurance);
+
+            var vehicle = await vehicleRepository.GetById(insurance.VehicleId);
+            var deltaCost = insurance.Cost - oldInsurance.Cost;
+            vehicle.Cost += deltaCost;
+            vehicle.AdjustCanBeBookedUntil(insurance.EndDate);
+            await vehicleRepository.Update(vehicle);            
+
             return Ok();
         }
 

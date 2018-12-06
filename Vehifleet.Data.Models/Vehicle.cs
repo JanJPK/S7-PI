@@ -47,5 +47,13 @@ namespace Vehifleet.Data.Models
         public virtual ICollection<Insurance> Insurances { get; set; }
 
         public virtual ICollection<Maintenance> Maintenances { get; set; }
+
+        public void AdjustCanBeBookedUntil(DateTime date)
+        {
+            if (date < CanBeBookedUntil)
+            {
+                CanBeBookedUntil = date;
+            }
+        }
     }
 }

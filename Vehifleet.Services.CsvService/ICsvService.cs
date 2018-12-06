@@ -4,6 +4,6 @@ namespace Vehifleet.Services.CsvService
 {
     public interface ICsvService
     {
-        Task GenerateReports(int bookingsHistoryDays = 30);
+        Task GenerateReports(string reportsDir, int bookingsHistoryDays = 30);
     }
 }

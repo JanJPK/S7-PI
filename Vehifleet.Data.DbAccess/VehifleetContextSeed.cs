@@ -430,7 +430,7 @@ namespace Vehifleet.Data.DbAccess
                 DateTime start = new DateTime(Rng.Next(vehicle.YearOfManufacture, 2019), Rng.Next(1, 10), Rng.Next(1, 25));
                 var employee = employees[Rng.Next(0, employees.Count)];
                 var mileage = Rng.Next(0, 200);
-                var fuelConsumed = (int) (mileage * vehicle.AverageFuelConsumption);
+                var fuelConsumed = (int) (mileage * 6 / 100);
 
                 var booking = new Booking
                 {

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vehifleet.Data.Dtos;
@@ -12,7 +13,7 @@ namespace Vehifleet.API.Controllers
 {
     [ApiController]
     [Route("api/maintenances")]
-    //[Authorize(Policy = "RequireEmployeeRole")]
+    [Authorize(Policy = "RequireElevatedRights")]
     public class MaintenanceController : ControllerBase
     {
         private readonly IGenericRepository<Maintenance, int> maintenanceRepository;
@@ -63,19 +64,31 @@ namespace Vehifleet.API.Controllers
         {
             var maintenance = mapper.Map<Maintenance>(maintenanceDto);
             await maintenanceRepository.Insert(maintenance);
+
+            var vehicle = await vehicleRepository.GetById(maintenance.VehicleId);            
+            vehicle.Cost += maintenance.Cost;
+            await vehicleRepository.Update(vehicle);
+
             return Ok(maintenance.Id);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] MaintenanceDto maintenanceDto)
         {
-            if (!await maintenanceRepository.Exists(id))
+            var oldMaintenance = await maintenanceRepository.GetById(id);
+            if (oldMaintenance == null)
             {
                 return NotFound("No such maintenance.");
             }
 
             var maintenance = mapper.Map<Maintenance>(maintenanceDto);
             await maintenanceRepository.Update(maintenance);
+
+            var vehicle = await vehicleRepository.GetById(maintenance.VehicleId);
+            var deltaCost = maintenance.Cost - oldMaintenance.Cost;
+            vehicle.Cost += deltaCost;
+            await vehicleRepository.Update(vehicle);
+
             return Ok();
         }
 

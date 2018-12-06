@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vehifleet.API.QueryFilters;
@@ -15,6 +16,7 @@ namespace Vehifleet.API.Controllers
 {
     [ApiController]
     [Route("api/bookings")]
+    [Authorize(Policy = "RequireEmployeeRole")]
     public class BookingController : ControllerBase
     {
         private readonly IGenericRepository<Booking, int> bookingRepository;

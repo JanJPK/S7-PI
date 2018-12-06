@@ -20,7 +20,6 @@ namespace Vehifleet.Services.CsvService
         private readonly IGenericRepository<Booking, int> bookingRepository;
         private readonly IGenericRepository<Vehicle, int> vehicleRepository;
         private readonly IGenericRepository<VehicleModel, int> vehicleModelRepository;
-        private readonly string reportsPath = @"D:\reports\";
 
         public CsvService(IEmployeeRepository employeeRepository,
                           IGenericRepository<Booking, int> bookingRepository,
@@ -33,7 +32,7 @@ namespace Vehifleet.Services.CsvService
             this.vehicleModelRepository = vehicleModelRepository;
         }
 
-        public async Task GenerateReports(int bookingsHistoryDays = 30)
+        public async Task GenerateReports(string reportsDir, int bookingsHistoryDays = 30)
         {
             DateTime startDate = DateTime.UtcNow.Subtract(new TimeSpan(bookingsHistoryDays, 0, 0, 0)).Date;
             string dateStamp = DateTime.UtcNow
@@ -52,7 +51,7 @@ namespace Vehifleet.Services.CsvService
                 employeeRows.Add(new EmployeeRow(employee));
             }
 
-            Write(employeeRows, $"{reportsPath}report_{dateStamp}_employees.csv");
+            Write(employeeRows, $"{reportsDir}report_{dateStamp}_employees.csv");
 
             var bookings = await bookingRepository.Get()
                                                   .Where(b => b.Status == BookingStatus.Completed)
@@ -65,7 +64,7 @@ namespace Vehifleet.Services.CsvService
                 bookingRows.Add(new BookingRow(booking));
             }
 
-            Write(bookingRows, $"{reportsPath}report_{dateStamp}_bookings.csv");
+            Write(bookingRows, $"{reportsDir}report_{dateStamp}_bookings.csv");
 
             var vehicles = await vehicleRepository.Get()
                                                   .Include(v => v.VehicleModel)
@@ -76,7 +75,7 @@ namespace Vehifleet.Services.CsvService
                 vehicleRows.Add(new VehicleRow(vehicle));
             }
 
-            Write(vehicleRows, $"{reportsPath}report_{dateStamp}_vehicles.csv");
+            Write(vehicleRows, $"{reportsDir}report_{dateStamp}_vehicles.csv");
 
             var vehicleModels = await vehicleModelRepository.Get()
                                                             .ToListAsync();
@@ -86,7 +85,7 @@ namespace Vehifleet.Services.CsvService
                 vehicleModelRows.Add(new VehicleModelRow(vehicleModel));
             }
 
-            Write(vehicleModelRows, $"{reportsPath}report_{dateStamp}_vehicle-models.csv");
+            Write(vehicleModelRows, $"{reportsDir}report_{dateStamp}_vehicle-models.csv");
         }
 
         private void Write<T>(IEnumerable<T> records, string filepath)

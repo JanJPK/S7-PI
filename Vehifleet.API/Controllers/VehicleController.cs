@@ -14,26 +14,29 @@ namespace Vehifleet.API.Controllers
 {
     [ApiController]
     [Route("api/vehicles")]
-    //[Authorize(Policy = "RequireEmployeeRole")]
     public class VehicleController : ControllerBase
     {
         private readonly IGenericRepository<Vehicle, int> vehicleRepository;
-        private readonly IGenericRepository<VehicleModel, int> vehicleModelRepository;
+        private readonly IGenericRepository<VehicleModel, int> vehicleModelRepository;        
         private readonly IGenericRepository<Booking, int> bookingRepository;
+        private readonly IGenericRepository<Insurance, int> insuranceRepository;
         private readonly IMapper mapper;
 
         public VehicleController(IGenericRepository<Vehicle, int> vehicleRepository,
                                  IGenericRepository<VehicleModel, int> vehicleModelRepository,
                                  IGenericRepository<Booking, int> bookingRepository,
+                                 IGenericRepository<Insurance, int> insuranceRepository,
                                  IMapper mapper)
         {
             this.vehicleRepository = vehicleRepository;
             this.vehicleModelRepository = vehicleModelRepository;
             this.bookingRepository = bookingRepository;
+            this.insuranceRepository = insuranceRepository;
             this.mapper = mapper;
         }
 
         [HttpGet]
+        [Authorize(Policy = "RequireEmployeeRole")]
         public async Task<IActionResult> Get([FromQuery] VehicleFilter filter)
         {
             var query = filter.Filter(vehicleRepository.Get());
@@ -47,6 +50,7 @@ namespace Vehifleet.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         public async Task<IActionResult> GetById(int id)
         {
             var vehicle = await vehicleRepository.GetById(id);
@@ -67,6 +71,7 @@ namespace Vehifleet.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "RequireElevatedRights")]
         public async Task<IActionResult> Create([FromBody] VehicleDto vehicleDto)
         {
             if (!await vehicleModelRepository.Exists(vehicleDto.VehicleModelId))
@@ -75,11 +80,14 @@ namespace Vehifleet.API.Controllers
             }
 
             var vehicle = mapper.Map<Vehicle>(vehicleDto);
+            vehicle.CanBeBookedUntil = vehicle.InspectionValidUntil;
+
             await vehicleRepository.Insert(vehicle);
             return Ok(vehicle.Id);
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "RequireElevatedRights")]
         public async Task<IActionResult> Update(int id, [FromBody] VehicleDto vehicleDto)
         {
             if (!await vehicleRepository.Exists(id))
@@ -88,11 +96,27 @@ namespace Vehifleet.API.Controllers
             }
 
             var vehicle = mapper.Map<Vehicle>(vehicleDto);
+            var currentInsurance = await insuranceRepository.Get()
+                                                            .Where(i => i.VehicleId == id)
+                                                            .OrderByDescending(i => i.EndDate)
+                                                            .FirstOrDefaultAsync();
+            if (currentInsurance == null)
+            {
+                vehicle.CanBeBookedUntil = vehicle.InspectionValidUntil;
+            }
+            else
+            {
+                vehicle.CanBeBookedUntil = currentInsurance.EndDate < vehicle.InspectionValidUntil
+                                               ? currentInsurance.EndDate
+                                               : vehicle.InspectionValidUntil;
+            }            
+
             await vehicleRepository.Update(vehicle);
             return Ok();
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "RequireElevatedRights")]
         public async Task<IActionResult> Delete(int id)
         {
             var vehicle = await vehicleRepository.GetById(id);

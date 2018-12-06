@@ -7,6 +7,7 @@ import { VehicleListItem } from '../classes/vehicle/vehicle-list-item';
 import { BaseService } from './base.service';
 import { VehicleListFilter } from '../classes/vehicle/vehicle-list-filter';
 import { LoggerService } from '../shared/logger/logger.service';
+import { UserService } from '../shared/user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,11 @@ export class VehicleService extends BaseService<
   VehicleListItem,
   number
 > {
-  constructor(http: HttpClient, logger: LoggerService) {
-    super(http, 'vehicles', logger);
+  constructor(
+    http: HttpClient,
+    userService: UserService,
+    logger: LoggerService
+  ) {
+    super(http, 'vehicles', userService, logger);
   }
 }

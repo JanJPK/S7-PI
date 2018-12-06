@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoggerService } from '../shared/logger/logger.service';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { UserService } from '../shared/user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,20 @@ export class VehicleModelService extends BaseService<
   VehicleModel,
   number
 > {
-  constructor(http: HttpClient, logger: LoggerService) {
-    super(http, 'vehicle-models', logger);
+  constructor(
+    http: HttpClient,
+    userService: UserService,
+    logger: LoggerService
+  ) {
+    super(http, 'vehicle-models', userService, logger);
   }
 
   getManufacturers(filter: any = null): Observable<string[]> {
-    this.logger.info(`getManufacturers() @ ${this.apiUrl}vehicle-models; filter: ${filter}`);
+    this.logger.info(
+      `getManufacturers() @ ${this.apiUrl}vehicle-models; filter: ${filter}`
+    );
     return this.http
-        .get<string[]>(this.apiUrl, this.httpOptions)
-        .pipe(catchError(this.handleError('get', [])));
+      .get<string[]>(this.apiUrl, this.httpOptions)
+      .pipe(catchError(this.handleError('get', [])));
   }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MockQueryable.Moq;
 using Moq;
@@ -10,7 +9,6 @@ using Vehifleet.API.QueryFilters;
 using Vehifleet.API.Tests.Helper;
 using Vehifleet.Data.Dtos;
 using Vehifleet.Data.Models;
-using Vehifleet.Repositories;
 using Vehifleet.Repositories.Interfaces;
 using Xunit;
 
@@ -29,6 +27,7 @@ namespace Vehifleet.API.Tests
             var vehicleController = new VehicleController(vehicleRepositoryMock.Object,
                                                           Mock.Of<IGenericRepository<VehicleModel, int>>(),
                                                           Mock.Of<IGenericRepository<Booking, int>>(),
+                                                          Mock.Of<IGenericRepository<Insurance, int>>(),
                                                           MapperProvider.GetMapper());
             // Act
             var request = await vehicleController.Get(new VehicleFilter());
@@ -52,11 +51,12 @@ namespace Vehifleet.API.Tests
             {
                 Manufacturer = "Ford"
             };
-            var vehicleRepositoryMock = new Mock<IGenericRepository<Vehicle, int>>();            
+            var vehicleRepositoryMock = new Mock<IGenericRepository<Vehicle, int>>();
             vehicleRepositoryMock.Setup(m => m.Get()).Returns(vehiclesMock.Object);
             var vehicleController = new VehicleController(vehicleRepositoryMock.Object,
                                                           Mock.Of<IGenericRepository<VehicleModel, int>>(),
                                                           Mock.Of<IGenericRepository<Booking, int>>(),
+                                                          Mock.Of<IGenericRepository<Insurance, int>>(),
                                                           MapperProvider.GetMapper());
             // Act
             var request = await vehicleController.Get(filter);
@@ -85,6 +85,7 @@ namespace Vehifleet.API.Tests
             var vehicleController = new VehicleController(vehicleRepositoryMock.Object,
                                                           Mock.Of<IGenericRepository<VehicleModel, int>>(),
                                                           bookingRepositoryMock.Object,
+                                                          Mock.Of<IGenericRepository<Insurance, int>>(),
                                                           MapperProvider.GetMapper());
             // Act
             var request = await vehicleController.GetById(1);
@@ -110,6 +111,7 @@ namespace Vehifleet.API.Tests
             var vehicleController = new VehicleController(vehicleRepositoryMock.Object,
                                                           Mock.Of<IGenericRepository<VehicleModel, int>>(),
                                                           bookingRepositoryMock.Object,
+                                                          Mock.Of<IGenericRepository<Insurance, int>>(),
                                                           MapperProvider.GetMapper());
             // Act
             var request = await vehicleController.GetById(9001);

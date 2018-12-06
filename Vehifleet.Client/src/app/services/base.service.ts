@@ -9,6 +9,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { LoggerService } from '../shared/logger/logger.service';
+import { UserService } from '../shared/user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ import { LoggerService } from '../shared/logger/logger.service';
 export abstract class BaseService<TEntity, TEntityListItem, TKey> {
   protected apiUrl: string;
   protected headers = new HttpHeaders({
-    'Content-Type': 'application/json'
-    //Authorization: 'my-auth-token'
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer ' + this.userService.getToken()
   });
   protected httpOptions = {
     headers: this.headers
@@ -26,12 +27,14 @@ export abstract class BaseService<TEntity, TEntityListItem, TKey> {
   constructor(
     protected http: HttpClient,
     protected apiType: string,
+    protected userService: UserService,
     protected logger: LoggerService
   ) {
     this.apiUrl = `${environment.apiUrl}${apiType}/`;
   }
 
   get(filter: any = null): Observable<TEntityListItem[]> {
+    console.log(this.headers);
     this.logger.info(`get() @ ${this.apiUrl}; filter: ${filter}`);
     if (filter) {
       return this.http

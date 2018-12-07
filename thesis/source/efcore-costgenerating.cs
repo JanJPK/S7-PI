@@ -9,9 +9,4 @@ public abstract class CostGeneratingEntity : AuditableEntity
     [Required]
     [Column(TypeName = "decimal(16, 2)")]
     public decimal Cost { get; set; }
-
-    [NotMapped]
-    public double AverageFuelConsumption => Mileage == 0
-                        ? 0
-                        : (FuelConsumed / Mileage);
 }

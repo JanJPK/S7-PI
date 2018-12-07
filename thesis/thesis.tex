@@ -55,7 +55,7 @@
 \title{Aplikacja webowa wspomagająca zarządzanie flotą samochodów}
 \engtitle{A web application supporting cars fleet management}
 \author{Jan Pajdak}
-\supervisor{dr inż. Jarosław Mierzwa, K-9}
+\supervisor{dr inż. Jarosław Mierzwa, W4/K9}
 %\guardian{dr hab. inż. Olgierd Unold Prof. nadzw. PWr, K-9}
 \field{Informatyka (INF)}
 \specialisation{Inżynieria systemów informatycznych (INS)}
@@ -124,150 +124,7 @@
 	\newpage
 	\chapter{Wymagania funkcjonalne i niefunkcjonalne}
 	\section{Wymagania funkcjonalne}
-	Wymagania zostały opisane według poniższego wzorca:
-	\begin{table}[H]
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline
-			Numer                & Numer wymagania \\ \hline
-			Nazwa                & Krótka nazwa\\ \hline
-			Opis                 & Dokładny opis\\ \hline
-			Aktor                & Grupa użytkowników\\ \hline
-			Kryterium spełnienia & Funkcjonalność, która musi zostać zaimplementowana by wymaganie można było uznać jako spełnione\\ \hline
-			Ograniczenia         & Ograniczenia funkcjonalności, jeżeli takie istnieją\\ \hline
-		\end{tabularx}
-	\end{table}
-	Rozróżniane są dwa rodzaje aktorów:
-	\begin{itemize}
-		\item Kierowca - użytkownik korzystający z funkcjonalności tworzenia i przeglądania historii rezerwacji.
-		\item Kierownik - użytkownik z pełnym dostępem do systemu.
-	\end{itemize}
-	Kierownik posiada wszelkie prawa i możliwości Kierowcy.
-	
-	Dodatkowe pojęcia związane z modelami świata biznesowego:
-	\begin{itemize}
-		\item \textbf{Model Pojazdu} — model opisujący specyfikacje techniczną wspólną dla pewnego zbioru pojazdów.
-		\item \textbf{Pojazd} — model opisujący informacje unikatowe dla pewnego przedstawiciela zbioru Modeli Pojazdów.
-	\end{itemize}
-	
-	\begin{table}[H]
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline
-			Numer                & 1  \\ \hline
-			Nazwa                & Zarządzanie modelami pojazdów \\ \hline
-			Opis                 & System powinien pozwalać na dodawanie i edycję modeli pojazdów; specyfikacji technicznej dla danego modelu.    \\ \hline
-			Aktor                & Kierownik \\ \hline
-			Kryterium spełnienia & Kierownik może dodawać nowe modele samochodów. Informacje mogą zostać w późniejszym czasie zmodyfikowane lub usunięte.\\ \hline
-			Ograniczenia         & Model pojazdu może zostać usunięty wyłącznie, gdy nie ma żadnych pojazdów \\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline
-			Numer                & 2 \\ \hline
-			Nazwa                & Zarządzanie pojazdami \\ \hline
-			Opis                 & System powinien pozwalać na dodawanie i edycję pojazdów będących egzemplarzami modeli z wymagania \#2; pojazd zawiera informacje unikalne dla danego egzemplarza, takie jak numer rejestracyjny.     \\ \hline
-			Aktor                & Kierownik \\ \hline
-			Kryterium spełnienia & Kierownik może dodawać nowe pojazdy dla wybranego modelu. Informacje mogą zostać w późniejszym czasie zmodyfikowane lub usunięte.\\ \hline
-			Ograniczenia         & Pojazd nie może być modyfikowany, gdy jest obecnie zarezerwowany. Pojazd który był rezerwowany, nie może zostać usunięty — może zostać oznaczony jako wycofany z użycia. \\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline
-			Numer                & 3 \\ \hline
-			Nazwa                & Zarządzanie ubezpieczeniami pojazdu \\ \hline
-			Opis                 & System powinien umożliwiać wprowadzanie informacji związanych z ubezpieczeniami danego pojazdu. \\ \hline
-			Aktor                & Kierownik \\ \hline
-			Kryterium spełnienia & Kierownik może przeglądać historię ubezpieczeń danego pojazdu oraz wprowadzać nowe dane. System bierze pod uwagę obecny stan pojazdu podczas tworzenia rezerwacji;  pojazd nie może zostać zarezerwowany w okresie gdy nie ma aktywnego ubezpieczenia. \\ \hline
-			Ograniczenia         & \\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline
-			Numer                & 4 \\ \hline
-			Nazwa                & Zarządzanie serwisami pojazdu \\ \hline
-			Opis                 & System powinien umożliwiać wprowadzanie informacji związanych z serwisami danego pojazdu. \\ \hline
-			Aktor                & Kierownik \\ \hline
-			Kryterium spełnienia & Kierownik może przeglądać historię napraw danego pojazdu oraz wprowadzać nowe dane. System rozróżnia różne rodzaje serwisowania takie jak regularny przegląd, zdarzenie wyjątkowe czy naprawa powypadkowa. System bierze pod uwagę obecny stan pojazdu podczas tworzenia rezerwacji; pojazd nie może zostać zarezerwowany, gdy jest obecnie naprawiany. \\ \hline
-			Ograniczenia         & \\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline
-			Numer                & 5 \\ \hline
-			Nazwa                & Tworzenie rezerwacji \\ \hline
-			Opis                 & System powinien umożliwiać przeglądanie dostępnych pojazdów (dostępność określana jest na podstawie informacji z wymagania \#2) i tworzenie rezerwacji wraz z niezbędnymi danymi takimi jak okres i potrzeba stojąca za rezerwacją\\ \hline
-			Aktor                & Kierowca \\ \hline
-			Kryterium spełnienia & Kierowca może utworzyć rezerwację \\ \hline
-			Ograniczenia         & Kierowca nie może utworzyć rezerwacji dla innego użytkownika \\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline
-			Numer                & 6 \\ \hline
-			Nazwa                & Kontrola rezerwacji\\ \hline
-			Opis                 & System umożliwia kontrolowanie stanu rezerwacji. Rezerwację uznane jest za obowiązujące dopiero po akceptacji przez uprawnioną do tego osobę.\\ \hline
-			Aktor                & Kierownik \\ \hline
-			Kryterium spełnienia & Kierownik może przeglądać rezerwacji utworzone przez użytkowników systemu oraz zmieniać ich obecny stan po ocenie zasadności rezerwacji \\ \hline
-			Ograniczenia         & Kierownik nie może akceptować własnych rezerwacji \\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline
-			Numer                & 7 \\ \hline
-			Nazwa                & Zbieranie informacji o kosztach rezerwacji\\ \hline
-			Opis                 & System umożliwia śledzenie kosztów utrzymania floty na podstawie raportów wprowadzanych przez kierowców. \\ \hline
-			Aktor                & Kierowca\\ \hline
-			Kryterium spełnienia & Kierowca może wprowadzić informację związane z rezerwacją (zużyte litry paliwa, przejechane kilometry, całkowity koszt) po oddaniu samochodu.\\ \hline
-			Ograniczenia         & \\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline
-			Numer                & 8 \\ \hline
-			Nazwa                & Zbieranie informacji o kosztach utrzymania \\ \hline
-			Opis                 & System umożliwia śledzenie kosztów utrzymania floty związanych z ubezpieczeniami oraz naprawami. \\ \hline
-			Aktor                & Kierownik \\ \hline
-			Kryterium spełnienia & Kierownik może wprowadzić koszty związane z ubezpieczeniem/serwisem pojazdu. \\ \hline
-			Ograniczenia         & \\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline
-			Numer                & 9 \\ \hline
-			Nazwa                & Wyświetlanie informacji o kosztach utrzymania \\ \hline
-			Opis                 & System jest w stanie wygenerować plik kompatybilny z programem \textit{Excel} zawierający dane na temat kosztów floty. \\ \hline
-			Aktor                & Kierownik \\ \hline
-			Kryterium spełnienia & Kierownik może wywołać utworzenie pliku ze statystykami  \\ \hline
-			Ograniczenia         & \\ \hline
-		\end{tabularx}
-	\end{table}
-	
-	\begin{table}[H]
-		\begin{tabularx}{\textwidth}{|l|X|}
-			\hline
-			Numer                & 10 \\ \hline
-			Nazwa                & Przechowywanie informacji audytowych \\ \hline
-			Opis                 & System zapisuje informacje o dacie i użytkowniku dokonującym wprowadzenia nowych danych lub modyfikacji istniejących. \\ \hline
-			Aktor                & Kierownik \\ \hline
-			Kryterium spełnienia & Informacje o dacie i użytkowniku modyfikowane są w trakcie zapisu do bazy danych. Kierownik może przeglądać dane audytowe.  \\ \hline
-			Ograniczenia         & \\ \hline
-		\end{tabularx}
-	\end{table}
+
 	
 	\section{Wymagania niefunkcjonalne}
 	\subsection{Interfejs użytkownika}
@@ -327,6 +184,137 @@
 	%----------------------------------------------------------------------------------------
 	\newpage
 	\chapter{Projekt i implementacja}
+	
+	\newpage
+	\section{Przypadki użycia}	
+	Na podstawie wymagań funkcjonalnych został stworzony następujący diagram przypadków użycia?
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{images/use_case_1.png}
+		\caption{Diagram przypadków użycia.}
+	\end{figure}
+	\subsection{Szczegółowy opis przypadków użycia}
+		Przypadki użycia zostały opisane według poniższego wzorca:
+	\begin{table}[H]
+		\begin{tabularx}{\textwidth}{|l|X|}
+			\hline
+			Numer                & Numer PU \\ \hline
+			Nazwa                & Krótka nazwa\\ \hline
+			Opis                 & Dokładny opis\\ \hline
+			Aktor                & Grupa użytkowników\\ \hline
+			Kryterium spełnienia & Funkcjonalność, która musi zostać zaimplementowana by wymaganie można było uznać jako spełnione\\ \hline
+			Ograniczenia         & Ograniczenia funkcjonalności, jeżeli takie istnieją\\ \hline
+		\end{tabularx}
+	\end{table}
+	Rozróżniane są dwa rodzaje aktorów:
+	\begin{itemize}
+		\item Kierowca - użytkownik korzystający z funkcjonalności tworzenia i przeglądania historii rezerwacji.
+		\item Kierownik - użytkownik z pełnym dostępem do systemu.
+	\end{itemize}
+	Kierownik posiada wszelkie prawa i możliwości Kierowcy.
+	
+	Dodatkowe pojęcia związane z modelami świata biznesowego:
+	\begin{itemize}
+		\item \textbf{Model Pojazdu} — model opisujący specyfikacje techniczną wspólną dla pewnego zbioru pojazdów.
+		\item \textbf{Pojazd} — model opisujący informacje unikatowe dla pewnego przedstawiciela zbioru Modeli Pojazdów.
+	\end{itemize}
+	
+	\begin{table}[H]
+		\begin{tabularx}{\textwidth}{|l|X|}
+			\hline
+			Numer                & 1  \\ \hline
+			Nazwa                & Przeglądanie dostępnych pojazdów \\ \hline
+			Opis                 & System powinien pozwalać przeglądać listę dostępnych (mogących zostać zarezerwowane) pojazdów. \\ \hline
+			Aktor                & Kierowca \\ \hline
+			Kryterium spełnienia & Kierowca może wyświetlić listę wszystkich dostępnych pojazdów. \\ \hline
+			Ograniczenia         &  \\ \hline
+		\end{tabularx}
+	\end{table}
+	
+	\begin{table}[H]
+		\begin{tabularx}{\textwidth}{|l|X|}
+			\hline
+			Numer                & 2 \\ \hline
+			Nazwa                & Tworzenie rezerwacji \\ \hline
+			Opis                 & System powinien umożliwiać rezerwowanie dostępnych pojazdów, wyświetlonych w ramach \textbf{PU \#2} wymagając wprowadzenia niezbędnych informacji jak okres i potrzeba stojąca za rezerwacją\\ \hline
+			Aktor                & Kierowca \\ \hline
+			Kryterium spełnienia & Kierowca może utworzyć rezerwację \\ \hline
+			Ograniczenia         & Kierowca nie może utworzyć rezerwacji dla innego użytkownika \\ \hline
+		\end{tabularx}
+	\end{table}	
+
+	\begin{table}[H]
+		\begin{tabularx}{\textwidth}{|l|X|}
+			\hline
+			Numer                & 3  \\ \hline
+			Nazwa                & Przeglądanie swoich rezerwacji \\ \hline
+			Opis                 & System powinien pozwalać przeglądać listę rezerwacji utworzonych przez zalogowanego użytkownika. \\ \hline
+			Aktor                & Kierowca \\ \hline
+			Kryterium spełnienia & Kierowca może wyświetlić listę rezerwacji które utworzył. \\ \hline
+			Ograniczenia         &  \\ \hline
+		\end{tabularx}
+	\end{table}
+
+	\begin{table}[H]
+		\begin{tabularx}{\textwidth}{|l|X|}
+			\hline
+			Numer                & 4  \\ \hline
+			Nazwa                & Edycja rezerwacji\\ \hline
+			Opis                 & System powinien pozwalać edytować rezerwacje. Edycja pozwala na zmianę określonych pól w zależności od obecnego stanu i poziomu uprawnień zalogowanego użytkownika. \\ \hline
+			Aktor                & Kierowca, Kierownik \\ \hline
+			Kryterium spełnienia & Kierowca może wprowadzić podstawowe informacje dotyczące rezerwacji oraz przesłać ją do oceny kierownika. Po oddaniu samochodu kierowca może zamknąć rezerwację po wpisaniu przejechanych kilometrów, zużytego paliwa oraz całkowitego kosztu. Kierownik zaakceptować lub odrzucić rezerwacje przesłane przez Kierowców. Kierownik ma również możliwość edycji większości pól by mógł naprawić ew. błędy. \\ \hline
+			Ograniczenia         & Jeżeli osobą tworzącą rezerwację jest użytkownik z uprawnieniami Kierownika, może on podejmować wyłącznie działania wchodzące w rolę Kierowcy w ramach tego wypożyczenia (np. nie może zaakceptować swojej rezerwacji). \\ \hline
+		\end{tabularx}
+	\end{table}
+
+	\begin{table}[H]
+		\begin{tabularx}{\textwidth}{|l|X|}
+			\hline
+			Numer                & 5  \\ \hline
+			Nazwa                & Przeglądanie wszystkich rezerwacji \\ \hline
+			Opis                 & System powinien pozwalać przeglądać listę wszystkich rezerwacji. \\ \hline
+			Aktor                & Kierownik \\ \hline
+			Kryterium spełnienia & Kierownik może wyświetlić listę wszystkich rezerwacji. \\ \hline
+			Ograniczenia         &  \\ \hline
+		\end{tabularx}
+	\end{table}	
+
+	\begin{table}[H]
+		\begin{tabularx}{\textwidth}{|l|X|}
+			\hline
+			Numer                & 5  \\ \hline
+			Nazwa                & Przeglądanie pojazdów \\ \hline
+			Opis                 & System powinien pozwalać przeglądać listę pojazdów. \\ \hline
+			Aktor                & Kierownik \\ \hline
+			Kryterium spełnienia & Kierownik może wyświetlić listę pojazdów. \\ \hline
+			Ograniczenia         &  \\ \hline
+		\end{tabularx}
+	\end{table}	
+
+	\begin{table}[H]
+		\begin{tabularx}{\textwidth}{|l|X|}
+			\hline
+			Numer                & 6  \\ \hline
+			Nazwa                & Edycja pojazdów \\ \hline
+			Opis                 & System powinien umożliwiać edycję pojazdów oraz powiązanych informacji (ubezpieczenia i naprawy). \\ \hline
+			Aktor                & Kierownik \\ \hline
+			Kryterium spełnienia & Kierownik może wyświetlić szczegółowe informację na temat pojazdu oraz dokonać ich zmian. Kierownik może również przeglądać ubezpieczenia i naprawy powiązane z pojazdem. \\ \hline
+			Ograniczenia         &  \\ \hline
+		\end{tabularx}
+	\end{table}	
+
+	\begin{table}[H]
+		\begin{tabularx}{\textwidth}{|l|X|}
+			\hline
+			Numer                & 7  \\ \hline
+			Nazwa                & Edycja pojazdów \\ \hline
+			Opis                 & System powinien umożliwiać edycję pojazdów oraz powiązanych informacji (ubezpieczenia i naprawy). \\ \hline
+			Aktor                & Kierownik \\ \hline
+			Kryterium spełnienia & Kierownik może wyświetlić szczegółowe informację na temat pojazdu oraz dokonać ich zmian. Kierownik może również przeglądać ubezpieczenia i naprawy powiązane z pojazdem. \\ \hline
+			Ograniczenia         &  \\ \hline
+		\end{tabularx}
+	\end{table}	
+	\newpage
 	\section{Architektura}
 	System został stworzony przy użyciu klasycznej architektury, w której można wyodrębić trzy moduły - interfejs użytkownika (\textit{UI}), interfejs programistyczny (\textit{API}) oraz bazę danych (\textit{DB}). 
 	
@@ -359,14 +347,6 @@
 		\end{tabularx}
 		\caption{Najważniejsze konwencje nazewnicze.}
 	\end{table}
-	
-	\newpage
-	\section{Przypadki użycia}	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{images/use_case_1.png}
-		\caption{Diagram przypadków użycia.}
-	\end{figure}
 	
 	\newpage
 	\section{Bezpieczeństwo}

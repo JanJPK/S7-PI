@@ -475,6 +475,15 @@
 	\section{Interfejs programistyczny}
 	\subsection{Logika biznesowa}
 	Implementacja projektu rozpoczęła się od utworzenia klas opisujących świat biznesowy.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.63]{images/vs_class_diagram.png}
+		\caption{Diagram klas}
+	\end{figure}
+	
+	Klasy były projektowane z myślą o późniejszym użyciu konwencji \textit{code-first} przy tworzeniu bazy danych (proces migracji został opisany w rozdziale 5.4.2). Diagram klas (wygenerowany w \textit{Visual Studio}) przedstawia rysunek 5.3.
+	
+	\newpage
 	\begin{table}[H]
 		\caption{Klasy obiektów biznesowych}
 		\begin{tabularx}{\textwidth}{|l|X|}
@@ -494,20 +503,9 @@
 	Wszystkie klasy związane z logiką biznesową dziedziczą po klasie \textit{AuditableEntity} (listing 5.1) posiadającej pola przechowujące informacje (data i nazwa użytkownika) o utworzeniu i ostatniej edycji encji. Klasy związane z elementami generującymi koszty (pojazdami, modelami pojazdów, rezerwacjami i użytkownikami) dziedziczą po klasie \newline \textit{CostGeneratingEntity} (listing 5.2) przechowującej informacje o koszcie, zużytym paliwie i przejechanych kilometrach.
 	
 	\lstinputlisting[language=C,frame=single,caption=Klasa abstrakcyjna AuditableEntity]{source/efcore-auditable.cs}
-	
-	\newpage	
+
 	\lstinputlisting[language=C,frame=single,caption=Klasa abstrakcyjna CostGeneratingEntity]{source/efcore-costgenerating.cs}
-	
-	Klasy były projektowane z myślą o późniejszym użyciu konwencji \textit{code-first} przy tworzeniu bazy danych (proces migracji został opisany w rozdziale 5.4.2). Diagram klas (wygenerowany w \textit{Visual Studio}) przedstawia rysunek 5.3.
-	\newpage
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{images/vs_class_diagram.png}
-		\caption{Diagram klas}
-		\small
 		
-	\end{figure}
-	
 	\subsection{Baza danych}
 	Baza danych została automatycznie wygenerowana na podstawie klas opisujących świat biznesowy przy użyciu \textit{EF Core}.
 	
@@ -1169,9 +1167,7 @@
 		\end{tabularx}
 	\end{table}
 	%----------------------------------------------------------------------------------------
-	
-	
-	\newpage
+		
 	\subsection{Eksport statystyk floty}
 	System przechowuje informacje na temat bieżących kosztów generowanych przez flotę — raporty zawierające te informacje mogą być wyeksportowane do pliku \textit{.csv}, by następnie zostać zaimportowane do narzędzia kalkulacyjnego, takiego jak \textit{Microsoft Excel}.
 	
@@ -1196,7 +1192,7 @@
 		\caption{Widoki interfejsu użytkownika}
 	\end{figure}
 
-	\section{Walidacja danych}
+	\subsection{Walidacja danych}
 	Dane wprowadzane przez użytkownika są sprawdzane pod kątem poprawności. W przypadku pól tekstowych walidacja najczęściej weryfikuje obecność jakiegokolwiek tekstu — pola, które powinny zawierać liczby, są weryfikowane przy użyciu wyrażeń regularnych.
 	
 	\lstinputlisting[frame=single,caption=Przykładowy walidator używający wyrażenia regularnego]{source/validator.js}
@@ -1209,7 +1205,7 @@
 	\end{figure}
 	
 	\newpage
-	\section{Stopka audytowa}
+	\subsection{Stopka audytowa}
 	Każdy widok szczegółowy korzysta z komponentu \textit{AuditFooter} wyświetlającego nazwę użytkownika, który utworzył/modyfikował obiekt oraz datę kiedy akcja została wykonana.
 	
 	\begin{figure}[H]
@@ -1218,7 +1214,7 @@
 		\caption{Stopka audytowa}
 	\end{figure}
 	
-	\section{Dialogi}
+	\subsection{Dialogi}
 	Każda akcja która niesie za sobą znaczne (np. akceptacja rezerwacji) lub nieodwracalne (np. usunięcie obiektu) konsekwencje, musi zostać zatwierdzona przez użytkownika w dialogu który pojawia się po naciśnięciu przycisku zapisu/usuwania.
 	
 	\begin{figure}[H]
@@ -1267,9 +1263,9 @@
 	
 	Najważniejsze testy które zostały wykonane:
 	\begin{itemize}
-		\item Utworzenie rezerwacji i przejście wszystkich stanów (przy użyciu dwóch kont testowych o różnych uprawnieniach),
-		\item Tworzenie oraz edycja modeli pojazdów, pojazdów, ubezpieczeń i napraw,
-		\item Wprowadzanie niepoprawnych danych (we wszystkich widokach) w celu przetestowania walidacji.
+		\item utworzenie rezerwacji i przejście wszystkich stanów (przy użyciu dwóch kont testowych o różnych uprawnieniach),
+		\item tworzenie oraz edycja modeli pojazdów, pojazdów, ubezpieczeń i napraw,
+		\item wprowadzanie niepoprawnych danych (we wszystkich widokach) w celu przetestowania walidacji.
 	\end{itemize}
 	
 	%----------------------------------------------------------------------------------------
@@ -1336,7 +1332,7 @@
 		\chapter{Instrukcja użytkownika}
 		Instrukcja użytkownika opisująca pokrótce każdy widok została zamieszczona poniżej. Instrukcja była tworzona przy użyciu konta z pełnymi uprawnieniami — użytkownik posiadający wyłącznie uprawnienia kierowcy ma do dyspozycji tylko widoki opisane w punktach 1-4 oraz 6.
 		
-		\section{Ekran logowania}
+		\section{Logowanie}
 		Jedyny widok dostępny dla niezalogowanego użytkownika. Aplikacja uniemożliwia dostęp do wszystkich innych widoków osobom niezalogowanym. Przy ręcznej zmianie adresu w przeglądarce nieupoważniony użytkownik zostanie przekierowany do tego widoku.
 		\begin{figure}[H]
 			\centering
@@ -1346,7 +1342,7 @@
 		Sesja użytkownika jest przechowywana w pamięci lokalnej przeglądarki do czasu wygaśnięcia tokenu (120 minut).
 		
 		\newpage
-		\section{Ekran wylogowywania}
+		\section{Wylogowywanie}
 		Podstawowy widok zalogowanego użytkownika z informacjami o użytkowniku i możliwością wylogowania się.
 		\begin{figure}[H]
 			\centering

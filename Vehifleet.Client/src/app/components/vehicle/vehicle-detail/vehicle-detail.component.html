@@ -200,22 +200,23 @@
             >
               Save
             </button>
-
-            <div *ngIf="vehicle.hasBookings; else: noBookings">
-              <button
-                class="btn btn-danger mb-3"
-                (click)="onDelete()"
-                [disabled]="vehicle.status != 'Available'"
-              >
-                Decomission
-              </button>
-            </div>
+            <!--
+              <div *ngIf="vehicle.hasBookings; else: noBookings">
+                <button
+                  class="btn btn-danger mb-3"
+                  (click)="onDelete()"
+                  [disabled]="vehicle.status != 'Available'"
+                >
+                  Decomission
+                </button>
+              </div>
+            -->
 
             <ng-template #noBookings>
               <button
                 class="btn btn-danger mb-3"
                 (click)="onDelete()"
-                [disabled]="vehicle.status != 'Available'"
+                [disabled]="vehicle.status != 'Available' || vehicle.id == 0"
               >
                 Delete
               </button>
@@ -247,7 +248,7 @@
       <app-insurance-list
         [selectedVehicleId]="vehicle.id"
         [isBooked]="
-          vehicle.status == 'Decomissioned' || vehicle.status == 'Booked'
+          vehicle.status == 'Decommissioned' || vehicle.status == 'Booked'
         "
       >
       </app-insurance-list>
@@ -256,7 +257,7 @@
       <app-maintenance-list
         [selectedVehicleId]="vehicle.id"
         [isBooked]="
-          vehicle.status == 'Decomissioned' || vehicle.status == 'Booked'
+          vehicle.status == 'Decommissioned' || vehicle.status == 'Booked'
         "
       >
       </app-maintenance-list>

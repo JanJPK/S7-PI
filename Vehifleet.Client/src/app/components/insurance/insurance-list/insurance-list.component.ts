@@ -29,11 +29,13 @@ export class InsuranceListComponent implements OnInit {
   }
 
   get() {
-    this.insuranceService
-      .getByVehicleId(this.vehicleId)
-      .subscribe(insurances => {
-        this.insurances = insurances;
-      });
+    if (this.vehicleId != 0) {
+      this.insuranceService
+        .getByVehicleId(this.vehicleId)
+        .subscribe(insurances => {
+          this.insurances = insurances;
+        });
+    }
   }
 
   select(id: number) {

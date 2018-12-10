@@ -6,7 +6,6 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { LocationService } from 'src/app/services/location.service';
 import { BaseFormDetailComponent } from '../../base/base-form-detail.component';
 import { ModalService } from 'src/app/shared/modal/modal.service';
-import { VehicleModel } from 'src/app/classes/vehicle-model/vehicle-model';
 import { VehicleModelService } from 'src/app/services/vehicle-model.service';
 
 @Component({
@@ -120,8 +119,14 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
       mileage: this.vehicle.mileage
     });
     this.form.controls['locationCode'].setValue(this.vehicle.locationCode);
-    if (this.vehicle.status == 'Booked') {
+    if (
+      this.vehicle.status === 'Booked' ||
+      this.vehicle.status === 'Decommissioned'
+    ) {
+      console.log('dupa');
       this.form.disable();
+    } else {
+      console.log(this.vehicle.status);
     }
   }
 
@@ -143,26 +148,40 @@ export class VehicleDetailComponent extends BaseFormDetailComponent {
   onSubmit() {
     this.readForm();
     if (this.vehicle.id != 0) {
-      if (this.vehicle.status == 'Decomissioned') {
+      if (this.vehicle.status === 'Decommissioned') {
         this.modalService
           .showConfirmModal('Do you want to decomission this vehicle?')
           .then(confirmed => {
             if (confirmed != 'true') {
               return;
             }
+            this.vehicleService
+              .update(this.vehicle, this.vehicle.id)
+              .subscribe(response => {
+                if (response['status'] == 200) {
+                  this.modalService.showSuccessModal(
+                    'Vehicle has been updated.'
+                  );
+                } else {
+                  this.modalService.showErrorModal(
+                    'Vehicle update has failed.'
+                  );
+                }
+              });
+          });
+      } else {
+        this.vehicleService
+          .update(this.vehicle, this.vehicle.id)
+          .subscribe(response => {
+            if (response['status'] == 200) {
+              this.modalService.showSuccessModal('Vehicle has been updated.');
+            } else {
+              this.modalService.showErrorModal('Vehicle update has failed.');
+            }
           });
       }
-      this.vehicleService
-        .update(this.vehicle, this.vehicle.id)
-        .subscribe(response => {
-          if (response['status'] == 200) {
-            this.modalService.showSuccessModal('Vehicle has been updated.');
-          } else {
-            this.modalService.showErrorModal('Vehicle update has failed.');
-          }
-        });
     } else {
-      if (this.vehicle.status == 'Decomissioned') {
+      if (this.vehicle.status === 'Decommissioned') {
         this.modalService.showInfoModal(
           'New vehicle cannot be set as decomissioned.'
         );

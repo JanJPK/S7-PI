@@ -157,7 +157,7 @@
 
             <button
               class="btn btn-danger mb-3"
-              [disabled]="vehicleModel.hasVehicles"
+              [disabled]="vehicleModel.hasVehicles || vehicleModel.id == 0"
               (click)="onDelete()"
             >
               Delete
@@ -165,21 +165,23 @@
           </div>
         </div>
 
-        <div *ngIf="vehicleModel.hasVehicles" class="card-body">
-          <div class="text-muted">
-            Vehicle models that have vehicles cannot be deleted.
+        <div class="card-body">
+          <div *ngIf="vehicleModel.hasVehicles">
+            <div class="text-muted">
+              Vehicle models that have vehicles cannot be deleted.
+            </div>
+            <a
+              href="/vehicles;vehicleModelId={{vehicleModel.id}}"
+              class="card-link"
+            >
+              Show all vehicles of this type</a
+            >
           </div>
           <a
             href="/vehicles/0;vehicleModelId={{vehicleModel.id}}"
             class="card-link"
           >
             Create new vehicle of this type</a
-          >
-          <a
-            href="/vehicles;vehicleModelId={{vehicleModel.id}}"
-            class="card-link"
-          >
-            Show all vehicles of this type</a
           >
         </div>
 

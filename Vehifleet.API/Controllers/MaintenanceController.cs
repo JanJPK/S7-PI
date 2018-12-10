@@ -37,7 +37,9 @@ namespace Vehifleet.API.Controllers
                 return NotFound("No such vehicle.");
             }
 
-            var query = maintenanceRepository.Get().Where(m => m.VehicleId == id);
+            var query = maintenanceRepository.Get()
+                                             .Where(m => m.VehicleId == id)
+                                             .OrderByDescending(b => b.StartDate);
 
             var maintenances = await query.ToListAsync();
 

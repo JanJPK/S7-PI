@@ -11,10 +11,12 @@ using Vehifleet.Repositories.Interfaces;
 
 namespace Vehifleet.Services.UserService
 {
+    /// <summary>
+    ///     Responsible for user login/logout.
+    /// </summary>
     public class UserService : IUserService
     {
         private readonly UserManager<EmployeeIdentity> userManager;
-        private readonly IGenericRepository<EmployeeIdentity, string> identityRepository;
         private readonly IEmployeeRepository employeeRepository;
         private readonly IRoleRepository roleRepository;
         private readonly JwtOptions jwtOptions;
@@ -26,7 +28,6 @@ namespace Vehifleet.Services.UserService
                            IOptions<JwtOptions> jwtOptions)
         {
             this.userManager = userManager;
-            this.identityRepository = identityRepository;
             this.employeeRepository = employeeRepository;
             this.roleRepository = roleRepository;
             this.jwtOptions = jwtOptions.Value;

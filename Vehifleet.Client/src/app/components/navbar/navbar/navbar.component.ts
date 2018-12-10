@@ -7,7 +7,7 @@ import { UserService } from 'src/app/shared/user/user.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  constructor(private userService: UserService) {}
+  constructor(public userService: UserService) {}
 
   ngOnInit() {
     this.userService.checkLocalStorage();

@@ -23,7 +23,11 @@
     </div>
 
     <div class="card-body">
-      <button class="btn btn-primary" (click)="select(0)" [disabled]="isBooked">
+      <button
+        class="btn btn-primary"
+        (click)="select(0)"
+        [disabled]="isBooked || vehicleId == 0"
+      >
         New insurance
       </button>
     </div>

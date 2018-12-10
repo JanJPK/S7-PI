@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MaintenanceService } from 'src/app/services/maintenance.service';
 import { Maintenance } from 'src/app/classes/maintenance/maintenance';
-import { MaintenanceFilter } from 'src/app/classes/maintenance/maintenance-filter';
 import { Router } from '@angular/router';
 
 @Component({
@@ -30,11 +29,13 @@ export class MaintenanceListComponent implements OnInit {
   }
 
   get() {
-    this.maintenanceService
-      .getByVehicleId(this.vehicleId)
-      .subscribe(maintenances => {
-        this.maintenances = maintenances;
-      });
+    if (this.vehicleId != 0) {
+      this.maintenanceService
+        .getByVehicleId(this.vehicleId)
+        .subscribe(maintenances => {
+          this.maintenances = maintenances;
+        });
+    }
   }
 
   select(id: number) {

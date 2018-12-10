@@ -29,7 +29,6 @@ namespace Vehifleet.Repositories
             //await Context.SaveChangesAsync();
         }
 
-        // TODO: Optimize so its faster
         public async Task<IEnumerable<IdentityRole>> GetByUserId(string userId)
         {
             var query = Context.Roles

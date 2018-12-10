@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -45,7 +46,8 @@ namespace Vehifleet.API.Controllers
                                          .Include(b => b.Vehicle)
                                          .ThenInclude(v => v.VehicleModel)
                                          .Include(b => b.Employee)
-                                         .ThenInclude(e => e.Identity);
+                                         .ThenInclude(e => e.Identity)
+                                         .OrderByDescending(b => b.StartDate);
 
             var bookings = await filter.Filter(query)
                                        .ToListAsync();

@@ -19,11 +19,11 @@ namespace Vehifleet.API.Tests
         [Fact]
         public async void Should_Return_Vehicles()
         {
-            // Arrange            
-            var vehicles = DataProvider.GetVehicles();
-            var vehiclesMock = vehicles.AsQueryable().BuildMock();
+            // Arrange                        
+            var vehiclesQueryable = DataProvider.GetVehicles().AsQueryable().BuildMock();
             var vehicleRepositoryMock = new Mock<IGenericRepository<Vehicle, int>>();
-            vehicleRepositoryMock.Setup(m => m.Get()).Returns(vehiclesMock.Object);
+            vehicleRepositoryMock.Setup(m => m.Get())
+                                 .Returns(vehiclesQueryable.Object);
             var vehicleController = new VehicleController(vehicleRepositoryMock.Object,
                                                           Mock.Of<IGenericRepository<VehicleModel, int>>(),
                                                           Mock.Of<IGenericRepository<Booking, int>>(),
@@ -45,14 +45,14 @@ namespace Vehifleet.API.Tests
         public async void Should_Return_Filtered_Vehicles()
         {
             // Arrange            
-            var vehicles = DataProvider.GetVehicles();
-            var vehiclesMock = vehicles.AsQueryable().BuildMock();
+            var vehiclesQueryable = DataProvider.GetVehicles().AsQueryable().BuildMock();
             var filter = new VehicleFilter
             {
                 Manufacturer = "Ford"
             };
             var vehicleRepositoryMock = new Mock<IGenericRepository<Vehicle, int>>();
-            vehicleRepositoryMock.Setup(m => m.Get()).Returns(vehiclesMock.Object);
+            vehicleRepositoryMock.Setup(m => m.Get())
+                                 .Returns(vehiclesQueryable.Object);
             var vehicleController = new VehicleController(vehicleRepositoryMock.Object,
                                                           Mock.Of<IGenericRepository<VehicleModel, int>>(),
                                                           Mock.Of<IGenericRepository<Booking, int>>(),
@@ -120,6 +120,44 @@ namespace Vehifleet.API.Tests
             // Assert
             Assert.NotNull(result);
             Assert.True(result.StatusCode == 404);
+        }
+
+        [Fact]
+        public async void Should_Update_Vehicle()
+        {
+            // Arrange            
+            var vehicles = DataProvider.GetVehicles();
+            var vehiclesMock = DataProvider.GetVehicles().AsQueryable().BuildMock();
+            var insurancesMock = new List<Insurance>().AsQueryable().BuildMock();
+            var updatedVehicle = new VehicleDto
+            {
+                Id = 1,
+                VehicleModelId = 3,
+                LocationCode = "333"
+            };
+            bool updated = false;
+            var vehicleRepositoryMock = new Mock<IGenericRepository<Vehicle, int>>();
+            vehicleRepositoryMock.Setup(m => m.Get()).Returns(vehiclesMock.Object);
+            vehicleRepositoryMock.Setup(m => m.Exists(It.IsAny<int>()))
+                                 .Returns<int>(id => Task.FromResult(vehicles.SingleOrDefault(v => v.Id == id) != null));
+            vehicleRepositoryMock.Setup(m => m.Update(It.IsAny<Vehicle>()))
+                                 .Returns(Task.FromResult(true))
+                                 .Callback((Vehicle vehicle) => { updated = true; });
+            var insuranceRepositoryMock = new Mock<IGenericRepository<Insurance, int>>();
+            insuranceRepositoryMock.Setup(m => m.Get()).Returns(insurancesMock.Object);
+            var vehicleController = new VehicleController(vehicleRepositoryMock.Object,
+                                                          Mock.Of<IGenericRepository<VehicleModel, int>>(),
+                                                          Mock.Of<IGenericRepository<Booking, int>>(),
+                                                          insuranceRepositoryMock.Object,
+                                                          MapperProvider.GetMapper());
+            // Act
+            var request = await vehicleController.Update(updatedVehicle.Id, updatedVehicle);
+            var result = request as OkResult;
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.True(result.StatusCode == 200);
+            Assert.True(updated);
         }
     }
 }

@@ -85,7 +85,7 @@
                 class="btn btn-primary mb-3"
                 [disabled]="
                   !form.valid ||
-                  vehicle.status == 'Decomissioned' ||
+                  vehicle.status == 'Decommissioned' ||
                   vehicle.status == 'Booked'
                 "
                 (click)="onSubmit()"
@@ -96,7 +96,7 @@
                 class="btn btn-danger mb-3"
                 (click)="onDelete()"
                 [disabled]="
-                  vehicle.status == 'Decomissioned' ||
+                  vehicle.status == 'Decommissioned' ||
                   vehicle.status == 'Booked'
                 "
               >

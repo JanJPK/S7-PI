@@ -11,9 +11,6 @@ import { catchError } from 'rxjs/operators';
 import { LoggerService } from '../shared/logger/logger.service';
 import { UserService } from '../shared/user/user.service';
 
-@Injectable({
-  providedIn: 'root'
-})
 export abstract class BaseService<TEntity, TEntityListItem, TKey> {
   protected apiUrl: string;
   protected headers = new HttpHeaders({
